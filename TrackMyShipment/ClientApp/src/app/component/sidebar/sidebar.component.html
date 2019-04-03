@@ -1,0 +1,94 @@
+  <div class="sidemenu-container navbar-collapse collapse fixed-menu">
+     <div id="remove-scroll">
+         <ul class="sidemenu page-header-fixed p-t-20" data-keep-expanded="false" data-auto-scroll="true" data-slide-speed="200">
+             <li class="sidebar-toggler-wrapper hide">
+                 <div class="sidebar-toggler">
+                     <span></span>
+                 </div>
+             </li>
+             <li class="sidebar-user-panel">
+                 <div class="user-panel">
+                     <div class="row">
+                             <div class="sidebar-userpic">
+                                 <img src="assets/img/dp.jpg" class="img-responsive" alt=""> </div>
+                         </div>
+                         <div class="profile-usertitle">
+                             <div class="sidebar-userpic-name"> {{currentUser.firstName}} </div>
+                             <div class="profile-usertitle-job"> Manager </div>
+                         </div>
+                         <div class="sidebar-userpic-btn">
+                             <a class="tooltips" href="user_profile.html" data-placement="top" data-original-title="Profile">
+                                 <i class="material-icons">person_outline</i>
+                             </a>
+                             <a class="tooltips" href="email_inbox.html" data-placement="top" data-original-title="Mail">
+                                 <i class="material-icons">mail_outline</i>
+                             </a>
+                             <a class="tooltips" href="chat.html" data-placement="top" data-original-title="Chat">
+                                 <i class="material-icons">chat</i>
+                             </a>
+                             <a class="tooltips" data-placement="top" href="" data-original-title="Logout"  (click)="clearStorage()">
+                                 <i class="material-icons">input</i>
+                             </a>
+                         </div>
+                 </div>
+             </li>
+             <li class="menu-heading">
+                 <span>-- Main</span>
+             </li>
+             <li class="nav-item start active">
+                 <a href="#" class="nav-link nav-toggle">
+                     <i class="material-icons">dashboard</i>
+                     <span class="title">Dashboard</span>
+                     <span class="selected"></span>
+                     <span class="arrow open"></span>
+                 </a>
+                 <ul class="sub-menu">
+                     <li class="nav-item active">
+                         <a href="index.html" class="nav-link ">
+                             <span class="title">Dashboard 1</span>
+                             <span class="selected"></span>
+                         </a>
+                     </li>
+                     <li class="nav-item ">
+                         <a href="dashboard2.html" class="nav-link ">
+                             <span class="title">Dashboard 2</span>
+                         </a>
+                     </li>
+                 </ul>
+             </li>
+             <li class="nav-item">
+                 <a href="#" class="nav-link nav-toggle">
+                     <i class="material-icons">email</i>
+                     <span class="title">Email</span>
+                     <span class="arrow"></span>
+                     <span class="label label-rouded label-menu label-danger">new</span>
+                 </a>
+                 <ul class="sub-menu">
+                     <li class="nav-item">
+                         <a href="email_inbox.html" class="nav-link ">
+                             <span class="title">Inbox</span>
+                         </a>
+                     </li>
+                     <li class="nav-item">
+                         <a href="email_view.html" class="nav-link ">
+                             <span class="title">View Mail</span>
+                         </a>
+                     </li>
+                     <li class="nav-item">
+                         <a href="email_compose.html" class="nav-link ">
+                             <span class="title">Compose Mail</span>
+                         </a>
+                     </li>
+                 </ul>
+             </li>
+             <li class="nav-item">
+                 <a href="#" class="nav-link nav-toggle">
+                     <i class="material-icons">business_center</i>
+                     <span class="title">Booking</span>
+                     <span class="arrow"></span>
+                 </a>
+             </li>
+         
+         </ul>
+     </div>
+ </div>
