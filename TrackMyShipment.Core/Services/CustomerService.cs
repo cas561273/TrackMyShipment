@@ -1,12 +1,11 @@
 ﻿using System.Collections.Generic;
-using System.Threading.Tasks;
 using TrackMyShipment.Core.Interfaces;
 using TrackMyShipment.Repository.Interfaces;
 using TrackMyShipment.Repository.Models;
 
 namespace TrackMyShipment.Core.Services
 {
-    internal class CustomerService : ICustomerService
+    public class CustomerService : ICustomerService
     {
         private readonly ICustomerRepository _context;
 
@@ -18,14 +17,10 @@ namespace TrackMyShipment.Core.Services
         public  Address DeleteAddress(int? id, int? userId)
         {
             var address =  _context.GetByAddress(id);
-            if (address.UsersId == userId)
-            {
-                _context.Remove(address);
-                _context.Complete();
-                return address;
-            }
-
-            return null;
+            if (address.UsersId != userId) return null;
+            _context.Remove(address);
+            _context.Complete();
+            return address;
         }
 
         public  string StatusAddress(int? id, int? userId)
@@ -41,9 +36,7 @@ namespace TrackMyShipment.Core.Services
         public string DeleteSubscribe(Supplies relation)
         {
             var result = _context.DeleteSubscribe(relation);
-            if (result) return "Delete Successfuly";
-
-            return null;
+            return result ? "Delete Successfully" : null;
         }
 
         public Supplies GetSubscribe(int? userId, int? carrierId)
@@ -56,29 +49,22 @@ namespace TrackMyShipment.Core.Services
             try
             {
                 var existAddress =  _context.GetByAddress(address.Id);
-
-                if (existAddress == null)
-                {
-                    address.UsersId = userId;
-                    _context.Add(address);
-                }
-
-                else
+                if (existAddress != null)
                 {
                     existAddress.State = address.State;
                     existAddress.StreetLine1 = address.StreetLine1;
                     existAddress.StreetLine2 = address.StreetLine2;
                     existAddress.City = address.City;
                 }
-
+                else
+                {
+                    address.UsersId = userId;
+                    _context.Add(address);
+                }
                 _context.Complete();
                 return address;
             }
-
-            catch
-            {
-                return null;
-            }
+            catch {return null;}
         }
 
         public IEnumerable<Address> MyAddress(int? userId)

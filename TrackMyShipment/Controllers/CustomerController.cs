@@ -14,7 +14,6 @@ namespace TrackMyShipment.Controllers
         {
         }
 
-
         [HttpPost]
         [Route("PutAddress")]
         [Authorize(Roles = "admin,customer")]
@@ -37,7 +36,6 @@ namespace TrackMyShipment.Controllers
             });
         }
 
-
         [HttpDelete]
         [Route("DeleteAddress")]
         [Authorize(Roles = "admin,customer")]
@@ -58,7 +56,6 @@ namespace TrackMyShipment.Controllers
                 Msg = "Cannot be deleted"
             });
         }
-
 
         [HttpGet]
         [Route("MyAddress")]
@@ -83,7 +80,6 @@ namespace TrackMyShipment.Controllers
             });
         }
 
-
         [HttpPost]
         [Route("StatusAddress")]
         [Authorize(Roles = "admin,customer")]
@@ -103,7 +99,6 @@ namespace TrackMyShipment.Controllers
                 State = RequestState.Failed
             });
         }
-
 
         [HttpPost]
         [Route("Subscribe")]

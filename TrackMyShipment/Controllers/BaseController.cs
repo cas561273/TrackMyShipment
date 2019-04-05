@@ -15,8 +15,7 @@ namespace TrackMyShipment.Controllers
         protected readonly CarrierManage _carrierManage;
         protected readonly CustomerManage _customerManage;
         protected readonly UserManage _userManage;
-
-
+    
         protected BaseController(UserManage userManage, CarrierManage carrierManage, CustomerManage customerManage)
         {
             _userManage = userManage;

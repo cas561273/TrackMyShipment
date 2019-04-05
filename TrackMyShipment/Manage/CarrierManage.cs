@@ -9,7 +9,7 @@ namespace TrackMyShipment.Manage
 {
     public class CarrierManage
     {
-        public readonly ICarrierService _carrierService;
+        private readonly ICarrierService _carrierService;
 
         public CarrierManage(ICarrierService carrierService)
         {
@@ -19,11 +19,6 @@ namespace TrackMyShipment.Manage
         public void AddOrUpdate(Carrier carrier)
         {
             _carrierService.AddOrUpdate(carrier);
-        }
-
-        public Carrier Get(Carrier carrier)
-        {
-            return _carrierService.Get(carrier);
         }
 
         public Carrier GetById(int carrierId)
@@ -54,17 +49,14 @@ namespace TrackMyShipment.Manage
         public IEnumerable<UserModel> GetMyUsers(int carrierId)
         {
             var mapper = new MapperConfiguration(cfg => cfg.CreateMap<User, UserModel>()).CreateMapper();
-
-
             var people = _carrierService.GetMyUsers(carrierId);
             IEnumerable<UserModel> peopleShort = mapper.Map<IEnumerable<User>, IEnumerable<UserModel>>(people);
-
             return peopleShort;
         }
 
-        public bool? Active(int carrierId)
+        public bool? ActiveStatus(int carrierId)
         {
-            return _carrierService.Active(carrierId);
+            return _carrierService.ActiveStatus(carrierId);
         }
     }
 }

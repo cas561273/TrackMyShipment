@@ -16,7 +16,6 @@ namespace TrackMyShipment.Controllers
         {
         }
 
-
         [Route("PutCarrier")]
         [HttpPut]
         [Authorize(Roles = "admin")]
@@ -29,7 +28,6 @@ namespace TrackMyShipment.Controllers
                 State = RequestState.Success
             });
         }
-
 
         [Route("DeleteCarrier")]
         [HttpDelete]
@@ -49,7 +47,6 @@ namespace TrackMyShipment.Controllers
                 State = RequestState.Failed
             });
         }
-
 
         [Route("GetCarriers")]
         [HttpGet]
@@ -72,7 +69,6 @@ namespace TrackMyShipment.Controllers
             });
         }
 
-
         [Route("MyCarriers")]
         [HttpGet]
         [Authorize(Roles = "admin,customer,carrier")]
@@ -94,7 +90,6 @@ namespace TrackMyShipment.Controllers
             });
         }
 
-
         [HttpGet("user/{id}")]
         [Authorize(Roles = "admin,carrier")]
         public ActionResult ListUsers(int id)
@@ -114,7 +109,6 @@ namespace TrackMyShipment.Controllers
             });
         }
 
-
         [HttpPost("Active")]
         [Authorize(Roles = "admin,carrier")]
         public IActionResult ActiveCarrier([FromBody] int id)
@@ -123,7 +117,7 @@ namespace TrackMyShipment.Controllers
             var relation =   _customerManage.GetSubscribe(user.Id, id);
             if (relation != null)
             {
-                if (_carrierManage.Active(id)==true)
+                if (_carrierManage.ActiveStatus(id)==true)
                     return Json(new Request
                     {
                         Msg = "Subscribe",

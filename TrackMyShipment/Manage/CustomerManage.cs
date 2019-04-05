@@ -25,7 +25,6 @@ namespace TrackMyShipment.Manage
             return _customerService.StatusAddress(id, userId);
         }
 
-
         public string DeleteSubscribe(Supplies relation)
         {
             return _customerService.DeleteSubscribe(relation);

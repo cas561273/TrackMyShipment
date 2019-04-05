@@ -9,7 +9,7 @@ namespace TrackMyShipment.Core.Services
 {
     public class CarrierService : ICarrierService
     {
-        public readonly ICarrierRepository _context;
+        private readonly ICarrierRepository _context;
 
         public CarrierService(ICarrierRepository context)
         {
@@ -33,12 +33,6 @@ namespace TrackMyShipment.Core.Services
             }
 
             _context.Complete();
-        }
-
-        public Carrier Get(Carrier carrier)
-        {
-            var person = _context.Get(carrier.Id);
-            return person;
         }
 
         public Carrier GetById(int carrierId)
@@ -79,11 +73,9 @@ namespace TrackMyShipment.Core.Services
             return _context.GetMyUser(carrierId);
         }
 
-        public bool? Active(int carrierId)
+        public bool? ActiveStatus(int carrierId)
         {
-            var status = _context.Active(carrierId);
-            _context.Complete();
-            return status;
+            return _context.ActiveStatus(carrierId);
         }
     }
 }

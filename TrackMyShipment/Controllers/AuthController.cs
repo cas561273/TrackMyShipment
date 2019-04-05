@@ -34,7 +34,6 @@ namespace TrackMyShipment.Controllers
             );
         }
 
-
         [HttpPost]
         [Route("Auth")]
         public IActionResult Login([FromBody] LoginModel user)

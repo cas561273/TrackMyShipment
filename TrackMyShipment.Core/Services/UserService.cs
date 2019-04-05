@@ -27,7 +27,6 @@ namespace TrackMyShipment.Core.Services
             return  _context.UserExists(user);
         }
 
-
         public async Task<bool> Create(User user, string companyName)
         {
             var temp =  _context.GetByEmail(user.Email);
@@ -45,13 +44,11 @@ namespace TrackMyShipment.Core.Services
                 });
                 _context.Complete();
                 _context.PutCompany(companyName, user.Email);
-                _context.Complete();
                 return true;
             }
 
             return false;
         }
-
 
         public async void PutCarrier(User carrier)
         {
