@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using TrackMyShipment.Core.Interfaces;
 using TrackMyShipment.Repository.Interfaces;
 using TrackMyShipment.Repository.Models;
@@ -14,57 +15,47 @@ namespace TrackMyShipment.Core.Services
             _context = context;
         }
 
-        public Address DeleteAddress(int? id, int? userId)
+        public  Address DeleteAddress(int? id, int? userId)
         {
-
-            Address address = _context.GetByAddress(id);
+            var address =  _context.GetByAddress(id);
             if (address.UsersId == userId)
             {
                 _context.Remove(address);
                 _context.Complete();
                 return address;
             }
-            return null;
 
+            return null;
         }
 
-        public string StatusAddress(int? id, int? userId)
+        public  string StatusAddress(int? id, int? userId)
         {
-
-            Address address = _context.GetByAddress(id);
-            if (address.UsersId != userId)
-            {
-                return null;
-            }
+            var address =  _context.GetByAddress(id);
+            if (address.UsersId != userId) return null;
             address.Active = !address.Active;
             _context.Complete();
             return "Address successfully deleted";
-
         }
 
 
         public string DeleteSubscribe(Supplies relation)
         {
-
-            bool result = _context.DeleteSubscribe(relation);
-            if (result != false)
-            {
-                return "Delete Successfuly";
-            }
+            var result = _context.DeleteSubscribe(relation);
+            if (result) return "Delete Successfuly";
 
             return null;
         }
 
         public Supplies GetSubscribe(int? userId, int? carrierId)
         {
-            return _context.GetSubscribe(userId, carrierId);
+            return  _context.GetSubscribe(userId, carrierId);
         }
 
         public Address PutOrUpdate(Address address, int? userId)
         {
             try
             {
-                Address existAddress = _context.GetByAddress(address.Id);
+                var existAddress =  _context.GetByAddress(address.Id);
 
                 if (existAddress == null)
                 {
@@ -79,12 +70,15 @@ namespace TrackMyShipment.Core.Services
                     existAddress.StreetLine2 = address.StreetLine2;
                     existAddress.City = address.City;
                 }
+
                 _context.Complete();
                 return address;
-
             }
 
-            catch { return null; }
+            catch
+            {
+                return null;
+            }
         }
 
         public IEnumerable<Address> MyAddress(int? userId)
@@ -96,19 +90,22 @@ namespace TrackMyShipment.Core.Services
         {
             try
             {
-                Supplies existRelation = _context.GetSubscribe(userId, carrierId);
+                var existRelation =  _context.GetSubscribe(userId, carrierId);
 
                 if (existRelation == null)
                 {
                     _context.Subscribe(carrierId, userId);
                     return "Subscribed";
-
                 }
+
                 _context.DeleteSubscribe(existRelation);
 
                 return "UnSubscribed";
             }
-            catch { return null; }
+            catch
+            {
+                return null;
+            }
         }
     }
 }

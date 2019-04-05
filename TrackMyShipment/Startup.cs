@@ -8,7 +8,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Swashbuckle.AspNetCore.Swagger;
 using System.Collections.Generic;
-using TrackMyShipment.Extension;
+using TrackMyShipment.Core.Extension;
 using TrackMyShipment.Manage;
 using TrackMyShipment.Repository;
 using TrackMyShipment.Utils;

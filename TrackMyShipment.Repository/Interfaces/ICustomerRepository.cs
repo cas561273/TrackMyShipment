@@ -1,4 +1,5 @@
-﻿using TrackMyShipment.Repository.Models;
+﻿using System.Threading.Tasks;
+using TrackMyShipment.Repository.Models;
 
 namespace TrackMyShipment.Repository.Interfaces
 {
@@ -8,6 +9,5 @@ namespace TrackMyShipment.Repository.Interfaces
         Address GetByAddress(int? id);
         Supplies GetSubscribe(int? userId, int? carrierId);
         bool DeleteSubscribe(Supplies relation);
-
     }
 }

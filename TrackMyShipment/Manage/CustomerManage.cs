@@ -17,14 +17,11 @@ namespace TrackMyShipment.Manage
 
         public Address DeleteAddress(int? id, int? userId)
         {
-
             return _customerService.DeleteAddress(id, userId);
-
         }
 
         public string StatusAddress(int? id, int? userId)
         {
-
             return _customerService.StatusAddress(id, userId);
         }
 
@@ -41,7 +38,7 @@ namespace TrackMyShipment.Manage
 
         public Address PutOrUpdate(AddressModel address, int? userId)
         {
-            var mapper = new MapperConfiguration(cfg => cfg.CreateMap<AddressModel, Address>()).CreateMapper();
+            IMapper mapper = new MapperConfiguration(cfg => cfg.CreateMap<AddressModel, Address>()).CreateMapper();
             Address addressModel = mapper.Map<AddressModel, Address>(address);
 
             return _customerService.PutOrUpdate(addressModel, userId);
@@ -49,17 +46,14 @@ namespace TrackMyShipment.Manage
 
         public IEnumerable<AddressModel> MyAddress(int? userId)
         {
-            var myAddress = _customerService.MyAddress(userId);
-            var mapper = new MapperConfiguration(cfg => cfg.CreateMap<Address, AddressModel>()).CreateMapper();
+            IEnumerable<Address> myAddress = _customerService.MyAddress(userId);
+            IMapper mapper = new MapperConfiguration(cfg => cfg.CreateMap<Address, AddressModel>()).CreateMapper();
             return mapper.Map<IEnumerable<Address>, IEnumerable<AddressModel>>(myAddress);
-            
         }
 
         public string Subscribe(int? carrierId, int? userId)
         {
             return _customerService.Subscribe(carrierId, userId);
         }
-
     }
 }
-

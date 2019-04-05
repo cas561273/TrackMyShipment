@@ -1,7 +1,7 @@
-﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+﻿using System.Security.Claims;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.Security.Claims;
 using TrackMyShipment.Manage;
 using TrackMyShipment.Repository.Models;
 using TrackMyShipment.ViewModel;
@@ -12,9 +12,9 @@ namespace TrackMyShipment.Controllers
     [ApiController]
     public class BaseController : Controller
     {
-        protected readonly UserManage _userManage;
-        protected readonly CustomerManage _customerManage;
         protected readonly CarrierManage _carrierManage;
+        protected readonly CustomerManage _customerManage;
+        protected readonly UserManage _userManage;
 
 
         protected BaseController(UserManage userManage, CarrierManage carrierManage, CustomerManage customerManage)
@@ -24,31 +24,24 @@ namespace TrackMyShipment.Controllers
             _carrierManage = carrierManage;
         }
 
-        [HttpGet, Route("fullInfo")]
+        [HttpGet]
+        [Route("fullInfo")]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public User CurrentUser()
         {
-            ClaimsIdentity claimsIdentity = User.Identity as ClaimsIdentity;
-            if (claimsIdentity == null)
-            {
-                return null;
-            }
-            return _userManage.GetByEmail(claimsIdentity.Name);
-
+            var claimsIdentity = User.Identity as ClaimsIdentity;
+            if (claimsIdentity == null) return null;
+            return  _userManage.GetByEmail(claimsIdentity.Name);
         }
 
-        [HttpGet, Route("shortInfo")]
+        [HttpGet]
+        [Route("shortInfo")]
         public RegistrationModel UserInfo()
         {
-            ClaimsIdentity claimsIdentity = User.Identity as ClaimsIdentity;
-            if (claimsIdentity == null)
-            {
-                return null;
-            }
-            User user = _userManage.GetByEmail(claimsIdentity.Name);
-            return new RegistrationModel { FirstName = user.FirstName, LastName = user.LastName, Phone = user.Phone };
+            var claimsIdentity = User.Identity as ClaimsIdentity;
+            if (claimsIdentity == null) return null;
+            var user =  _userManage.GetByEmail(claimsIdentity.Name);
+            return new RegistrationModel {FirstName = user.FirstName, LastName = user.LastName, Phone = user.Phone};
         }
     }
 }
-
-

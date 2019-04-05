@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { HttpHeaders } from '@angular/common/http';
+import { CarrierService } from 'src/app/services/carrierService';
+import { Carrier } from 'src/app/models/Carrier';
 
 @Component({
   selector: 'app-home',
@@ -10,8 +12,16 @@ import { HttpHeaders } from '@angular/common/http';
 })
 export class HomeComponent implements OnInit {
 
-  constructor(private router: Router, private http: HttpClient) { }
+  carriers: Carrier[];
+
+  constructor(private router: Router, private http: HttpClient, private carrierService: CarrierService) { }
 
   ngOnInit() {
+    this.carrierService.RequestCarrier().subscribe((data) => {
+      let requestCarriers = data.data as Carrier[];
+      this.carriers = requestCarriers;
+      console.log(data);
+      console.log(data.msg);
+    });
   }
 }

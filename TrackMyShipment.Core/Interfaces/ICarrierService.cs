@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using TrackMyShipment.Repository.Models;
 
 namespace TrackMyShipment.Core.Interfaces
@@ -10,10 +11,9 @@ namespace TrackMyShipment.Core.Interfaces
         IEnumerable<Carrier> GetAll();
         void AddOrUpdate(Carrier carrier);
         bool Delete(int id);
-        IEnumerable<Carrier> GetAvailable(User user);
+        Task<IEnumerable<Carrier>> GetAvailable(User user);
         Carrier GetById(int carrierId);
         IEnumerable<User> GetMyUsers(int carrierId);
-        bool Active(int carrierId);
-
+        bool? Active(int carrierId);
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 namespace TrackMyShipment.Utils
 {
@@ -10,8 +11,12 @@ namespace TrackMyShipment.Utils
         public static bool ValidateIssuerSigningKey = true;
         public static string ValidIssuer = "https://localhost:44395";
         public static string ValidAudience = "https://localhost:44395";
-        public static string secretKey = "craftkey91Keys13";
-        public static SymmetricSecurityKey IssuerSigningKey = new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes(secretKey));
-        public static SigningCredentials signinCredentials = new SigningCredentials(IssuerSigningKey, SecurityAlgorithms.HmacSha256Signature);
+        public static string SecretKey = "craftkey91Keys13";
+
+        public static SymmetricSecurityKey IssuerSigningKey =
+            new SymmetricSecurityKey(Encoding.UTF8.GetBytes(SecretKey));
+
+        public static SigningCredentials SigninCredentials =
+            new SigningCredentials(IssuerSigningKey, SecurityAlgorithms.HmacSha256Signature);
     }
 }

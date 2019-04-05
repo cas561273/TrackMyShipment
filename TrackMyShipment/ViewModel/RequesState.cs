@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace TrackMyShipment.Core.ViewModel
+﻿namespace TrackMyShipment.ViewModel
 {
     public enum RequestState
     {

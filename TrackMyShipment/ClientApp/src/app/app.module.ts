@@ -15,6 +15,7 @@ import { PricingComponent } from './component/pricing/pricing.component';
 import { SidebarComponent } from './component/sidebar/sidebar.component';
 import { AuthService } from './services/authService';
 import { DataSharingService } from './services/dataSharing';
+import { CarrierService } from './services/carrierService';
 
 
 @NgModule({
@@ -36,7 +37,7 @@ import { DataSharingService } from './services/dataSharing';
     AppRoutingModule,
     FormsModule,
   ],
-  providers: [AuthService, DataSharingService],
+  providers: [AuthService, DataSharingService, CarrierService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

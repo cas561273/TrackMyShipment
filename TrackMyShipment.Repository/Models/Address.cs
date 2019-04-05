@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
-
-namespace TrackMyShipment.Repository.Models
+﻿namespace TrackMyShipment.Repository.Models
 {
     public class Address
     {
@@ -13,7 +11,6 @@ namespace TrackMyShipment.Repository.Models
 
         public int? UsersId { get; set; }
 
-        public  User Users { get; set; }
-
+        public User Users { get; set; }
     }
 }

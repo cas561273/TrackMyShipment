@@ -1,4 +1,6 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using TrackMyShipment.Core.Interfaces;
 using TrackMyShipment.Repository.Interfaces;
 using TrackMyShipment.Repository.Models;
@@ -8,6 +10,7 @@ namespace TrackMyShipment.Core.Services
     public class CarrierService : ICarrierService
     {
         public readonly ICarrierRepository _context;
+
         public CarrierService(ICarrierRepository context)
         {
             _context = context;
@@ -15,7 +18,7 @@ namespace TrackMyShipment.Core.Services
 
         public void AddOrUpdate(Carrier carrier)
         {
-            Carrier person = _context.GetByName(carrier.Name);
+            var person = _context.Find(x => x.Name == carrier.Name).FirstOrDefault();
             if (person == null)
             {
                 _context.Add(carrier);
@@ -28,41 +31,42 @@ namespace TrackMyShipment.Core.Services
                 person.Status = carrier.Status;
                 person.Code = carrier.Code;
             }
+
             _context.Complete();
         }
 
         public Carrier Get(Carrier carrier)
         {
-            Carrier person = _context.Get(carrier.Id);
+            var person = _context.Get(carrier.Id);
             return person;
         }
 
         public Carrier GetById(int carrierId)
         {
-            return _context.Get(carrierId);
+            return _context.Find(x => x.Id == carrierId).FirstOrDefault();
         }
+
         public bool Delete(int id)
         {
-            Carrier person = _context.Get(id);
+            var person = GetById(id);
             if (person != null)
             {
                 _context.Remove(person);
                 _context.Complete();
                 return true;
             }
+
             return false;
         }
+
         public IEnumerable<Carrier> GetAll()
         {
             return _context.GetAll();
         }
 
-        public IEnumerable<Carrier> GetAvailable(User user)
+        public async Task<IEnumerable<Carrier>> GetAvailable(User user)
         {
-
-            IEnumerable<Carrier> carriers = _context.GetAvailable(user);
-
-            return carriers;
+            return await _context.GetAvailable(user);
         }
 
         public IEnumerable<Carrier> GetMyCarriers(User user)
@@ -75,14 +79,11 @@ namespace TrackMyShipment.Core.Services
             return _context.GetMyUser(carrierId);
         }
 
-        public bool Active(int carrierId)
+        public bool? Active(int carrierId)
         {
             var status = _context.Active(carrierId);
             _context.Complete();
             return status;
         }
-
-
-
     }
 }

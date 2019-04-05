@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+﻿using System.Threading.Tasks;
 using TrackMyShipment.Repository.Models;
 
 namespace TrackMyShipment.Core.Interfaces
@@ -7,7 +7,7 @@ namespace TrackMyShipment.Core.Interfaces
     {
         User GetByEmail(string email);
         User Get(User person);
-        bool Create(User person,string companyName);
+        Task<bool> Create(User person, string companyName);
         void PutCarrier(User carrier);
     }
 }

@@ -15,7 +15,7 @@ namespace TrackMyShipment.Repository.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.2.2-servicing-10034")
+                .HasAnnotation("ProductVersion", "2.2.3-servicing-35854")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -80,13 +80,13 @@ namespace TrackMyShipment.Repository.Migrations
                     b.ToTable("Company");
                 });
 
-            modelBuilder.Entity("TrackMyShipment.Repository.Models.Roles", b =>
+            modelBuilder.Entity("TrackMyShipment.Repository.Models.Role", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("Role");
+                    b.Property<string>("Name");
 
                     b.HasKey("Id");
 
@@ -96,17 +96,17 @@ namespace TrackMyShipment.Repository.Migrations
                         new
                         {
                             Id = 1,
-                            Role = "admin"
+                            Name = "admin"
                         },
                         new
                         {
                             Id = 2,
-                            Role = "customer"
+                            Name = "customer"
                         },
                         new
                         {
                             Id = 3,
-                            Role = "carrier"
+                            Name = "carrier"
                         });
                 });
 
@@ -215,7 +215,7 @@ namespace TrackMyShipment.Repository.Migrations
                         .WithMany()
                         .HasForeignKey("CompanyId");
 
-                    b.HasOne("TrackMyShipment.Repository.Models.Roles", "Role")
+                    b.HasOne("TrackMyShipment.Repository.Models.Role", "Role")
                         .WithMany()
                         .HasForeignKey("RoleId");
 

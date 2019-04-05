@@ -13,7 +13,7 @@ export class SidebarComponent {
   constructor(private router: Router, private authService: AuthService, private dataSharingService: DataSharingService) { }
 
   currentUser: Person;
-  firstName: string;
+
   public clearStorage() {
     this.authService.logout();
   }

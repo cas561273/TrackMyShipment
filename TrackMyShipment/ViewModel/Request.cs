@@ -1,6 +1,4 @@
-﻿using TrackMyShipment.Core.ViewModel;
-
-namespace TrackMyShipment.ViewModel
+﻿namespace TrackMyShipment.ViewModel
 {
     public class Request
     {
@@ -9,4 +7,3 @@ namespace TrackMyShipment.ViewModel
         public object Data { get; set; }
     }
 }
-

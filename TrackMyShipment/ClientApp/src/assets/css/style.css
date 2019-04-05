@@ -638,6 +638,7 @@ body {
 .page-header.navbar {
     background: #193650;
 }
+
 .page-header.navbar .page-logo {
     float: left;
     display: block;
@@ -646,6 +647,7 @@ body {
     padding: 10px 20px 0px 30px;
     background: #222c3c;
 }
+
 .logo-icon{
 	font-size: 35px !important;
 	padding-right: 10px;

@@ -1,9 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using TrackMyShipment.Core.ViewModel;
+﻿using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
 using TrackMyShipment.Manage;
-using TrackMyShipment.Repository.ViewModel;
 using TrackMyShipment.ViewModel;
-
 
 namespace TrackMyShipment.Controllers
 {
@@ -16,36 +14,34 @@ namespace TrackMyShipment.Controllers
         {
         }
 
-        [HttpPut, Route("Register")]
-        public IActionResult Add([FromBody]RegistrationModel user)
+        [HttpPut]
+        [Route("Register")]
+        public async Task<IActionResult> Add([FromBody] RegistrationModel user)
         {
-            bool result = _userManage.Create(user);
-            if (result == true)
-            {
+            var result = await _userManage.Create(user);
+            if (result)
                 return Json(new Request
                 {
                     State = RequestState.Success,
-                    Msg = "Registered successfuly"
+                    Msg = "Registered successfully"
                 });
-            }
 
             return Json(new Request
-            {
-                State = RequestState.Failed,
-                Msg = "Failed registration"
-            }
+                {
+                    State = RequestState.Failed,
+                    Msg = "Failed registration"
+                }
             );
-
         }
 
 
-        [HttpPost, Route("Auth")]
-        public IActionResult Login([FromBody]LoginModel user)
+        [HttpPost]
+        [Route("Auth")]
+        public IActionResult Login([FromBody] LoginModel user)
         {
-            string token = _userManage.Login(user);
+            var token =  _userManage.Login(user);
 
             if (token != null)
-            {
                 return Json(new Request
                 {
                     Data = new
@@ -53,15 +49,14 @@ namespace TrackMyShipment.Controllers
                         Token = token
                     },
                     State = RequestState.Success,
-                    Msg = "User authorized",
+                    Msg = "User authorized"
                 });
-            }
 
             return Json(new Request
-            {
-                State = RequestState.Failed,
-                Msg = "Username or password is invalid"
-            }
+                {
+                    State = RequestState.Failed,
+                    Msg = "Username or password is invalid"
+                }
             );
         }
     }

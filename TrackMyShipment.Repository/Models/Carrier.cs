@@ -1,7 +1,5 @@
-﻿
-namespace TrackMyShipment.Repository.Models
+﻿namespace TrackMyShipment.Repository.Models
 {
-    
     public class Carrier
     {
         public int Id { get; set; }
@@ -11,8 +9,5 @@ namespace TrackMyShipment.Repository.Models
         public string Logo { get; set; }
         public bool Status { get; set; }
         public long Cost { get; set; }
-
-
     }
 }
-
