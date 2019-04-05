@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 
 namespace TrackMyShipment.Repository.Interfaces
 {
@@ -17,6 +18,12 @@ namespace TrackMyShipment.Repository.Interfaces
         /// <returns>Single <see cref="TEntity" /> object</returns>
         TEntity Get(int id);
 
+        void AddAsync(TEntity entity);
+
+        Task<TEntity> FindAsync(Expression<Func<TEntity, bool>> predicate);
+        Task<IEnumerable<TEntity>> GetAllAsync();
+
+        void CompleteAsync();
 
         /// <summary>
         ///     Get all <see cref="TEntity" /> elements

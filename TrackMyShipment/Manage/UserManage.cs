@@ -16,19 +16,19 @@ namespace TrackMyShipment.Manage
             _userService = userService;
         }
 
-        public User GetByEmail(string email)
+        public async Task<User> GetByEmail(string email)
         {
-            return  _userService.GetByEmail(email);
+            return  await _userService.GetByEmail(email);
         }
 
-        public  User Get(User user)
+        public async Task<User> Get(User user)
         { 
-            return _userService.Get(user);
+            return await _userService.Get(user);
         }
 
-        public string Login(LoginModel loginModel)
+        public async Task<string> Login(LoginModel loginModel)
         {
-            var user =  _userService.Get(new User {Email = loginModel.Email, Password = loginModel.Password});
+            var user = await _userService.Get(new User {Email = loginModel.Email, Password = loginModel.Password});
             if (user != null)
             {
                 var token = new Token().GetToken(new User {Email = user.Email, Role = user.Role});

@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using TrackMyShipment.Manage;
@@ -32,9 +33,9 @@ namespace TrackMyShipment.Controllers
         [Route("DeleteCarrier")]
         [HttpDelete]
         [Authorize(Roles = "admin")]
-        public ActionResult Delete([FromBody] int id)
+        public async Task<IActionResult> Delete([FromBody] int id)
         {
-            var existCarrier = _carrierManage.Delete(id);
+            var existCarrier = await _carrierManage.Delete(id);
             if (existCarrier)
                 return Json(new Request
                 {
@@ -54,7 +55,7 @@ namespace TrackMyShipment.Controllers
         public async Task<IActionResult> AvailableCarriers()
         {
             var user =  CurrentUser();
-            var carriers = await _carrierManage.GetAvailable(user);
+            var carriers = await _carrierManage.GetAvailable(await user);
             if (carriers != null)
                 return Json(new Request
                 {
@@ -72,10 +73,10 @@ namespace TrackMyShipment.Controllers
         [Route("MyCarriers")]
         [HttpGet]
         [Authorize(Roles = "admin,customer,carrier")]
-        public IActionResult MyCarriers()
+        public async Task<IActionResult> MyCarriers()
         {
             var user =  CurrentUser();
-            var myCarriers = _carrierManage.GetMyCarriers(user);
+            var myCarriers = await _carrierManage.GetMyCarriers(await user);
             if (myCarriers != null)
                 return Json(new Request
                 {
@@ -92,9 +93,9 @@ namespace TrackMyShipment.Controllers
 
         [HttpGet("user/{id}")]
         [Authorize(Roles = "admin,carrier")]
-        public ActionResult ListUsers(int id)
+        public async Task<IActionResult> ListUsers(int id)
         {
-            var myUsers = _carrierManage.GetMyUsers(id);
+            var myUsers = await _carrierManage.GetMyUsers(id);
             if (myUsers != null)
                 return Json(new Request
                 {
@@ -111,13 +112,13 @@ namespace TrackMyShipment.Controllers
 
         [HttpPost("Active")]
         [Authorize(Roles = "admin,carrier")]
-        public IActionResult ActiveCarrier([FromBody] int id)
+        public async Task<IActionResult> ActiveCarrier([FromBody] int id)
         {
-            var user =  CurrentUser();
-            var relation =   _customerManage.GetSubscribe(user.Id, id);
+            var user =  await CurrentUser();
+            var relation =  await _customerManage.GetSubscribe(user.Id, id);
             if (relation != null)
             {
-                if (_carrierManage.ActiveStatus(id)==true)
+                if (await _carrierManage.ActiveStatus(id)==true)
                     return Json(new Request
                     {
                         Msg = "Subscribe",
@@ -140,11 +141,11 @@ namespace TrackMyShipment.Controllers
         [Route("Add-UserCarrier")]
         [HttpPut]
         [Authorize(Roles = "admin")]
-        public IActionResult AddUserCarrier([FromBody] UserModel carrier, int carrierId)
+        public async Task<IActionResult> AddUserCarrier([FromBody] UserModel carrier, int carrierId)
         {
             _userManage.PutCarrier(carrier);
-            var currentCarrier = _userManage.GetByEmail(carrier.Email);
-             _customerManage.Subscribe(carrierId, currentCarrier.Id);
+            var currentCarrier = await _userManage.GetByEmail(carrier.Email);
+            await  _customerManage.Subscribe(carrierId, currentCarrier.Id);
             return Json(new Request
             {
                 Msg = "Successfully added",

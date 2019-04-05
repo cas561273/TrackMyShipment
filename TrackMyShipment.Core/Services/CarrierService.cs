@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using TrackMyShipment.Core.Interfaces;
 using TrackMyShipment.Repository.Interfaces;
@@ -16,9 +15,9 @@ namespace TrackMyShipment.Core.Services
             _context = context;
         }
 
-        public void AddOrUpdate(Carrier carrier)
+        public async void AddOrUpdate(Carrier carrier)
         {
-            var person = _context.Find(x => x.Name == carrier.Name).FirstOrDefault();
+            var person = await _context.FindAsync(x => x.Name == carrier.Name);
             if (person == null)
             {
                 _context.Add(carrier);
@@ -35,14 +34,14 @@ namespace TrackMyShipment.Core.Services
             _context.Complete();
         }
 
-        public Carrier GetById(int carrierId)
+        public async Task<Carrier> GetById(int carrierId)
         {
-            return _context.Find(x => x.Id == carrierId).FirstOrDefault();
+            return await _context.FindAsync(x => x.Id == carrierId);
         }
 
-        public bool Delete(int id)
+        public async Task<bool> Delete(int id)
         {
-            var person = GetById(id);
+            var person = await GetById(id);
             if (person != null)
             {
                 _context.Remove(person);
@@ -53,9 +52,9 @@ namespace TrackMyShipment.Core.Services
             return false;
         }
 
-        public IEnumerable<Carrier> GetAll()
+        public async Task<IEnumerable<Carrier>> GetAllAsync()
         {
-            return _context.GetAll();
+            return await _context.GetAllAsync();
         }
 
         public async Task<IEnumerable<Carrier>> GetAvailable(User user)
@@ -63,19 +62,19 @@ namespace TrackMyShipment.Core.Services
             return await _context.GetAvailable(user);
         }
 
-        public IEnumerable<Carrier> GetMyCarriers(User user)
+        public async Task<IEnumerable<Carrier>> GetMyCarriers(User user)
         {
-            return _context.GetCarriers(user);
+            return await _context.GetCarriers(user);
         }
 
-        public IEnumerable<User> GetMyUsers(int carrierId)
+        public async Task<IEnumerable<User>> GetMyUsers(int carrierId)
         {
-            return _context.GetMyUser(carrierId);
+            return await _context.GetMyUsers(carrierId);
         }
 
-        public bool? ActiveStatus(int carrierId)
+        public async Task<bool?> ActiveStatus(int carrierId)
         {
-            return _context.ActiveStatus(carrierId);
+            return  await _context.ActiveStatus(carrierId);
         }
     }
 }

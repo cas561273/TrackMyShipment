@@ -36,9 +36,9 @@ namespace TrackMyShipment.Controllers
 
         [HttpPost]
         [Route("Auth")]
-        public IActionResult Login([FromBody] LoginModel user)
+        public async  Task<IActionResult> Login([FromBody] LoginModel user)
         {
-            var token =  _userManage.Login(user);
+            var token =  await _userManage.Login(user);
 
             if (token != null)
                 return Json(new Request

@@ -6,9 +6,9 @@ namespace TrackMyShipment.Repository.Interfaces
 {
     public interface ICarrierRepository : IRepository<Carrier>
     {
-        IEnumerable<Carrier> GetCarriers(User user);
-        IEnumerable<User> GetMyUser(int carrierId);
+        Task<IEnumerable<Carrier>> GetCarriers(User user);
+        Task<IEnumerable<User>> GetMyUsers(int carrierId);
         Task<IEnumerable<Carrier>> GetAvailable(User user);
-        bool? ActiveStatus(int carrierId);
+        Task<bool?> ActiveStatus(int carrierId);
     }
 }

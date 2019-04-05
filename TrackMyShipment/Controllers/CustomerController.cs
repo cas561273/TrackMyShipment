@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using TrackMyShipment.Manage;
 using TrackMyShipment.ViewModel;
@@ -17,10 +18,11 @@ namespace TrackMyShipment.Controllers
         [HttpPost]
         [Route("PutAddress")]
         [Authorize(Roles = "admin,customer")]
-        public IActionResult PutAddress([FromBody] AddressModel address)
+        public async Task<IActionResult> PutAddress([FromBody] AddressModel address)
         {
-            var userId = CurrentUser()?.Id;
-            var result = _customerManage.PutOrUpdate(address, userId);
+            var user = await CurrentUser();
+            var userId = user.Id;
+            var result = await _customerManage.PutOrUpdate(address, userId);
 
             if (result != null)
                 return Json(new Request
@@ -39,10 +41,11 @@ namespace TrackMyShipment.Controllers
         [HttpDelete]
         [Route("DeleteAddress")]
         [Authorize(Roles = "admin,customer")]
-        public IActionResult Delete([FromBody] int? id)
+        public async Task<IActionResult> Delete([FromBody] int? id)
         {
-            var userId = CurrentUser()?.Id;
-            var address =  _customerManage.DeleteAddress(id, userId);
+            var user = await CurrentUser();
+            var userId = user.Id;
+            var address =  await _customerManage.DeleteAddress(id, userId);
             if (address != null)
                 return Json(new Request
                 {
@@ -60,10 +63,11 @@ namespace TrackMyShipment.Controllers
         [HttpGet]
         [Route("MyAddress")]
         [Authorize(Roles = "admin,customer")]
-        public IActionResult MyAddress()
+        public async Task<IActionResult> MyAddress()
         {
-            var userId = CurrentUser()?.Id;
-            var myAddress = _customerManage.MyAddress(userId);
+            var user = await CurrentUser();
+            var userId = user.Id;
+            var myAddress = await _customerManage.MyAddress(userId);
 
             if (myAddress != null)
                 return Json(new Request
@@ -83,10 +87,11 @@ namespace TrackMyShipment.Controllers
         [HttpPost]
         [Route("StatusAddress")]
         [Authorize(Roles = "admin,customer")]
-        public IActionResult StatusAddress([FromBody] int? id)
+        public async Task<IActionResult> StatusAddress([FromBody] int? id)
         {
-            var userId = CurrentUser()?.Id;
-            var result =  _customerManage.StatusAddress(id, userId);
+            var user = await CurrentUser();
+            var userId = user.Id;
+            var result =  await _customerManage.StatusAddress(id, userId);
             if (result != null)
                 return Json(new Request
                 {
@@ -103,19 +108,23 @@ namespace TrackMyShipment.Controllers
         [HttpPost]
         [Route("Subscribe")]
         [Authorize(Roles = "admin,customer")]
-        public ActionResult Subscription([FromBody] int carrierId)
+        public async Task<IActionResult> Subscription([FromBody] int carrierId)
         {
             var result = string.Empty;
-            var userId = CurrentUser()?.Id;
-            var carrier = _carrierManage?.GetById(carrierId);
+            var user = await CurrentUser();
+            var userId = user.Id;
+            if (_carrierManage != null)
+            {
+                var carrier = await _carrierManage?.GetById(carrierId);
 
-            if (carrier?.Status != false) result =  _customerManage.Subscribe(carrierId, userId);
-            if (carrier != null)
-                return Json(new Request
-                {
-                    State = RequestState.Success,
-                    Msg = result
-                });
+                if (carrier?.Status != false) result = await _customerManage.Subscribe(carrierId, userId);
+                if (carrier != null)
+                    return Json(new Request
+                    {
+                        State = RequestState.Success,
+                        Msg = result
+                    });
+            }
 
             return Json(new Request
             {

@@ -21,42 +21,38 @@ namespace TrackMyShipment.Manage
             _carrierService.AddOrUpdate(carrier);
         }
 
-        public Carrier GetById(int carrierId)
+        public async Task<Carrier> GetById(int carrierId)
         {
-            return _carrierService.GetById(carrierId);
+            return await _carrierService.GetById(carrierId);
         }
 
-        public bool Delete(int id)
+        public async  Task<bool> Delete(int id)
         {
-            return _carrierService.Delete(id);
+            return await _carrierService.Delete(id);
         }
 
-        public IEnumerable<Carrier> GetAll()
-        {
-            return _carrierService.GetAll();
-        }
 
         public async Task<IEnumerable<Carrier>> GetAvailable(User user)
         {
             return await _carrierService.GetAvailable(user);
         }
 
-        public IEnumerable<Carrier> GetMyCarriers(User user)
+        public async Task<IEnumerable<Carrier>> GetMyCarriers(User user)
         {
-            return _carrierService.GetMyCarriers(user);
+            return await _carrierService.GetMyCarriers(user);
         }
 
-        public IEnumerable<UserModel> GetMyUsers(int carrierId)
+        public async Task<IEnumerable<UserModel>> GetMyUsers(int carrierId)
         {
             var mapper = new MapperConfiguration(cfg => cfg.CreateMap<User, UserModel>()).CreateMapper();
-            var people = _carrierService.GetMyUsers(carrierId);
-            IEnumerable<UserModel> peopleShort = mapper.Map<IEnumerable<User>, IEnumerable<UserModel>>(people);
-            return peopleShort;
+            var people = await _carrierService.GetMyUsers(carrierId);
+            IEnumerable<UserModel> peopleShort =  mapper.Map<IEnumerable<User>, IEnumerable<UserModel>>(people);
+            return  peopleShort;
         }
 
-        public bool? ActiveStatus(int carrierId)
+        public async Task<bool?> ActiveStatus(int carrierId)
         {
-            return _carrierService.ActiveStatus(carrierId);
+            return  await _carrierService.ActiveStatus(carrierId);
         }
     }
 }

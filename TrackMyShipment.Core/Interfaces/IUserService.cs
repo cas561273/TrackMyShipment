@@ -5,8 +5,8 @@ namespace TrackMyShipment.Core.Interfaces
 {
     public interface IUserService
     {
-        User GetByEmail(string email);
-        User Get(User person);
+        Task<User> GetByEmail(string email);
+        Task<User> Get(User person);
         Task<bool> Create(User person, string companyName);
         void PutCarrier(User carrier);
     }

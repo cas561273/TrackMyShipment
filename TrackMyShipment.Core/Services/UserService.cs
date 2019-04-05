@@ -17,19 +17,19 @@ namespace TrackMyShipment.Core.Services
             _context = context;
         }
 
-        public User GetByEmail(string email)
+        public async Task<User> GetByEmail(string email)
         {
-            return  _context.GetByEmail(email);
+            return await _context.GetByEmail(email);
         }
 
-        public  User Get(User user)
+        public async Task<User> Get(User user)
         {
-            return  _context.UserExists(user);
+            return await _context.UserExists(user);
         }
 
         public async Task<bool> Create(User user, string companyName)
         {
-            var temp =  _context.GetByEmail(user.Email);
+            var temp = await _context.GetByEmail(user.Email);
             if (temp == null)
             {
                 _context.Add(new User
@@ -42,24 +42,25 @@ namespace TrackMyShipment.Core.Services
                     RoleId = await _context.GetRoleId(Role.Customer),
                     SubscriptionId = await _context.GetSubscribeId(Subscribe.Free)
                 });
-                _context.Complete();
-                _context.PutCompany(companyName, user.Email);
+                 _context.CompleteAsync();
+                 _context.PutCompany(companyName, user.Email);
                 return true;
             }
 
+             _context.CompleteAsync();
             return false;
         }
 
         public async void PutCarrier(User carrier)
         {
-            var user =  _context.UserExists(carrier);
+            var user =  await _context.UserExists(carrier);
             if (user == null)
             {
-                carrier.RoleId = _context.GetRoleId("carrier").Result;
+                carrier.RoleId = await _context.GetRoleId("carrier");
                 carrier.SubscriptionId = await _context.GetSubscribeId("free");
                 carrier.Password = Encrypt.Sha256(carrier.Email, carrier.Password);
 
-                _context.Add(carrier);
+                _context.AddAsync(carrier);
             }
             else
             {
@@ -68,7 +69,7 @@ namespace TrackMyShipment.Core.Services
                 user.Phone = carrier.Phone;
             }
 
-            _context.Complete();
+            _context.CompleteAsync();
         }
     }
 }
