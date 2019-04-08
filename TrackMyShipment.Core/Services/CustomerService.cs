@@ -65,10 +65,7 @@ namespace TrackMyShipment.Core.Services
                 await _context.CompleteAsync();
                 return address;
             }
-            catch
-            {
-                return null;
-            }
+            catch {return null;}
         }
 
         public async Task<IEnumerable<Address>> MyAddress(int? userId)

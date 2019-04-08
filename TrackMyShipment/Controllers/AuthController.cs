@@ -19,29 +19,28 @@ namespace TrackMyShipment.Controllers
         public async Task<IActionResult> Add([FromBody] RegistrationModel user)
         {
             var result = await _userManage.Create(user);
-            if (result)
-                return Json(new Request
+            return result
+                ? Json(new Request
                 {
                     State = RequestState.Success,
                     Msg = "Registered successfully"
-                });
-
-            return Json(new Request
-                {
-                    State = RequestState.Failed,
-                    Msg = "Failed registration"
-                }
-            );
+                })
+                : Json(new Request
+                    {
+                        State = RequestState.Failed,
+                        Msg = "Failed registration"
+                    }
+                );
         }
 
         [HttpPost]
         [Route("Auth")]
-        public async  Task<IActionResult> Login([FromBody] LoginModel user)
+        public async Task<IActionResult> Login([FromBody] LoginModel user)
         {
-            var token =  await _userManage.Login(user);
+            var token = await _userManage.Login(user);
 
-            if (token != null)
-                return Json(new Request
+            return token != null
+                ? Json(new Request
                 {
                     Data = new
                     {
@@ -49,14 +48,13 @@ namespace TrackMyShipment.Controllers
                     },
                     State = RequestState.Success,
                     Msg = "User authorized"
-                });
-
-            return Json(new Request
-                {
-                    State = RequestState.Failed,
-                    Msg = "Username or password is invalid"
-                }
-            );
+                })
+                : Json(new Request
+                    {
+                        State = RequestState.Failed,
+                        Msg = "Username or password is invalid"
+                    }
+                );
         }
     }
 }

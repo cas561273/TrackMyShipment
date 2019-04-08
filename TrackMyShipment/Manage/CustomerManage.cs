@@ -35,7 +35,6 @@ namespace TrackMyShipment.Manage
         {
             IMapper mapper = new MapperConfiguration(cfg => cfg.CreateMap<AddressModel, Address>()).CreateMapper();
             Address addressModel = mapper.Map<AddressModel, Address>(address);
-
             return await _customerService.PutOrUpdate(addressModel, userId);
         }
 

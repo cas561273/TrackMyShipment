@@ -4,7 +4,7 @@ namespace TrackMyShipment.ViewModel
 {
     public class LoginModel
     {
-        [EmailAddress(ErrorMessage = "Invalid address")]
+        [EmailAddress]
         public string Email { get; set; }
 
         [DataType(DataType.Password)]

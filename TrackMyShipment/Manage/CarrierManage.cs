@@ -18,7 +18,7 @@ namespace TrackMyShipment.Manage
 
         public async Task<bool> AddOrUpdate(Carrier carrier)
         {
-          return await Task.Run(() => _carrierService.AddOrUpdate(carrier));
+          return await _carrierService.AddOrUpdate(carrier);
         }
 
         public async Task<Carrier> GetById(int carrierId)
@@ -30,7 +30,6 @@ namespace TrackMyShipment.Manage
         {
             return await _carrierService.Delete(id);
         }
-
 
         public async Task<IEnumerable<Carrier>> GetAvailable(User user)
         {

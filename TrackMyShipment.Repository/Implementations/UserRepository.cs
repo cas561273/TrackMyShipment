@@ -70,7 +70,6 @@ namespace TrackMyShipment.Repository.Implementations
                 _context.Entry(user).Reference(nameof(Company)).Load();
                 _context.Entry(user).Reference(nameof(Subscription)).Load();
             }
-
             return user;
         }
     }

@@ -24,18 +24,15 @@ namespace TrackMyShipment.Controllers
             var userId = user.Id;
             var result = await _customerManage.PutOrUpdate(address, userId);
 
-            if (result != null)
-                return Json(new Request
+            return result != null ? Json(new Request
                 {
                     State = RequestState.Success,
                     Msg = "Put address successfully"
+                })  : Json(new Request
+                {
+                    State = RequestState.Failed,
+                    Msg = "Address can not be added"
                 });
-
-            return Json(new Request
-            {
-                State = RequestState.Failed,
-                Msg = "Address can not be added"
-            });
         }
 
         [HttpDelete]
@@ -46,18 +43,15 @@ namespace TrackMyShipment.Controllers
             var user = await CurrentUser();
             var userId = user.Id;
             var address =  await _customerManage.DeleteAddress(id, userId);
-            if (address != null)
-                return Json(new Request
+            return address != null ? Json(new Request
                 {
                     State = RequestState.Success,
                     Msg = "Deleted successfully"
+                }) : Json(new Request
+                {
+                    State = RequestState.Failed,
+                    Msg = "Cannot be deleted"
                 });
-
-            return Json(new Request
-            {
-                State = RequestState.Failed,
-                Msg = "Cannot be deleted"
-            });
         }
 
         [HttpGet]
@@ -69,19 +63,16 @@ namespace TrackMyShipment.Controllers
             var userId = user.Id;
             var myAddress = await _customerManage.MyAddress(userId);
 
-            if (myAddress != null)
-                return Json(new Request
+            return myAddress != null  ? Json(new Request
                 {
                     Msg = "Received successful",
                     Data = myAddress,
                     State = RequestState.Success
+                }) : Json(new Request
+                {
+                    Msg = "Not Found",
+                    State = RequestState.Failed
                 });
-
-            return Json(new Request
-            {
-                Msg = "Not Found",
-                State = RequestState.Failed
-            });
         }
 
         [HttpPost]
@@ -92,17 +83,15 @@ namespace TrackMyShipment.Controllers
             var user = await CurrentUser();
             var userId = user.Id;
             var result =  await _customerManage.StatusAddress(id, userId);
-            if (result != null)
-                return Json(new Request
+            return result != null ? Json(new Request
                 {
                     Msg = "Successfully changed",
                     State = RequestState.Success
+                }) : Json(new Request
+                {
+                    Msg = "Cannot be changed",
+                    State = RequestState.Failed
                 });
-            return Json(new Request
-            {
-                Msg = "Cannot be changed",
-                State = RequestState.Failed
-            });
         }
 
         [HttpPost]
@@ -117,14 +106,16 @@ namespace TrackMyShipment.Controllers
                 var carrier = await _carrierManage?.GetById(carrierId);
 
                 result = await _customerManage.Subscribe(carrier, user);
-                if (carrier != null)
-                    return Json(new Request
+                return carrier != null ? Json(new Request
                     {
                         State = RequestState.Success,
                         Msg = result
+                    }) : Json(new Request
+                    {
+                        State = RequestState.Failed,
+                        Msg = result
                     });
             }
-
             return Json(new Request
             {
                 State = RequestState.Failed,

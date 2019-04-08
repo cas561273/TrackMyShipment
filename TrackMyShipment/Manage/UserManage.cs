@@ -29,20 +29,15 @@ namespace TrackMyShipment.Manage
         public async Task<string> Login(LoginModel loginModel)
         {
             var user = await _userService.Get(new User {Email = loginModel.Email, Password = loginModel.Password});
-            if (user != null)
-            {
-                var token = new Token().GetToken(new User {Email = user.Email, Role = user.Role});
-                return token;
-            }
-
-            return null;
+            if (user == null) return null;
+            var token = new Token().GetToken(user);
+            return token;
         }
 
         public async Task<bool> Create(RegistrationModel user)
         {
             var mapper = new MapperConfiguration(cfg => cfg.CreateMap<RegistrationModel, User>()).CreateMapper();
             var userModel = mapper.Map<RegistrationModel, User>(user);
-
             return await _userService.Create(userModel, user.CompanyName);
         }
 

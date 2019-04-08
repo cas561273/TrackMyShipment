@@ -19,7 +19,7 @@ namespace TrackMyShipment.Controllers
         [Route("PutCarrier")]
         [HttpPut]
         [Authorize(Roles = "admin")]
-        public async  Task<IActionResult> AddOrUpdate([FromBody] Carrier carrier)
+        public async Task<IActionResult> AddOrUpdate([FromBody] Carrier carrier)
         {
             await _carrierManage.AddOrUpdate(carrier);
             return Json(new Request
@@ -35,17 +35,17 @@ namespace TrackMyShipment.Controllers
         public async Task<IActionResult> Delete([FromBody] int id)
         {
             var existCarrier = await _carrierManage.Delete(id);
-            if (existCarrier)
-                return Json(new Request
+            return existCarrier
+                ? Json(new Request
                 {
                     Msg = "Successfully deleted",
                     State = RequestState.Success
+                })
+                : Json(new Request
+                {
+                    Msg = "Not Found",
+                    State = RequestState.Failed
                 });
-            return Json(new Request
-            {
-                Msg = "Not Found",
-                State = RequestState.Failed
-            });
         }
 
         [Route("GetCarriers")]
@@ -53,20 +53,20 @@ namespace TrackMyShipment.Controllers
         [Authorize(Roles = "admin,customer")]
         public async Task<IActionResult> AvailableCarriers()
         {
-            var user =  CurrentUser();
+            var user = CurrentUser();
             var carriers = await _carrierManage.GetAvailable(await user);
-            if (carriers != null)
-                return Json(new Request
+            return carriers != null
+                ? Json(new Request
                 {
                     Data = carriers,
                     Msg = "Successfully received",
                     State = RequestState.Success
+                })
+                : Json(new Request
+                {
+                    Msg = "Not received",
+                    State = RequestState.Success
                 });
-            return Json(new Request
-            {
-                Msg = "Not received",
-                State = RequestState.Success
-            });
         }
 
         [Route("MyCarriers")]
@@ -74,20 +74,20 @@ namespace TrackMyShipment.Controllers
         [Authorize(Roles = "admin,customer,carrier")]
         public async Task<IActionResult> MyCarriers()
         {
-            var user =  CurrentUser();
+            var user = CurrentUser();
             var myCarriers = await _carrierManage.GetMyCarriers(await user);
-            if (myCarriers != null)
-                return Json(new Request
+            return myCarriers != null
+                ? Json(new Request
                 {
                     Data = myCarriers,
                     Msg = "Successfully received",
                     State = RequestState.Success
+                })
+                : Json(new Request
+                {
+                    Msg = "Not received",
+                    State = RequestState.Success
                 });
-            return Json(new Request
-            {
-                Msg = "Not received",
-                State = RequestState.Success
-            });
         }
 
         [HttpGet("user/{id}")]
@@ -95,40 +95,38 @@ namespace TrackMyShipment.Controllers
         public async Task<IActionResult> ListUsers(int id)
         {
             var myUsers = await _carrierManage.GetMyUsers(id);
-            if (myUsers != null)
-                return Json(new Request
+            return myUsers != null
+                ? Json(new Request
                 {
                     Data = myUsers,
                     Msg = "Successfully received",
                     State = RequestState.Success
+                })
+                : Json(new Request
+                {
+                    Msg = "Not received",
+                    State = RequestState.Success
                 });
-            return Json(new Request
-            {
-                Msg = "Not received",
-                State = RequestState.Success
-            });
         }
 
         [HttpPost("ActiveStatus")]
         [Authorize(Roles = "admin,carrier")]
         public async Task<IActionResult> ActiveCarrier([FromBody] int id)
         {
-            var user =  await CurrentUser();
-            var relation =  await _customerManage.GetSubscribe(user.Id, id);
+            var user = await CurrentUser();
+            var relation = await _customerManage.GetSubscribe(user.Id, id);
             if (relation != null)
-            {
-                if (await _carrierManage.ActiveStatus(id)==true)
-                    return Json(new Request
+                return await _carrierManage.ActiveStatus(id) == true
+                    ? Json(new Request
                     {
                         Msg = "Status activated",
                         State = RequestState.Success
+                    })
+                    : Json(new Request
+                    {
+                        Msg = "Status unactivated",
+                        State = RequestState.Success
                     });
-                return Json(new Request
-                {
-                    Msg = "Status unactivated",
-                    State = RequestState.Success
-                });
-            }
 
             return Json(new Request
             {
@@ -144,7 +142,7 @@ namespace TrackMyShipment.Controllers
         {
             await _userManage.PutCarrier(carrier);
             var currentCarrier = await _userManage.GetByEmail(carrier.Email);
-            await  _customerManage.Subscribe(new Carrier{Id=carrierId}, currentCarrier);
+            await _customerManage.Subscribe(new Carrier {Id = carrierId}, currentCarrier);
             return Json(new Request
             {
                 Msg = "Successfully added",

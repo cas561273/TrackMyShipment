@@ -30,24 +30,21 @@ namespace TrackMyShipment.Core.Services
         public async Task<bool> Create(User user, string companyName)
         {
             var temp = await _context.GetByEmail(user.Email);
-            if (temp == null)
+            if (temp != null) return false;
+            await _context.AddAsync(new User
             {
-                await _context.AddAsync(new User
-                {
-                    FirstName = user.FirstName,
-                    LastName = user.LastName,
-                    Email = user.Email,
-                    Phone = user.Phone,
-                    Password = Encrypt.Sha256(user.Email, user.Password),
-                    RoleId = await _context.GetRoleId(Role.Customer),
-                    SubscriptionId = await _context.GetSubscribeId(Subscribe.Free)
-                });
-                await _context.CompleteAsync();
-                await _context.PutCompany(companyName, user.Email);
-                return true;
-            }
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                Email = user.Email,
+                Phone = user.Phone,
+                Password = Encrypt.Sha256(user.Email, user.Password),
+                RoleId = await _context.GetRoleId(Role.Customer),
+                SubscriptionId = await _context.GetSubscribeId(Subscribe.Free)
+            });
+            await _context.CompleteAsync();
+            await _context.PutCompany(companyName, user.Email);
+            return true;
 
-            return false;
         }
 
         public async Task PutCarrier(User carrier)
@@ -58,7 +55,6 @@ namespace TrackMyShipment.Core.Services
                 carrier.RoleId = await _context.GetRoleId("carrier");
                 carrier.SubscriptionId = await _context.GetSubscribeId("free");
                 carrier.Password = Encrypt.Sha256(carrier.Email, carrier.Password);
-
                 await _context.AddAsync(carrier);
             }
             else
@@ -67,7 +63,6 @@ namespace TrackMyShipment.Core.Services
                 user.LastName = carrier.LastName;
                 user.Phone = carrier.Phone;
             }
-
             await _context.CompleteAsync();
         }
     }
