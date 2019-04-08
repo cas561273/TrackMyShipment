@@ -32,7 +32,7 @@ namespace TrackMyShipment.Core.Services
             var temp = await _context.GetByEmail(user.Email);
             if (temp == null)
             {
-                _context.Add(new User
+                _context.AddAsync(new User
                 {
                     FirstName = user.FirstName,
                     LastName = user.LastName,
@@ -42,12 +42,10 @@ namespace TrackMyShipment.Core.Services
                     RoleId = await _context.GetRoleId(Role.Customer),
                     SubscriptionId = await _context.GetSubscribeId(Subscribe.Free)
                 });
-                 _context.CompleteAsync();
-                 _context.PutCompany(companyName, user.Email);
+                 await Task.Run(() => _context.Complete());
+                 await Task.Run(() => _context.PutCompany(companyName, user.Email));
                 return true;
             }
-
-             _context.CompleteAsync();
             return false;
         }
 

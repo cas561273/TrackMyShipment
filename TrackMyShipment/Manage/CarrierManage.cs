@@ -16,9 +16,9 @@ namespace TrackMyShipment.Manage
             _carrierService = carrierService;
         }
 
-        public void AddOrUpdate(Carrier carrier)
+        public async Task<bool> AddOrUpdate(Carrier carrier)
         {
-            _carrierService.AddOrUpdate(carrier);
+          return await Task.Run(() => _carrierService.AddOrUpdate(carrier));
         }
 
         public async Task<Carrier> GetById(int carrierId)

@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Remotion.Linq.Clauses;
 using TrackMyShipment.Manage;
 using TrackMyShipment.Repository.Models;
 using TrackMyShipment.ViewModel;
@@ -27,7 +28,7 @@ namespace TrackMyShipment.Controllers
         [HttpGet]
         [Route("fullInfo")]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-        public async Task<User> CurrentUser()
+         public async Task<User> CurrentUser()
         {
             var claimsIdentity = User.Identity as ClaimsIdentity;
             if (claimsIdentity == null) return null;
@@ -36,7 +37,7 @@ namespace TrackMyShipment.Controllers
 
         [HttpGet]
         [Route("shortInfo")]
-        public async Task<RegistrationModel> UserInfo()
+        protected virtual  async Task<RegistrationModel> UserInfo()
         {
             var claimsIdentity = User.Identity as ClaimsIdentity;
             if (claimsIdentity == null) return null;

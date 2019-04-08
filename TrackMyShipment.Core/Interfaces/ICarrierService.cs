@@ -7,7 +7,7 @@ namespace TrackMyShipment.Core.Interfaces
     public interface ICarrierService
     {
         Task<IEnumerable<Carrier>> GetMyCarriers(User person);
-        void AddOrUpdate(Carrier carrier);
+        Task <bool> AddOrUpdate(Carrier carrier);
         Task<bool> Delete(int id);
         Task<IEnumerable<Carrier>> GetAvailable(User user);
         Task<Carrier> GetById(int carrierId);

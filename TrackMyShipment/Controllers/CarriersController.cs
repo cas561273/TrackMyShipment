@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using TrackMyShipment.Manage;
@@ -20,9 +19,9 @@ namespace TrackMyShipment.Controllers
         [Route("PutCarrier")]
         [HttpPut]
         [Authorize(Roles = "admin")]
-        public ActionResult AddOrUpdate([FromBody] Carrier carrier)
+        public async  Task<IActionResult> AddOrUpdate([FromBody] Carrier carrier)
         {
-            _carrierManage.AddOrUpdate(carrier);
+            await _carrierManage.AddOrUpdate(carrier);
             return Json(new Request
             {
                 Msg = "Successfully added",
@@ -110,7 +109,7 @@ namespace TrackMyShipment.Controllers
             });
         }
 
-        [HttpPost("Active")]
+        [HttpPost("ActiveStatus")]
         [Authorize(Roles = "admin,carrier")]
         public async Task<IActionResult> ActiveCarrier([FromBody] int id)
         {
@@ -121,12 +120,12 @@ namespace TrackMyShipment.Controllers
                 if (await _carrierManage.ActiveStatus(id)==true)
                     return Json(new Request
                     {
-                        Msg = "Subscribe",
+                        Msg = "Status activated",
                         State = RequestState.Success
                     });
                 return Json(new Request
                 {
-                    Msg = "UnSubscribe",
+                    Msg = "Status unactivated",
                     State = RequestState.Success
                 });
             }
