@@ -2,6 +2,7 @@
 
 namespace TrackMyShipment.Repository.Models
 {
+    //todo. Remove validation attributes.
     public class User
     {
         [ScaffoldColumn(false)] public int Id { get; set; }

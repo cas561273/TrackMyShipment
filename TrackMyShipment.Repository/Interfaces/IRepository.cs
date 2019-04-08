@@ -53,8 +53,8 @@ namespace TrackMyShipment.Repository.Interfaces
         /// <summary>
         ///     Add collection <see cref="TEntity" /> in the end collection
         /// </summary>
-        /// <param name="entitys"><see cref="TEntity" /> collection</param>
-        void AddRange(IEnumerable<TEntity> entitys);
+        /// <param name="entities"><see cref="TEntity" /> collection</param>
+        void AddRange(IEnumerable<TEntity> entities);
 
         /// <summary>
         ///     Remove <see cref="TEntity" /> element from the collection
@@ -65,8 +65,8 @@ namespace TrackMyShipment.Repository.Interfaces
         /// <summary>
         ///     Remove collection <see cref="TEntity" /> from the collection
         /// </summary>
-        /// <param name="entitys"><see cref="TEntity" /> collection</param>
-        void RemoveRange(IEnumerable<TEntity> entitys);
+        /// <param name="entities"><see cref="TEntity" /> collection</param>
+        void RemoveRange(IEnumerable<TEntity> entities);
 
         int Complete();
     }

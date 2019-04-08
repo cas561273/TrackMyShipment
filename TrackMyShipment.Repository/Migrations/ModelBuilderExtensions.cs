@@ -5,6 +5,7 @@ namespace TrackMyShipment.Repository.Migrations
 {
     public static class ModelBuilderExtensions
     {
+        //todo. Replace string literals with constants.
         public static void Seed(this ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Role>().HasData(

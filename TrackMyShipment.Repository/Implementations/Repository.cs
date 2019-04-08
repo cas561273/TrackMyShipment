@@ -53,9 +53,9 @@ namespace TrackMyShipment.Repository.Implementations
             await _context.Set<TEntity>().AddAsync(entity);
         }
 
-        public void AddRange(IEnumerable<TEntity> entitys)
+        public void AddRange(IEnumerable<TEntity> entities)
         {
-            _context.Set<TEntity>().AddRange(entitys);
+            _context.Set<TEntity>().AddRange(entities);
         }
 
         public async Task<IEnumerable<TEntity>> FindAsync(Expression<Func<TEntity, bool>> predicate)
@@ -73,9 +73,9 @@ namespace TrackMyShipment.Repository.Implementations
             return await _context.Set<TEntity>().SingleOrDefaultAsync(predicate);
         }
 
-        public void RemoveRange(IEnumerable<TEntity> entitys)
+        public void RemoveRange(IEnumerable<TEntity> entities)
         {
-            _context.Set<TEntity>().RemoveRange(entitys);
+            _context.Set<TEntity>().RemoveRange(entities);
         }
 
         public async Task CompleteAsync()

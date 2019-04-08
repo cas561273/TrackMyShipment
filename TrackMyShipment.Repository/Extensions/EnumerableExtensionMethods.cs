@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace TrackMyShipment.Repository.Extend
+namespace TrackMyShipment.Repository.Extensions
 {
-    public static class ExtensionMethods
+    public static class EnumerableExtensionMethods
     {
         public static async Task<IEnumerable<T>> WhereAsync<T>(this IEnumerable<T> source, Func<T, bool> selector)
         {

@@ -17,9 +17,21 @@ namespace TrackMyShipment.Repository.Implementations
             _context = context;
         }
 
+        private async Task<User> FetchUser(Expression<Func<User, bool>> predicate)
+        {
+            var user = await _context.Users.SingleOrDefaultAsync(predicate);
+            if (user != null)
+            {
+                _context.Entry(user).Reference(nameof(Role)).Load();
+                _context.Entry(user).Reference(nameof(Company)).Load();
+                _context.Entry(user).Reference(nameof(Subscription)).Load();
+            }
+            return user;
+        }
+
         public async Task<User> UserExists(User userExist)
         {
-            var encryptedPassword = Encrypt.Sha256(userExist.Email, userExist.Password);
+            var encryptedPassword = PasswordHelper.CalculateHashedPassword(userExist.Email, userExist.Password);
             return await FetchUser(u => u.Email.Equals(userExist.Email) && u.Password.Equals(encryptedPassword));
         }
 
@@ -28,9 +40,9 @@ namespace TrackMyShipment.Repository.Implementations
             return await FetchUser(_ => _.Email.Equals(email));
         }
 
-        public async Task<int> GetRoleId(string role)
+        public async Task<int> GetRoleId(string roleName)
         {
-            var myRole = await _context.Roles.SingleOrDefaultAsync(r => r.Name.Equals(role));
+            var myRole = await _context.Roles.SingleOrDefaultAsync(r => r.Name.Equals(roleName));
             return myRole.Id;
         }
 
@@ -61,16 +73,6 @@ namespace TrackMyShipment.Repository.Implementations
             return true;
         }
 
-        private async Task<User> FetchUser(Expression<Func<User, bool>> predicate)
-        {
-            var user = await _context.Users.SingleOrDefaultAsync(predicate);
-            if (user != null)
-            {
-                _context.Entry(user).Reference(nameof(Role)).Load();
-                _context.Entry(user).Reference(nameof(Company)).Load();
-                _context.Entry(user).Reference(nameof(Subscription)).Load();
-            }
-            return user;
-        }
+
     }
 }

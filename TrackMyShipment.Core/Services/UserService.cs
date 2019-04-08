@@ -1,10 +1,10 @@
 ﻿using System.Threading.Tasks;
 using TrackMyShipment.Core.Interfaces;
-using TrackMyShipment.Repository.Const;
+using TrackMyShipment.Repository.Constant;
 using TrackMyShipment.Repository.Helper;
 using TrackMyShipment.Repository.Interfaces;
 using TrackMyShipment.Repository.Models;
-using Role = TrackMyShipment.Repository.Const.Role;
+using Role = TrackMyShipment.Repository.Constant.Role;
 
 namespace TrackMyShipment.Core.Services
 {
@@ -37,9 +37,9 @@ namespace TrackMyShipment.Core.Services
                 LastName = user.LastName,
                 Email = user.Email,
                 Phone = user.Phone,
-                Password = Encrypt.Sha256(user.Email, user.Password),
-                RoleId = await _context.GetRoleId(Role.Customer),
-                SubscriptionId = await _context.GetSubscribeId(Subscribe.Free)
+                Password = PasswordHelper.CalculateHashedPassword(user.Email, user.Password),
+                RoleId = await _context.GetRoleId(Role.CUSTOMER),
+                SubscriptionId = await _context.GetSubscribeId(Subscribe.FREE)
             });
             await _context.CompleteAsync();
             await _context.PutCompany(companyName, user.Email);
@@ -51,9 +51,9 @@ namespace TrackMyShipment.Core.Services
             var user = await _context.UserExists(carrier);
             if (user == null)
             {
-                carrier.RoleId = await _context.GetRoleId("carrier");
-                carrier.SubscriptionId = await _context.GetSubscribeId("free");
-                carrier.Password = Encrypt.Sha256(carrier.Email, carrier.Password);
+                carrier.RoleId = await _context.GetRoleId(Role.CARRIER);
+                carrier.SubscriptionId = await _context.GetSubscribeId(Subscribe.FREE);
+                carrier.Password = PasswordHelper.CalculateHashedPassword(carrier.Email, carrier.Password);
                 await _context.AddAsync(carrier);
             }
             else

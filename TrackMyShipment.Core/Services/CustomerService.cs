@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using TrackMyShipment.Core.Interfaces;
 using TrackMyShipment.Repository.Interfaces;
@@ -46,30 +47,30 @@ namespace TrackMyShipment.Core.Services
 
         public async Task<Address> PutOrUpdate(Address address, int? userId)
         {
-            try
+            if (address == null) throw new ArgumentNullException(nameof(address));
+
+            Address existedAddress = await _context.GetByAddress(address.Id);
+
+            if (existedAddress != null)
             {
-                var existAddress = await _context.GetByAddress(address.Id);
-                if (existAddress != null)
-                {
-                    existAddress.State = address.State;
-                    existAddress.StreetLine1 = address.StreetLine1;
-                    existAddress.StreetLine2 = address.StreetLine2;
-                    existAddress.City = address.City;
-                }
-                else
-                {
-                    address.UsersId = userId;
-                    _context.Add(address);
-                }
-                await _context.CompleteAsync();
-                return address;
+                existedAddress.State = address.State;
+                existedAddress.StreetLine1 = address.StreetLine1;
+                existedAddress.StreetLine2 = address.StreetLine2;
+                existedAddress.City = address.City;
+
+                return existedAddress;
             }
-            catch {return null;}
+
+            address.UsersId = userId;
+            _context.Add(address);
+            await _context.CompleteAsync();
+
+            return address;
         }
 
         public async Task<IEnumerable<Address>> MyAddress(int? userId)
         {
-            return await Task.Run(() => _context.Find(address => address.UsersId == userId));
+            return await _context.FindAsync(address => address.UsersId == userId);
         }
 
         public async Task<string> Subscribe(Carrier carrier, User user)
@@ -85,7 +86,7 @@ namespace TrackMyShipment.Core.Services
                 await _context.DeleteSubscribe(existRelation);
                 return "UnSubscribed";
             }
-            catch {return null;}
+            catch { return null; }
         }
     }
 }

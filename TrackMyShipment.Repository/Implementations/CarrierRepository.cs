@@ -2,11 +2,11 @@
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
-using TrackMyShipment.Repository.Const;
-using TrackMyShipment.Repository.Extend;
+using TrackMyShipment.Repository.Constant;
+using TrackMyShipment.Repository.Extensions;
 using TrackMyShipment.Repository.Interfaces;
 using TrackMyShipment.Repository.Models;
-using Role = TrackMyShipment.Repository.Const.Role;
+using Role = TrackMyShipment.Repository.Constant.Role;
 
 namespace TrackMyShipment.Repository.Implementations
 {
@@ -27,9 +27,9 @@ namespace TrackMyShipment.Repository.Implementations
 
         public async Task<IEnumerable<Carrier>> GetAvailable(User user)
         {
-            if (user.Role.Name.Equals(Role.Admin)) return await _context.Carriers.ToListAsync();
+            if (user.Role.Name.Equals(Role.ADMIN)) return await _context.Carriers.ToListAsync();
 
-            if (user.Subscription.Status.Equals(Subscribe.Paid))
+            if (user.Subscription.Status.Equals(Subscribe.PAID))
                 return await _context.Carriers.WhereAsync(u => u.Status);
 
             return await _context.Carriers.WhereAsync(u => u.Cost == 0 && u.Status);
