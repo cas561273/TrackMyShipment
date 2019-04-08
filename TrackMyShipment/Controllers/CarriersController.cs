@@ -11,31 +11,37 @@ namespace TrackMyShipment.Controllers
     [ApiController]
     public class CarriersController : BaseController
     {
-        public CarriersController(UserManage userManage, CarrierManage carrierManage, CustomerManage customerManage)
-            : base(userManage, carrierManage, customerManage)
+        public CarriersController(UserManage userManage, CarrierManage carrierManage, AddressManage addressManage,CompanyManage companyManage,SubscriptionManage subscriptionManage)
+            : base(userManage, carrierManage, addressManage,companyManage,subscriptionManage)
         {
         }
 
         [Route("PutCarrier")]
         [HttpPut]
         [Authorize(Roles = "admin")]
-        public async Task<IActionResult> AddOrUpdate([FromBody] Carrier carrier)
+        public async Task<IActionResult> PutCarrier([FromBody] Carrier carrier)
         {
-            await _carrierManage.AddOrUpdate(carrier);
-            return Json(new Request
-            {
-                Msg = "Successfully added",
-                State = RequestState.Success
-            });
+            var result = await _carrierManage.AddOrUpdateCarrier(carrier);
+            return result
+                ? Json(new Request
+                {
+                    Msg = "Successfully added",
+                    State = RequestState.Success
+                })
+                : Json(new Request
+                {
+                    Msg = "Failed to add",
+                    State = RequestState.Failed
+                });
         }
 
         [Route("DeleteCarrier")]
         [HttpDelete]
         [Authorize(Roles = "admin")]
-        public async Task<IActionResult> Delete([FromBody] int id)
+        public async Task<IActionResult> DeleteCarrier([FromBody] int id)
         {
-            var existCarrier = await _carrierManage.Delete(id);
-            return existCarrier
+            var existedCarrier = await _carrierManage.DeleteCarrier(id);
+            return existedCarrier
                 ? Json(new Request
                 {
                     Msg = "Successfully deleted",
@@ -54,7 +60,7 @@ namespace TrackMyShipment.Controllers
         public async Task<IActionResult> AvailableCarriers()
         {
             var user = CurrentUser();
-            var carriers = await _carrierManage.GetAvailable(await user);
+            var carriers = await _carrierManage.GetAvailableCarriers(await user);
             return carriers != null
                 ? Json(new Request
                 {
@@ -92,9 +98,9 @@ namespace TrackMyShipment.Controllers
 
         [HttpGet("user/{id}")]
         [Authorize(Roles = "admin,carrier")]
-        public async Task<IActionResult> ListUsers(int id)
+        public async Task<IActionResult> ListUsersOfCarrier(int carrierId)
         {
-            var myUsers = await _carrierManage.GetMyUsers(id);
+            var myUsers = await _userManage.GetMyUsers(carrierId);
             return myUsers != null
                 ? Json(new Request
                 {
@@ -109,14 +115,14 @@ namespace TrackMyShipment.Controllers
                 });
         }
 
-        [HttpPost("ActiveStatus")]
+        [HttpPost("ChangeStatusCarrier")]
         [Authorize(Roles = "admin,carrier")]
-        public async Task<IActionResult> ActiveCarrier([FromBody] int id)
+        public async Task<IActionResult> ChangeStatusCarrier([FromBody] int id)
         {
             var user = await CurrentUser();
-            var relation = await _customerManage.GetSubscribe(user.Id, id);
+            var relation = await _subscriptionManage.GetSubscribe(user.Id, id);
             if (relation != null)
-                return await _carrierManage.ActiveStatus(id) == true
+                return await _carrierManage.ChangeStatusCarrier(id) == true
                     ? Json(new Request
                     {
                         Msg = "Status activated",
@@ -135,19 +141,25 @@ namespace TrackMyShipment.Controllers
             });
         }
 
-        [Route("Add-UserCarrier")]
+        [Route("AddUserCarrier")]
         [HttpPut]
         [Authorize(Roles = "admin")]
         public async Task<IActionResult> AddUserCarrier([FromBody] UserModel carrier, int carrierId)
         {
-            await _userManage.PutCarrier(carrier);
-            var currentCarrier = await _userManage.GetByEmail(carrier.Email);
-            await _customerManage.Subscribe(new Carrier {Id = carrierId}, currentCarrier);
-            return Json(new Request
-            {
-                Msg = "Successfully added",
-                State = RequestState.Success
-            });
+            await _userManage.PutUserCarrier(carrier);
+            var currentCarrier = await _userManage.GetByEmailUser(carrier.Email);
+            bool result = await _subscriptionManage.Subscribe(new Carrier {Id = carrierId}, currentCarrier);
+            return result
+                ? Json(new Request
+                {
+                    Msg = "Successfully added",
+                    State = RequestState.Success
+                })
+                : Json(new Request
+                {
+                    Msg = "Failed to add",
+                    State = RequestState.Failed
+                });
         }
     }
 }

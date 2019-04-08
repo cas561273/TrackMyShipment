@@ -48,10 +48,10 @@ namespace TrackMyShipment.Repository.Implementations
             _context.Set<TEntity>().Add(entity);
         }
 
-        public async Task AddAsync(TEntity entity)
-        {
-            await _context.Set<TEntity>().AddAsync(entity);
-        }
+        //public async Task AddAsync(TEntity entity)
+        //{
+        //    await _context.Set<TEntity>().AddAsync(entity);
+        //}
 
         public void AddRange(IEnumerable<TEntity> entities)
         {

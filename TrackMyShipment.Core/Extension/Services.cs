@@ -14,8 +14,10 @@ namespace TrackMyShipment.Core.Extension
                 .AddTransient<IUserRepository, UserRepository>()
                 .AddTransient<ICarrierService, CarrierService>()
                 .AddTransient<ICarrierRepository, CarrierRepository>()
-                .AddTransient<ICustomerService, CustomerService>()
-                .AddTransient<ICustomerRepository, CustomerRepository>();
+                .AddTransient<IAddressService, AddressService>()
+                .AddTransient<IAddressRepository, AddressRepository>()
+                .AddTransient<ICompanyService, CompanyService>()
+                .AddTransient<ICompanyRepository, CompanyRepository>();
 
             return services;
         }

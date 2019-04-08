@@ -12,28 +12,32 @@ namespace TrackMyShipment.Controllers
     public class BaseController : Controller
     {
         protected readonly CarrierManage _carrierManage;
-        protected readonly CustomerManage _customerManage;
         protected readonly UserManage _userManage;
-    
-        protected BaseController(UserManage userManage, CarrierManage carrierManage, CustomerManage customerManage)
+        protected readonly CompanyManage _companyManage;
+        protected readonly AddressManage _addressManage;
+        protected readonly SubscriptionManage _subscriptionManage;
+
+        protected BaseController(UserManage userManage, CarrierManage carrierManage,AddressManage addressManage, CompanyManage companyManage, SubscriptionManage subscriptionManage)
         {
             _userManage = userManage;
-            _customerManage = customerManage;
             _carrierManage = carrierManage;
+            _addressManage = addressManage;
+            _companyManage = companyManage;
+            _subscriptionManage = subscriptionManage;
         }
  
         protected async Task<User> CurrentUser()
         {
             var claimsIdentity = User.Identity as ClaimsIdentity;
             if (claimsIdentity == null) return null;
-            return  await _userManage.GetByEmail(claimsIdentity.Name);
+            return  await _userManage.GetByEmailUser(claimsIdentity.Name);
         }
   
         protected async Task<RegistrationModel> UserInfo()
         {
             var claimsIdentity = User.Identity as ClaimsIdentity;
             if (claimsIdentity == null) return null;
-            var user =  await _userManage.GetByEmail(claimsIdentity.Name);
+            var user =  await _userManage.GetByEmailUser(claimsIdentity.Name);
             return new RegistrationModel {FirstName = user.FirstName, LastName = user.LastName,
                 Phone = user.Phone,CompanyName = user.Company.Name,Email = user.Email};
         }

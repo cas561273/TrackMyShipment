@@ -5,26 +5,21 @@ using TrackMyShipment.Repository.Models;
 
 namespace TrackMyShipment.Repository.Implementations
 {
-    public class CustomerRepository : Repository<Address>, ICustomerRepository
+    public class SubscriptionsRepository : Repository<Subscription>, ISubscriptionRepository
     {
         private readonly ApplicationContext _context;
 
-        public CustomerRepository(ApplicationContext context) : base(context)
+        public SubscriptionsRepository(ApplicationContext context) : base(context)
         {
             _context = context;
         }
 
         public async Task<bool> Subscribe(int? carrierId, int? userId)
         {
-            var subscribe = await _context.Supplies.AddAsync(new Supplies {CarrierId = carrierId, UserId = userId});
+            var subscribe = await _context.Supplies.AddAsync(new Supplies { CarrierId = carrierId, UserId = userId });
             if (subscribe == null) return false;
             await _context.SaveChangesAsync();
             return true;
-        }
-
-        public async Task<Address> GetByAddress(int? id)
-        {
-            return await _context.Address.SingleOrDefaultAsync(_ => _.Id.Equals(id));
         }
 
         public async Task<Supplies> GetSubscribe(int? userId, int? carrierId)

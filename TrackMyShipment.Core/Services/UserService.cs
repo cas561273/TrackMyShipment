@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using TrackMyShipment.Core.Interfaces;
 using TrackMyShipment.Repository.Constant;
 using TrackMyShipment.Repository.Helper;
@@ -17,21 +18,11 @@ namespace TrackMyShipment.Core.Services
             _context = context;
         }
 
-        public async Task<User> GetByEmail(string email)
+        public async Task<User> Create(User user)
         {
-            return await _context.GetByEmail(email);
-        }
-
-        public async Task<User> Get(User user)
-        {
-            return await _context.UserExists(user);
-        }
-
-        public async Task<bool> Create(User user, string companyName)
-        {
-            var temp = await _context.GetByEmail(user.Email);
-            if (temp != null) return false;
-            await _context.AddAsync(new User
+            var temp = await _context.GetUserByEmail(user.Email);
+            if (temp != null) return null;
+             _context.Add(new User
             {
                 FirstName = user.FirstName,
                 LastName = user.LastName,
@@ -42,8 +33,7 @@ namespace TrackMyShipment.Core.Services
                 SubscriptionId = await _context.GetSubscribeId(Subscribe.FREE)
             });
             await _context.CompleteAsync();
-            await _context.PutCompany(companyName, user.Email);
-            return true;
+            return await _context.GetUserByEmail(user.Email);
         }
 
         public async Task PutCarrier(User carrier)
@@ -54,7 +44,7 @@ namespace TrackMyShipment.Core.Services
                 carrier.RoleId = await _context.GetRoleId(Role.CARRIER);
                 carrier.SubscriptionId = await _context.GetSubscribeId(Subscribe.FREE);
                 carrier.Password = PasswordHelper.CalculateHashedPassword(carrier.Email, carrier.Password);
-                await _context.AddAsync(carrier);
+                _context.Add(carrier);
             }
             else
             {
@@ -63,6 +53,21 @@ namespace TrackMyShipment.Core.Services
                 user.Phone = carrier.Phone;
             }
             await _context.CompleteAsync();
+        }
+
+    
+        public async Task<User> GetUserByEmail(string email)
+        {
+            return await _context.GetUserByEmail(email);
+        }
+        public async Task<IEnumerable<User>> GetMyUsers(int carrierId)
+        {
+            return await _context.GetMyUsers(carrierId);
+        }
+
+        public async Task<User> GetUser(User user)
+        {
+            return await _context.UserExists(user);
         }
     }
 }

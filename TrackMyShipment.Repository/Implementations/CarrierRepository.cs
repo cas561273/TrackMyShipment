@@ -35,13 +35,7 @@ namespace TrackMyShipment.Repository.Implementations
             return await _context.Carriers.WhereAsync(u => u.Cost == 0 && u.Status);
         }
 
-        public async Task<IEnumerable<User>> GetMyUsers(int carrierId)
-        {
-            var relation = await _context.Supplies.Include("User").WhereAsync(u => u.CarrierId == carrierId);
-            return await Task.Run(() => relation.Select(u => u.User));
-        }
-
-        public async Task<bool?> ActiveStatus(int carrierId)
+        public async Task<bool?> ChangeStatusCarrier(int carrierId)
         {
             var carrier = await _context.Carriers.SingleOrDefaultAsync(u => u.Id == carrierId);
 

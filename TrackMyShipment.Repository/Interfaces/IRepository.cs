@@ -18,7 +18,7 @@ namespace TrackMyShipment.Repository.Interfaces
         /// <returns>Single <see cref="TEntity" /> object</returns>
         TEntity Get(int id);
 
-        Task AddAsync(TEntity entity);
+        //Task AddAsync(TEntity entity);
         Task<IEnumerable<TEntity>> FindAsync(Expression<Func<TEntity, bool>> predicate);
         Task<IEnumerable<TEntity>> GetAllAsync();
         Task CompleteAsync();

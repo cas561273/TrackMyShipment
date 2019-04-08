@@ -31,7 +31,6 @@ namespace TrackMyShipment
             services.RegisterServices();
             services.RegisterSwaggerServices();
             services.AddTransient<UserManage>()
-            .AddTransient<CustomerManage>()
             .AddTransient<CarrierManage>();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);

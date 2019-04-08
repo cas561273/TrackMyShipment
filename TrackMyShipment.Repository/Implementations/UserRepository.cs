@@ -1,7 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using TrackMyShipment.Repository.Extensions;
 using TrackMyShipment.Repository.Helper;
 using TrackMyShipment.Repository.Interfaces;
 using TrackMyShipment.Repository.Models;
@@ -16,7 +19,6 @@ namespace TrackMyShipment.Repository.Implementations
         {
             _context = context;
         }
-
         private async Task<User> FetchUser(Expression<Func<User, bool>> predicate)
         {
             var user = await _context.Users.SingleOrDefaultAsync(predicate);
@@ -29,21 +31,21 @@ namespace TrackMyShipment.Repository.Implementations
             return user;
         }
 
+        public async Task<IEnumerable<User>> GetMyUsers(int carrierId)
+        {
+            var relation = await _context.Supplies.Include("User").WhereAsync(u => u.CarrierId == carrierId);
+            return await Task.Run(() => relation.Select(u => u.User));
+        }
+
         public async Task<User> UserExists(User userExist)
         {
             var encryptedPassword = PasswordHelper.CalculateHashedPassword(userExist.Email, userExist.Password);
             return await FetchUser(u => u.Email.Equals(userExist.Email) && u.Password.Equals(encryptedPassword));
         }
 
-        public async Task<User> GetByEmail(string email)
+        public async Task<User> GetUserByEmail(string email)
         {
             return await FetchUser(_ => _.Email.Equals(email));
-        }
-
-        public async Task<int> GetRoleId(string roleName)
-        {
-            var myRole = await _context.Roles.SingleOrDefaultAsync(r => r.Name.Equals(roleName));
-            return myRole.Id;
         }
 
         public async Task<int> GetSubscribeId(string subscribe)
@@ -51,28 +53,10 @@ namespace TrackMyShipment.Repository.Implementations
             var subscription = await _context.Subscriptions.SingleOrDefaultAsync(s => s.Status.Equals(subscribe));
             return subscription.Id;
         }
-
-        public async Task<bool> PutCompany(string companyName, string email)
+        public async Task<int> GetRoleId(string roleName)
         {
-            var currentUser = await GetByEmail(email);
-            var company = await _context.Company.SingleOrDefaultAsync(c => c.Name.Equals(companyName));
-            if (company != null)
-            {
-                currentUser.CompanyId = company.Id;
-                await _context.SaveChangesAsync();
-                return true;
-            }
-
-            await _context.Company.AddAsync(new Company {Name = companyName});
-            await _context.SaveChangesAsync();
-            company = await _context.Company.SingleOrDefaultAsync(c => c.Name.Equals(companyName));
-            var user = await _context.Users.SingleOrDefaultAsync(u => u.Email.Equals(email));
-            if (user != null) user.CompanyId = company?.Id;
-
-            await _context.SaveChangesAsync();
-            return true;
+            var myRole = await _context.Roles.SingleOrDefaultAsync(r => r.Name.Equals(roleName));
+            return myRole.Id;
         }
-
-
     }
 }

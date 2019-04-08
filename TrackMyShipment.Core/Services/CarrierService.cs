@@ -15,12 +15,12 @@ namespace TrackMyShipment.Core.Services
             _context = context;
         }
 
-        public async Task<bool> AddOrUpdate(Carrier carrier)
+        public async Task<bool> AddOrUpdateCarrier(Carrier carrier)
         {
             var person = await _context.SingleOrDefaultAsync(c => c.Name == carrier.Name);
             if (person == null)
             {
-                await _context.AddAsync(carrier);
+                 _context.Add(carrier);
             }
             else
             {
@@ -35,25 +35,24 @@ namespace TrackMyShipment.Core.Services
             return true;
         }
 
-        public async Task<Carrier> GetById(int carrierId)
+        public async Task<Carrier> GetByIdCarrier(int carrierId)
         {
             return await _context.SingleOrDefaultAsync(x => x.Id == carrierId);
         }
 
-        public async Task<bool> Delete(int id)
+        public async Task<bool> DeleteCarrier(int id)
         {
-            var person = await GetById(id);
-            if (person != null)
+            var carrier = await GetByIdCarrier(id);
+            if (carrier != null)
             {
-                _context.Remove(person);
+                _context.Remove(carrier);
                 await _context.CompleteAsync();
                 return true;
             }
-
             return false;
         }
 
-        public async Task<IEnumerable<Carrier>> GetAvailable(User user)
+        public async Task<IEnumerable<Carrier>> GetAvailableCarriers(User user)
         {
             return await _context.GetAvailable(user);
         }
@@ -63,14 +62,10 @@ namespace TrackMyShipment.Core.Services
             return await _context.GetCarriers(user);
         }
 
-        public async Task<IEnumerable<User>> GetMyUsers(int carrierId)
-        {
-            return await _context.GetMyUsers(carrierId);
-        }
 
-        public async Task<bool?> ActiveStatus(int carrierId)
+        public async Task<bool?> ChangeStatusCarrier(int carrierId)
         {
-            return await _context.ActiveStatus(carrierId);
+            return await _context.ChangeStatusCarrier(carrierId);
         }
 
         public async Task<IEnumerable<Carrier>> GetAllAsync()
