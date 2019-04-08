@@ -3,7 +3,6 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Remotion.Linq.Clauses;
 using TrackMyShipment.Manage;
 using TrackMyShipment.Repository.Models;
 using TrackMyShipment.ViewModel;

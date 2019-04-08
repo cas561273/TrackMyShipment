@@ -26,11 +26,6 @@ namespace TrackMyShipment.Manage
             return await _customerService.StatusAddress(id, userId);
         }
 
-        public async Task<string> DeleteSubscribe(Supplies relation)
-        {
-            return await _customerService.DeleteSubscribe(relation);
-        }
-
         public async Task<Supplies> GetSubscribe(int? userId, int? carrierId)
         {
             return await _customerService.GetSubscribe(userId, carrierId);
