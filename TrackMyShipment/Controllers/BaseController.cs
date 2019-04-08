@@ -27,7 +27,7 @@ namespace TrackMyShipment.Controllers
         [HttpGet]
         [Route("fullInfo")]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-         public async Task<User> CurrentUser()
+         protected async Task<User> CurrentUser()
         {
             var claimsIdentity = User.Identity as ClaimsIdentity;
             if (claimsIdentity == null) return null;
@@ -36,7 +36,7 @@ namespace TrackMyShipment.Controllers
 
         [HttpGet]
         [Route("shortInfo")]
-        protected virtual  async Task<RegistrationModel> UserInfo()
+        protected async Task<RegistrationModel> UserInfo()
         {
             var claimsIdentity = User.Identity as ClaimsIdentity;
             if (claimsIdentity == null) return null;

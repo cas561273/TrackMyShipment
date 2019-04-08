@@ -26,7 +26,7 @@ namespace TrackMyShipment.Core.Services
 
         public async Task<string> StatusAddress(int? id, int? userId)
         {
-            var address =  await _context.GetByAddress(id);
+            var address = await _context.GetByAddress(id);
             if (address.UsersId != userId) return null;
             address.Active = !address.Active;
             await _context.CompleteAsync();
@@ -41,14 +41,14 @@ namespace TrackMyShipment.Core.Services
 
         public async Task<Supplies> GetSubscribe(int? userId, int? carrierId)
         {
-            return  await _context.GetSubscribe(userId, carrierId);
+            return await _context.GetSubscribe(userId, carrierId);
         }
 
         public async Task<Address> PutOrUpdate(Address address, int? userId)
         {
             try
             {
-                var existAddress =  await _context.GetByAddress(address.Id);
+                var existAddress = await _context.GetByAddress(address.Id);
                 if (existAddress != null)
                 {
                     existAddress.State = address.State;
@@ -61,10 +61,14 @@ namespace TrackMyShipment.Core.Services
                     address.UsersId = userId;
                     _context.Add(address);
                 }
-                 await _context.CompleteAsync();
+
+                await _context.CompleteAsync();
                 return address;
             }
-            catch {return null;}
+            catch
+            {
+                return null;
+            }
         }
 
         public async Task<IEnumerable<Address>> MyAddress(int? userId)
@@ -72,14 +76,14 @@ namespace TrackMyShipment.Core.Services
             return await Task.Run(() => _context.Find(address => address.UsersId == userId));
         }
 
-        public async Task<string> Subscribe(int? carrierId, int? userId)
+        public async Task<string> Subscribe(Carrier carrier, User user)
         {
             try
             {
-                var existRelation =  await _context.GetSubscribe(userId, carrierId);
-                if (existRelation == null)
+                var existRelation = await _context.GetSubscribe(user.Id, carrier.Id);
+                if (existRelation == null && !carrier.Status)
                 {
-                   await _context.Subscribe(carrierId, userId);
+                    await _context.Subscribe(carrier.Id, user.Id);
                     return "Subscribed";
                 }
                 await _context.DeleteSubscribe(existRelation);

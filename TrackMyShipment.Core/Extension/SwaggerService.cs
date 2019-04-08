@@ -1,7 +1,6 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using System.Collections.Generic;
+using Microsoft.Extensions.DependencyInjection;
 using Swashbuckle.AspNetCore.Swagger;
-using System.Collections.Generic;
-
 
 namespace TrackMyShipment.Core.Extension
 {
@@ -11,10 +10,10 @@ namespace TrackMyShipment.Core.Extension
         {
             services.AddSwaggerGen(c =>
             {
-                Dictionary<string, IEnumerable<string>> security = new Dictionary<string, IEnumerable<string>>
-                    {
-                    {"Bearer", new string[] { }},
-                    };
+                var security = new Dictionary<string, IEnumerable<string>>
+                {
+                    {"Bearer", new string[] { }}
+                };
 
                 c.AddSecurityDefinition("Bearer", new ApiKeyScheme
                 {
@@ -24,7 +23,7 @@ namespace TrackMyShipment.Core.Extension
                     Type = "apiKey"
                 });
                 c.AddSecurityRequirement(security);
-                c.SwaggerDoc("v1", new Info { Title = "API", Version = "v1" });
+                c.SwaggerDoc("v1", new Info {Title = "API", Version = "v1"});
             });
 
             return services;

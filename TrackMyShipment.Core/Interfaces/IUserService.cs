@@ -8,6 +8,6 @@ namespace TrackMyShipment.Core.Interfaces
         Task<User> GetByEmail(string email);
         Task<User> Get(User person);
         Task<bool> Create(User person, string companyName);
-        void PutCarrier(User carrier);
+        Task PutCarrier(User carrier);
     }
 }

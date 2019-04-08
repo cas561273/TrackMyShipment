@@ -1,9 +1,7 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-
 
 namespace TrackMyShipment.Repository.Extend
 {
@@ -13,6 +11,5 @@ namespace TrackMyShipment.Repository.Extend
         {
             return await Task.Run(() => source.Where(selector));
         }
-
     }
 }

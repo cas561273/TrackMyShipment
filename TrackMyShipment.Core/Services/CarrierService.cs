@@ -30,13 +30,14 @@ namespace TrackMyShipment.Core.Services
                 person.Status = carrier.Status;
                 person.Code = carrier.Code;
             }
+
             await _context.CompleteAsync();
             return true;
         }
 
         public async Task<Carrier> GetById(int carrierId)
         {
-            return await  _context.SingleOrDefaultAsync(x => x.Id == carrierId);
+            return await _context.SingleOrDefaultAsync(x => x.Id == carrierId);
         }
 
         public async Task<bool> Delete(int id)
@@ -45,16 +46,11 @@ namespace TrackMyShipment.Core.Services
             if (person != null)
             {
                 _context.Remove(person);
-                await  _context.CompleteAsync();
+                await _context.CompleteAsync();
                 return true;
             }
 
             return false;
-        }
-
-        public async Task<IEnumerable<Carrier>> GetAllAsync()
-        {
-            return await _context.GetAllAsync();
         }
 
         public async Task<IEnumerable<Carrier>> GetAvailable(User user)
@@ -74,7 +70,12 @@ namespace TrackMyShipment.Core.Services
 
         public async Task<bool?> ActiveStatus(int carrierId)
         {
-            return  await _context.ActiveStatus(carrierId);
+            return await _context.ActiveStatus(carrierId);
+        }
+
+        public async Task<IEnumerable<Carrier>> GetAllAsync()
+        {
+            return await _context.GetAllAsync();
         }
     }
 }

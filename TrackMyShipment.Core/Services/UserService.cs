@@ -32,7 +32,7 @@ namespace TrackMyShipment.Core.Services
             var temp = await _context.GetByEmail(user.Email);
             if (temp == null)
             {
-                await  _context.AddAsync(new User 
+                await _context.AddAsync(new User
                 {
                     FirstName = user.FirstName,
                     LastName = user.LastName,
@@ -42,23 +42,24 @@ namespace TrackMyShipment.Core.Services
                     RoleId = await _context.GetRoleId(Role.Customer),
                     SubscriptionId = await _context.GetSubscribeId(Subscribe.Free)
                 });
-                 await  _context.CompleteAsync();
-                 await  _context.PutCompany(companyName, user.Email);
+                await _context.CompleteAsync();
+                await _context.PutCompany(companyName, user.Email);
                 return true;
             }
+
             return false;
         }
 
-        public async void PutCarrier(User carrier)
+        public async Task PutCarrier(User carrier)
         {
-            var user =  await _context.UserExists(carrier);
+            var user = await _context.UserExists(carrier);
             if (user == null)
             {
                 carrier.RoleId = await _context.GetRoleId("carrier");
                 carrier.SubscriptionId = await _context.GetSubscribeId("free");
                 carrier.Password = Encrypt.Sha256(carrier.Email, carrier.Password);
 
-               await _context.AddAsync(carrier);
+                await _context.AddAsync(carrier);
             }
             else
             {
@@ -66,7 +67,8 @@ namespace TrackMyShipment.Core.Services
                 user.LastName = carrier.LastName;
                 user.Phone = carrier.Phone;
             }
-           await _context.CompleteAsync();
+
+            await _context.CompleteAsync();
         }
     }
 }

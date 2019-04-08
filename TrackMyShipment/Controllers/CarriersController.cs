@@ -142,9 +142,9 @@ namespace TrackMyShipment.Controllers
         [Authorize(Roles = "admin")]
         public async Task<IActionResult> AddUserCarrier([FromBody] UserModel carrier, int carrierId)
         {
-            _userManage.PutCarrier(carrier);
+            await _userManage.PutCarrier(carrier);
             var currentCarrier = await _userManage.GetByEmail(carrier.Email);
-            await  _customerManage.Subscribe(carrierId, currentCarrier.Id);
+            await  _customerManage.Subscribe(new Carrier{Id=carrierId}, currentCarrier);
             return Json(new Request
             {
                 Msg = "Successfully added",

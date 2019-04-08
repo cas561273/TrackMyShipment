@@ -8,11 +8,12 @@ namespace TrackMyShipment.Repository.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Carriers",
-                columns: table => new
+                "Carriers",
+                table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                        .Annotation("SqlServer:ValueGenerationStrategy",
+                            SqlServerValueGenerationStrategy.IdentityColumn),
                     Name = table.Column<string>(nullable: true),
                     Code = table.Column<string>(nullable: true),
                     Phone = table.Column<string>(nullable: true),
@@ -20,56 +21,48 @@ namespace TrackMyShipment.Repository.Migrations
                     Status = table.Column<bool>(nullable: false),
                     Cost = table.Column<long>(nullable: false)
                 },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Carriers", x => x.Id);
-                });
+                constraints: table => { table.PrimaryKey("PK_Carriers", x => x.Id); });
 
             migrationBuilder.CreateTable(
-                name: "Company",
-                columns: table => new
+                "Company",
+                table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                        .Annotation("SqlServer:ValueGenerationStrategy",
+                            SqlServerValueGenerationStrategy.IdentityColumn),
                     Name = table.Column<string>(nullable: true)
                 },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Company", x => x.Id);
-                });
+                constraints: table => { table.PrimaryKey("PK_Company", x => x.Id); });
 
             migrationBuilder.CreateTable(
-                name: "Roles",
-                columns: table => new
+                "Roles",
+                table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                        .Annotation("SqlServer:ValueGenerationStrategy",
+                            SqlServerValueGenerationStrategy.IdentityColumn),
                     Name = table.Column<string>(nullable: true)
                 },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Roles", x => x.Id);
-                });
+                constraints: table => { table.PrimaryKey("PK_Roles", x => x.Id); });
 
             migrationBuilder.CreateTable(
-                name: "Subscriptions",
-                columns: table => new
+                "Subscriptions",
+                table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                        .Annotation("SqlServer:ValueGenerationStrategy",
+                            SqlServerValueGenerationStrategy.IdentityColumn),
                     Status = table.Column<string>(nullable: true)
                 },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Subscriptions", x => x.Id);
-                });
+                constraints: table => { table.PrimaryKey("PK_Subscriptions", x => x.Id); });
 
             migrationBuilder.CreateTable(
-                name: "Users",
-                columns: table => new
+                "Users",
+                table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                        .Annotation("SqlServer:ValueGenerationStrategy",
+                            SqlServerValueGenerationStrategy.IdentityColumn),
                     FirstName = table.Column<string>(maxLength: 50, nullable: true),
                     LastName = table.Column<string>(maxLength: 50, nullable: true),
                     Phone = table.Column<string>(maxLength: 50, nullable: true),
@@ -83,31 +76,32 @@ namespace TrackMyShipment.Repository.Migrations
                 {
                     table.PrimaryKey("PK_Users", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Users_Company_CompanyId",
-                        column: x => x.CompanyId,
-                        principalTable: "Company",
-                        principalColumn: "Id",
+                        "FK_Users_Company_CompanyId",
+                        x => x.CompanyId,
+                        "Company",
+                        "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Users_Roles_RoleId",
-                        column: x => x.RoleId,
-                        principalTable: "Roles",
-                        principalColumn: "Id",
+                        "FK_Users_Roles_RoleId",
+                        x => x.RoleId,
+                        "Roles",
+                        "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Users_Subscriptions_SubscriptionId",
-                        column: x => x.SubscriptionId,
-                        principalTable: "Subscriptions",
-                        principalColumn: "Id",
+                        "FK_Users_Subscriptions_SubscriptionId",
+                        x => x.SubscriptionId,
+                        "Subscriptions",
+                        "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Address",
-                columns: table => new
+                "Address",
+                table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                        .Annotation("SqlServer:ValueGenerationStrategy",
+                            SqlServerValueGenerationStrategy.IdentityColumn),
                     StreetLine1 = table.Column<string>(nullable: true),
                     StreetLine2 = table.Column<string>(nullable: true),
                     City = table.Column<string>(nullable: true),
@@ -119,111 +113,111 @@ namespace TrackMyShipment.Repository.Migrations
                 {
                     table.PrimaryKey("PK_Address", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Address_Users_UsersId",
-                        column: x => x.UsersId,
-                        principalTable: "Users",
-                        principalColumn: "Id",
+                        "FK_Address_Users_UsersId",
+                        x => x.UsersId,
+                        "Users",
+                        "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Supplies",
-                columns: table => new
+                "Supplies",
+                table => new
                 {
                     UserId = table.Column<int>(nullable: false),
                     CarrierId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Supplies", x => new { x.UserId, x.CarrierId });
+                    table.PrimaryKey("PK_Supplies", x => new {x.UserId, x.CarrierId});
                     table.ForeignKey(
-                        name: "FK_Supplies_Carriers_CarrierId",
-                        column: x => x.CarrierId,
-                        principalTable: "Carriers",
-                        principalColumn: "Id",
+                        "FK_Supplies_Carriers_CarrierId",
+                        x => x.CarrierId,
+                        "Carriers",
+                        "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Supplies_Users_UserId",
-                        column: x => x.UserId,
-                        principalTable: "Users",
-                        principalColumn: "Id",
+                        "FK_Supplies_Users_UserId",
+                        x => x.UserId,
+                        "Users",
+                        "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.InsertData(
-                table: "Roles",
-                columns: new[] { "Id", "Name" },
-                values: new object[,]
+                "Roles",
+                new[] {"Id", "Name"},
+                new object[,]
                 {
-                    { 1, "admin" },
-                    { 2, "customer" },
-                    { 3, "carrier" }
+                    {1, "admin"},
+                    {2, "customer"},
+                    {3, "carrier"}
                 });
 
             migrationBuilder.InsertData(
-                table: "Subscriptions",
-                columns: new[] { "Id", "Status" },
-                values: new object[,]
+                "Subscriptions",
+                new[] {"Id", "Status"},
+                new object[,]
                 {
-                    { 1, "free" },
-                    { 2, "paid" }
+                    {1, "free"},
+                    {2, "paid"}
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Address_UsersId",
-                table: "Address",
-                column: "UsersId");
+                "IX_Address_UsersId",
+                "Address",
+                "UsersId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Supplies_CarrierId",
-                table: "Supplies",
-                column: "CarrierId");
+                "IX_Supplies_CarrierId",
+                "Supplies",
+                "CarrierId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Users_CompanyId",
-                table: "Users",
-                column: "CompanyId");
+                "IX_Users_CompanyId",
+                "Users",
+                "CompanyId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Users_Email",
-                table: "Users",
-                column: "Email",
+                "IX_Users_Email",
+                "Users",
+                "Email",
                 unique: true,
                 filter: "[Email] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Users_RoleId",
-                table: "Users",
-                column: "RoleId");
+                "IX_Users_RoleId",
+                "Users",
+                "RoleId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Users_SubscriptionId",
-                table: "Users",
-                column: "SubscriptionId");
+                "IX_Users_SubscriptionId",
+                "Users",
+                "SubscriptionId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Address");
+                "Address");
 
             migrationBuilder.DropTable(
-                name: "Supplies");
+                "Supplies");
 
             migrationBuilder.DropTable(
-                name: "Carriers");
+                "Carriers");
 
             migrationBuilder.DropTable(
-                name: "Users");
+                "Users");
 
             migrationBuilder.DropTable(
-                name: "Company");
+                "Company");
 
             migrationBuilder.DropTable(
-                name: "Roles");
+                "Roles");
 
             migrationBuilder.DropTable(
-                name: "Subscriptions");
+                "Subscriptions");
         }
     }
 }

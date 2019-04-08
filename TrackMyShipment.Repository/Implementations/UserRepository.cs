@@ -20,7 +20,7 @@ namespace TrackMyShipment.Repository.Implementations
         public async Task<User> UserExists(User userExist)
         {
             var encryptedPassword = Encrypt.Sha256(userExist.Email, userExist.Password);
-            return await FetchUser(u => u.Email.Equals(userExist.Email)&& u.Password.Equals(encryptedPassword));
+            return await FetchUser(u => u.Email.Equals(userExist.Email) && u.Password.Equals(encryptedPassword));
         }
 
         public async Task<User> GetByEmail(string email)
@@ -70,6 +70,7 @@ namespace TrackMyShipment.Repository.Implementations
                 _context.Entry(user).Reference(nameof(Company)).Load();
                 _context.Entry(user).Reference(nameof(Subscription)).Load();
             }
+
             return user;
         }
     }

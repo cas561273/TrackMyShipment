@@ -46,9 +46,9 @@ namespace TrackMyShipment.Manage
             return mapper.Map<IEnumerable<Address>, IEnumerable<AddressModel>>(myAddress);
         }
 
-        public async Task<string> Subscribe(int? carrierId, int? userId)
+        public async Task<string> Subscribe(Carrier carrier, User user)
         {
-            return await _customerService.Subscribe(carrierId, userId);
+            return await _customerService.Subscribe(carrier, user);
         }
     }
 }

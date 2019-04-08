@@ -1,5 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 using TrackMyShipment.Repository.Interfaces;
 using TrackMyShipment.Repository.Models;
 
@@ -16,7 +16,7 @@ namespace TrackMyShipment.Repository.Implementations
 
         public async Task<bool> Subscribe(int? carrierId, int? userId)
         {
-            var subscribe = await _context.Supplies.AddAsync(new Supplies { CarrierId = carrierId, UserId = userId });
+            var subscribe = await _context.Supplies.AddAsync(new Supplies {CarrierId = carrierId, UserId = userId});
             if (subscribe == null) return false;
             await _context.SaveChangesAsync();
             return true;

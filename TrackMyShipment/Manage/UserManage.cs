@@ -46,11 +46,11 @@ namespace TrackMyShipment.Manage
             return await _userService.Create(userModel, user.CompanyName);
         }
 
-        public void PutCarrier(UserModel carrier)
+        public async Task PutCarrier(UserModel carrier)
         {
             var mapper = new MapperConfiguration(cfg => cfg.CreateMap<UserModel, User>()).CreateMapper();
             var carrierModel = mapper.Map<UserModel, User>(carrier);
-            _userService.PutCarrier(carrierModel);
+            await _userService.PutCarrier(carrierModel);
         }
     }
 }

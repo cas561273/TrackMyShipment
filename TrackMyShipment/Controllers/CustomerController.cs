@@ -110,14 +110,13 @@ namespace TrackMyShipment.Controllers
         [Authorize(Roles = "admin,customer")]
         public async Task<IActionResult> Subscription([FromBody] int carrierId)
         {
-            var result = string.Empty;
+            var result = "exception";
             var user = await CurrentUser();
-            var userId = user.Id;
             if (_carrierManage != null)
             {
                 var carrier = await _carrierManage?.GetById(carrierId);
 
-                if (carrier?.Status != false) result = await _customerManage.Subscribe(carrierId, userId);
+                result = await _customerManage.Subscribe(carrier, user);
                 if (carrier != null)
                     return Json(new Request
                     {
