@@ -1,7 +1,5 @@
 ﻿using System.Security.Claims;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using TrackMyShipment.Manage;
 using TrackMyShipment.Repository.Models;
@@ -23,25 +21,21 @@ namespace TrackMyShipment.Controllers
             _customerManage = customerManage;
             _carrierManage = carrierManage;
         }
-
-        [HttpGet]
-        [Route("fullInfo")]
-        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-         protected async Task<User> CurrentUser()
+ 
+        protected async Task<User> CurrentUser()
         {
             var claimsIdentity = User.Identity as ClaimsIdentity;
             if (claimsIdentity == null) return null;
             return  await _userManage.GetByEmail(claimsIdentity.Name);
         }
-
-        [HttpGet]
-        [Route("shortInfo")]
+  
         protected async Task<RegistrationModel> UserInfo()
         {
             var claimsIdentity = User.Identity as ClaimsIdentity;
             if (claimsIdentity == null) return null;
             var user =  await _userManage.GetByEmail(claimsIdentity.Name);
-            return new RegistrationModel {FirstName = user.FirstName, LastName = user.LastName, Phone = user.Phone};
+            return new RegistrationModel {FirstName = user.FirstName, LastName = user.LastName,
+                Phone = user.Phone,CompanyName = user.Company.Name,Email = user.Email};
         }
     }
 }

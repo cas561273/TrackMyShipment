@@ -10,7 +10,6 @@ namespace TrackMyShipment.Repository.Helper
         {
             HashAlgorithm hash = new SHA256Managed();
 
-            // compute hash of the password prefixing password with the salt
             var plainTextBytes = Encoding.UTF8.GetBytes(pass + email);
             var hashBytes = hash.ComputeHash(plainTextBytes);
             var hashValue = Convert.ToBase64String(hashBytes);

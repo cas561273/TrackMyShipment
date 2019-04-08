@@ -44,7 +44,6 @@ namespace TrackMyShipment.Core.Services
             await _context.CompleteAsync();
             await _context.PutCompany(companyName, user.Email);
             return true;
-
         }
 
         public async Task PutCarrier(User carrier)

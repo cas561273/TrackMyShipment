@@ -8,7 +8,7 @@ namespace TrackMyShipment.Core.Extension
 {
     public static partial class Services
     {
-        public static IServiceCollection RegisterJwtServices(this IServiceCollection services)
+        public static IServiceCollection RegisterServices(this IServiceCollection services)
         {
             services.AddTransient<IUserService, UserService>()
                 .AddTransient<IUserRepository, UserRepository>()

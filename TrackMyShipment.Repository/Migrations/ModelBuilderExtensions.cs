@@ -15,6 +15,14 @@ namespace TrackMyShipment.Repository.Migrations
             modelBuilder.Entity<Subscription>().HasData(
                 new Subscription {Id = 1, Status = "free"},
                 new Subscription {Id = 2, Status = "paid"});
+
+            modelBuilder.Entity<User>()
+                .HasIndex(u => u.Email)
+                .IsUnique();
+
+            modelBuilder.Entity<Supplies>().HasKey(
+                t => new { t.UserId, t.CarrierId }
+            );
         }
     }
 }

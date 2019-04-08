@@ -24,6 +24,23 @@ namespace TrackMyShipment
 
         public void ConfigureServices(IServiceCollection services)
         {
+            string connection = Configuration.GetConnectionString("DefaultConnection");
+
+            services.AddDbContext<ApplicationContext>(options => options.UseSqlServer(connection));
+            services.AddAuthenticationJwt(JwtBearerDefaults.AuthenticationScheme);
+            services.RegisterServices();
+            services.RegisterSwaggerServices();
+            services.AddTransient<UserManage>()
+            .AddTransient<CustomerManage>()
+            .AddTransient<CarrierManage>();
+
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+
+            services.AddSpaStaticFiles(configuration =>
+            {
+                configuration.RootPath = "ClientApp/dist";
+            });
+
             services.AddCors(options =>
             {
                 options.AddPolicy("EnableCORS", builder =>
@@ -32,23 +49,6 @@ namespace TrackMyShipment
                 });
             });
 
-            string connection = Configuration.GetConnectionString("DefaultConnection");
-
-            services.AddDbContext<ApplicationContext>(options => options.UseSqlServer(connection));
-            services.AddAuthenticationJwt(JwtBearerDefaults.AuthenticationScheme);
-            services.RegisterJwtServices();
-            services.RegisterSwaggerServices();
-
-            services.AddTransient<UserManage>()
-         .AddTransient<CustomerManage>()
-         .AddTransient<CarrierManage>();
-
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
-
-            services.AddSpaStaticFiles(configuration =>
-            {
-                configuration.RootPath = "ClientApp/dist";
-            });
         }
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
@@ -65,7 +65,6 @@ namespace TrackMyShipment
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseSpaStaticFiles();
-
             app.UseCors("EnableCORS");
             app.UseSwagger();
             app.UseSwaggerUI(c =>

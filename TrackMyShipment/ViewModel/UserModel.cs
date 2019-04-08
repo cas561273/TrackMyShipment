@@ -4,8 +4,7 @@ namespace TrackMyShipment.ViewModel
 {
     public class UserModel
     {
-        [EmailAddress]
-        public string Email { get; set; }
+        [EmailAddress] public string Email { get; set; }
 
         [StringLength(50, MinimumLength = 3, ErrorMessage = "The length of the string must be from 3 to 50 characters")]
         public string FirstName { get; set; }
@@ -15,7 +14,6 @@ namespace TrackMyShipment.ViewModel
 
         [StringLength(50, MinimumLength = 11, ErrorMessage = "The length of the string must be from 11 to 50 characters")]
 
-        [Phone]
-        public string Phone { get; set; }
+        [Phone] public string Phone { get; set; }
     }
 }

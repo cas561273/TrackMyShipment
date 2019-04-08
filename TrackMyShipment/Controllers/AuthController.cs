@@ -51,10 +51,18 @@ namespace TrackMyShipment.Controllers
                 })
                 : Json(new Request
                     {
-                        State = RequestState.Failed,
+                        State = RequestState.NotAuth,
                         Msg = "Username or password is invalid"
                     }
                 );
         }
+
+        [HttpGet]
+        [Route("shortInfo")]
+        public async Task<RegistrationModel> GetUserInfo()
+        {
+            return await UserInfo();
+        }
+
     }
 }

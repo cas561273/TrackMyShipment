@@ -12,11 +12,9 @@ namespace TrackMyShipment.Repository.Models
         [StringLength(50, MinimumLength = 3, ErrorMessage = "The length of the string must be from 3 to 50 characters")]
         public string LastName { get; set; }
 
-        [StringLength(50, MinimumLength = 11,
-            ErrorMessage = "The length of the string must be from 11 to 50 characters")]
-        [Phone]
-        public string Phone { get; set; }
+        [StringLength(50, MinimumLength = 11, ErrorMessage = "The length of the string must be from 11 to 50 characters")]
 
+        [Phone] public string Phone { get; set; }
         [EmailAddress] public string Email { get; set; }
 
         [DataType(DataType.Password)]
