@@ -20,7 +20,7 @@ namespace TrackMyShipment.Core.Services
             var address = await _context.GetByAddress(id);
             if (address.UsersId != userId) return null;
             _context.Remove(address);
-            _context.CompleteAsync();
+            await _context.CompleteAsync();
             return address;
         }
 
@@ -29,10 +29,9 @@ namespace TrackMyShipment.Core.Services
             var address =  await _context.GetByAddress(id);
             if (address.UsersId != userId) return null;
             address.Active = !address.Active;
-             _context.CompleteAsync();
+            await _context.CompleteAsync();
             return "Address successfully deleted";
         }
-
 
         public async Task<string> DeleteSubscribe(Supplies relation)
         {
@@ -62,7 +61,7 @@ namespace TrackMyShipment.Core.Services
                     address.UsersId = userId;
                     _context.Add(address);
                 }
-                 _context.CompleteAsync();
+                 await _context.CompleteAsync();
                 return address;
             }
             catch {return null;}
@@ -78,21 +77,15 @@ namespace TrackMyShipment.Core.Services
             try
             {
                 var existRelation =  await _context.GetSubscribe(userId, carrierId);
-
                 if (existRelation == null)
                 {
                    await _context.Subscribe(carrierId, userId);
                     return "Subscribed";
                 }
-
                 await _context.DeleteSubscribe(existRelation);
-
                 return "UnSubscribed";
             }
-            catch
-            {
-                return null;
-            }
+            catch {return null;}
         }
     }
 }

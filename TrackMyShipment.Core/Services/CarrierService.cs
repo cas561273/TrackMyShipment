@@ -17,10 +17,10 @@ namespace TrackMyShipment.Core.Services
 
         public async Task<bool> AddOrUpdate(Carrier carrier)
         {
-            var person = await Task.Run(() => _context.SingleOrDefault(c => c.Name == carrier.Name));
+            var person = await _context.SingleOrDefaultAsync(c => c.Name == carrier.Name);
             if (person == null)
             {
-                await Task.Run(() => _context.AddAsync(carrier));
+                await _context.AddAsync(carrier);
             }
             else
             {
@@ -30,13 +30,13 @@ namespace TrackMyShipment.Core.Services
                 person.Status = carrier.Status;
                 person.Code = carrier.Code;
             }
-            await Task.Run(() => _context.Complete());
+            await _context.CompleteAsync();
             return true;
         }
 
         public async Task<Carrier> GetById(int carrierId)
         {
-            return await Task.Run(() => _context.SingleOrDefault(x => x.Id == carrierId));
+            return await  _context.SingleOrDefaultAsync(x => x.Id == carrierId);
         }
 
         public async Task<bool> Delete(int id)
@@ -45,7 +45,7 @@ namespace TrackMyShipment.Core.Services
             if (person != null)
             {
                 _context.Remove(person);
-                await Task.Run(() => _context.Complete());
+                await  _context.CompleteAsync();
                 return true;
             }
 
