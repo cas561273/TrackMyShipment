@@ -24,7 +24,7 @@ namespace TrackMyShipment.Controllers
             var userId = user.Id;
             var result = await _addressManage.PutOrUpdateAddress(address, userId);
             if (result == true)
-                Json(new Request
+            return Json(new Request
                 {
                     State = RequestState.Success,
                     Msg = "Put address successfully"

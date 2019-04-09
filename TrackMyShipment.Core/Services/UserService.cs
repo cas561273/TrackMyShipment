@@ -18,39 +18,35 @@ namespace TrackMyShipment.Core.Services
             _context = context;
         }
 
-        public async Task<User> Create(User user)
+        public async Task<User> CreateUser(User user)
         {
-            var temp = await _context.GetUserByEmail(user.Email);
-            if (temp != null) return null;
-             _context.Add(new User
-            {
-                FirstName = user.FirstName,
-                LastName = user.LastName,
-                Email = user.Email,
-                Phone = user.Phone,
-                Password = PasswordHelper.CalculateHashedPassword(user.Email, user.Password),
-                RoleId = await _context.GetRoleId(Role.CUSTOMER),
-                SubscriptionId = await _context.GetSubscribeId(Subscribe.FREE)
-            });
+            var existedUser = await _context.GetUserByEmail(user.Email);
+            if (existedUser != null) return null;
+            user.Password = PasswordHelper.CalculateHashedPassword(user.Email, user.Password);
+            user.RoleId = await _context.GetRoleId(Role.CUSTOMER);
+            user.SubscriptionId = await _context.GetSubscribeId(Subscribe.FREE);
+
+            var addedUser = await _context.AddAsync(user);
+
             await _context.CompleteAsync();
-            return await _context.GetUserByEmail(user.Email);
+            return addedUser.Entity;
         }
 
         public async Task PutCarrier(User carrier)
         {
-            var user = await _context.UserExists(carrier);
-            if (user == null)
+            var existedUser = await _context.UserExists(carrier);
+            if (existedUser == null)
             {
+                carrier.Password = PasswordHelper.CalculateHashedPassword(carrier.Email, carrier.Password);
                 carrier.RoleId = await _context.GetRoleId(Role.CARRIER);
                 carrier.SubscriptionId = await _context.GetSubscribeId(Subscribe.FREE);
-                carrier.Password = PasswordHelper.CalculateHashedPassword(carrier.Email, carrier.Password);
                 _context.Add(carrier);
             }
             else
             {
-                user.FirstName = carrier.FirstName;
-                user.LastName = carrier.LastName;
-                user.Phone = carrier.Phone;
+                existedUser.FirstName = carrier.FirstName;
+                existedUser.LastName = carrier.LastName;
+                existedUser.Phone = carrier.Phone;
             }
             await _context.CompleteAsync();
         }

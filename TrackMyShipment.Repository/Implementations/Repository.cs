@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 using TrackMyShipment.Repository.Interfaces;
 
 namespace TrackMyShipment.Repository.Implementations
@@ -46,21 +48,22 @@ namespace TrackMyShipment.Repository.Implementations
         public void Add(TEntity entity)
         {
             _context.Set<TEntity>().Add(entity);
+            
         }
 
-        //public async Task AddAsync(TEntity entity)
-        //{
-        //    await _context.Set<TEntity>().AddAsync(entity);
-        //}
+        public async Task<TEntity> FindAsync(params object[] entities)
+        {
+           return  await _context.Set<TEntity>().FindAsync(entities);
+        }
 
+
+        public async Task<EntityEntry<TEntity>> AddAsync(TEntity entity,CancellationToken cancellationToken = default(CancellationToken))
+        {
+            return await _context.Set<TEntity>().AddAsync(entity);
+        }
         public void AddRange(IEnumerable<TEntity> entities)
         {
             _context.Set<TEntity>().AddRange(entities);
-        }
-
-        public async Task<IEnumerable<TEntity>> FindAsync(Expression<Func<TEntity, bool>> predicate)
-        {
-            return await _context.Set<IEnumerable<TEntity>>().FindAsync(predicate);
         }
 
         public void Remove(TEntity entity)

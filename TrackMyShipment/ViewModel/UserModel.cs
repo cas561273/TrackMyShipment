@@ -2,9 +2,8 @@
 
 namespace TrackMyShipment.ViewModel
 {
-    public class UserModel
-    {
-        [EmailAddress] public string Email { get; set; }
+    public class UserModel:LoginModel
+    { 
 
         [StringLength(50, MinimumLength = 3, ErrorMessage = "The length of the string must be from 3 to 50 characters")]
         public string FirstName { get; set; }

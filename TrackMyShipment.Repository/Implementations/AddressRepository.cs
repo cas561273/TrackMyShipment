@@ -1,5 +1,7 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using TrackMyShipment.Repository.Extensions;
 using TrackMyShipment.Repository.Interfaces;
 using TrackMyShipment.Repository.Models;
 
@@ -14,10 +16,14 @@ namespace TrackMyShipment.Repository.Implementations
             _context = context;
         }
 
-        public async Task<Address> GetByAddress(int? id)
+        public async Task<Address> GetAddressById(int? id)
         {
             return await _context.Address.SingleOrDefaultAsync(_ => _.Id.Equals(id));
         }
-     
+
+        public async Task<IEnumerable<Address>> GetMyAddress(int? userId)
+        {
+            return await _context.Address.WhereAsync(u => u.UsersId == userId);
+        }
     }
 }

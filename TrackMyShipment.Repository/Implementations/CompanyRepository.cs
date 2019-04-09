@@ -1,6 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 using TrackMyShipment.Repository.Interfaces;
 using TrackMyShipment.Repository.Models;
 
@@ -14,5 +13,11 @@ namespace TrackMyShipment.Repository.Implementations
         {
             _context = context;
         }
+
+        public async Task<Company> GetCompanyByName(string companyName)
+        {
+           return  await _context.Company.SingleOrDefaultAsync(c => c.Name.Equals(companyName));
+        }
+
     }
 }

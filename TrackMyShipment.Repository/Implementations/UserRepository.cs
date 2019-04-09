@@ -48,9 +48,9 @@ namespace TrackMyShipment.Repository.Implementations
             return await FetchUser(_ => _.Email.Equals(email));
         }
 
-        public async Task<int> GetSubscribeId(string subscribe)
+        public async Task<int> GetSubscribeId(string subscribeStatus)
         {
-            var subscription = await _context.Subscriptions.SingleOrDefaultAsync(s => s.Status.Equals(subscribe));
+            var subscription = await _context.Subscriptions.SingleOrDefaultAsync(s => s.Status.Equals(subscribeStatus));
             return subscription.Id;
         }
         public async Task<int> GetRoleId(string roleName)

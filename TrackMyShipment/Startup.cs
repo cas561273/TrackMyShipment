@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using TrackMyShipment.Core.Extension;
+using TrackMyShipment.Core.RegisterServices;
 using TrackMyShipment.Manage;
 using TrackMyShipment.Repository;
 using TrackMyShipment.Utils;
@@ -30,8 +30,9 @@ namespace TrackMyShipment
             services.AddAuthenticationJwt(JwtBearerDefaults.AuthenticationScheme);
             services.RegisterServices();
             services.RegisterSwaggerServices();
-            services.AddTransient<UserManage>()
-            .AddTransient<CarrierManage>();
+            services.AddTransient<UserManage>().AddTransient<CarrierManage>().AddTransient<AddressManage>()
+                .AddTransient<SubscriptionManage>().AddTransient<CompanyManage>();
+
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 

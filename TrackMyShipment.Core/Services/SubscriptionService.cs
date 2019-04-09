@@ -13,10 +13,6 @@ namespace TrackMyShipment.Core.Services
         {
             _context = context;
         }
-        public async Task<bool> DeleteSubscribe(Supplies relation)
-        {
-            return await _context.DeleteSubscribe(relation);
-        }
 
         public async Task<Supplies> GetSubscribe(int? userId, int? carrierId)
         {

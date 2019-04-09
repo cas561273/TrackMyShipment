@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using TrackMyShipment.Core.Interfaces;
 using TrackMyShipment.Repository.Interfaces;
 using TrackMyShipment.Repository.Models;
+using TrackMyShipment.Repository.Extensions;
 
 namespace TrackMyShipment.Core.Services
 {
@@ -17,18 +18,15 @@ namespace TrackMyShipment.Core.Services
 
         public async Task<bool> AddOrUpdateCarrier(Carrier carrier)
         {
-            var person = await _context.SingleOrDefaultAsync(c => c.Name == carrier.Name);
-            if (person == null)
+            Carrier existedUser = await _context.SingleOrDefaultAsync(c => c.Name == carrier.Name);
+       
+            if (existedUser == null)
             {
                  _context.Add(carrier);
             }
             else
             {
-                person.Name = carrier.Name;
-                person.Logo = carrier.Logo;
-                person.Phone = carrier.Phone;
-                person.Status = carrier.Status;
-                person.Code = carrier.Code;
+                await Task.Run(() => existedUser.CopyPropertyValues(carrier));
             }
 
             await _context.CompleteAsync();
@@ -54,7 +52,7 @@ namespace TrackMyShipment.Core.Services
 
         public async Task<IEnumerable<Carrier>> GetAvailableCarriers(User user)
         {
-            return await _context.GetAvailable(user);
+            return await _context.GetAvailableCarriers(user);
         }
 
         public async Task<IEnumerable<Carrier>> GetMyCarriers(User user)

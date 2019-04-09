@@ -18,16 +18,6 @@ namespace TrackMyShipment.Manage
    
         }
 
-        public async Task<User> GetByEmailUser(string email)
-        {
-            return  await _userService.GetUserByEmail(email);
-        }
-
-        public async Task<User> GetUser(User user)
-        { 
-            return await _userService.GetUser(user);
-        }
-
         public async Task<string> Login(LoginModel loginModel)
         {
             var user = await _userService.GetUser(new User {Email = loginModel.Email, Password = loginModel.Password});
@@ -40,7 +30,7 @@ namespace TrackMyShipment.Manage
         {
             var mapper = new MapperConfiguration(cfg => cfg.CreateMap<RegistrationModel, User>()).CreateMapper();
             var userModel = mapper.Map<RegistrationModel, User>(user);
-            var registeredUser =  await _userService.Create(userModel);
+            var registeredUser =  await _userService.CreateUser(userModel);
             if (registeredUser != null) return registeredUser;
              return null;
         }
@@ -58,6 +48,16 @@ namespace TrackMyShipment.Manage
             var people = await _userService.GetMyUsers(carrierId);
             IEnumerable<UserModel> peopleShort = mapper.Map<IEnumerable<User>, IEnumerable<UserModel>>(people);
             return peopleShort;
+        }
+
+        public async Task<User> GetByEmailUser(string email)
+        {
+            return await _userService.GetUserByEmail(email);
+        }
+
+        public async Task<User> GetUser(User user)
+        {
+            return await _userService.GetUser(user);
         }
     }
 }

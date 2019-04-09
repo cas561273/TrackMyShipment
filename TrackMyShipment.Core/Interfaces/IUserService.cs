@@ -10,7 +10,7 @@ namespace TrackMyShipment.Core.Interfaces
         Task<User> GetUserByEmail(string email);
         Task<User> GetUser(User person);
         Task PutCarrier(User carrier);
-        Task<User> Create(User person);
+        Task<User> CreateUser(User person);
 
     }
 }

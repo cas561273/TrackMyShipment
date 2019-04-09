@@ -1,8 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace TrackMyShipment.Repository.Models
+﻿namespace TrackMyShipment.Repository.Models
 {
-    //todo. Remove validation attributes.
     public class User
     {
         public int Id { get; set; }

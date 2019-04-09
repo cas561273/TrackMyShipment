@@ -25,7 +25,7 @@ namespace TrackMyShipment.Repository.Implementations
             return await Task.Run(() => carriers.Select(c => c.Carrier));
         }
 
-        public async Task<IEnumerable<Carrier>> GetAvailable(User user)
+        public async Task<IEnumerable<Carrier>> GetAvailableCarriers(User user)
         {
             if (user.Role.Name.Equals(Role.ADMIN)) return await _context.Carriers.ToListAsync();
 

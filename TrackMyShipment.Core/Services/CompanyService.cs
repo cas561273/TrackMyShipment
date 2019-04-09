@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using TrackMyShipment.Core.Interfaces;
 using TrackMyShipment.Repository.Interfaces;
 using TrackMyShipment.Repository.Models;
@@ -19,19 +16,16 @@ namespace TrackMyShipment.Core.Services
 
         public async Task<bool> PutCompany(string companyName, User existedUser)
         {
-            var company = await _context.SingleOrDefaultAsync(c => c.Name.Equals(companyName));
+            var company = await _context.GetCompanyByName(companyName);
             if (company != null)
             {
                 existedUser.CompanyId = company.Id;
-                await _context.CompleteAsync();
-                return true;
             }
-
-             _context.Add(new Company { Name = companyName });
-            await _context.CompleteAsync();
-            company = await _context.SingleOrDefaultAsync(c => c.Name.Equals(companyName));
-            existedUser.CompanyId = company?.Id;
-
+            else
+            {
+                var temp = await _context.AddAsync(new Company {Name = companyName});
+                existedUser.CompanyId = temp.Entity.Id;
+            }
             await _context.CompleteAsync();
             return true;
         }

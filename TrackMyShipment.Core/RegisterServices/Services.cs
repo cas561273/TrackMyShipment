@@ -4,7 +4,7 @@ using TrackMyShipment.Core.Services;
 using TrackMyShipment.Repository.Implementations;
 using TrackMyShipment.Repository.Interfaces;
 
-namespace TrackMyShipment.Core.Extension
+namespace TrackMyShipment.Core.RegisterServices
 {
     public static partial class Services
     {
@@ -17,7 +17,9 @@ namespace TrackMyShipment.Core.Extension
                 .AddTransient<IAddressService, AddressService>()
                 .AddTransient<IAddressRepository, AddressRepository>()
                 .AddTransient<ICompanyService, CompanyService>()
-                .AddTransient<ICompanyRepository, CompanyRepository>();
+                .AddTransient<ICompanyRepository, CompanyRepository>()
+                .AddTransient<ISubscriptionService, SubscriptionService>()
+                .AddTransient<ISubscriptionRepository, SubscriptionsRepository>();
 
             return services;
         }

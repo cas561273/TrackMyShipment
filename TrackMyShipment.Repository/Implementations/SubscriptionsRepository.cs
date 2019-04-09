@@ -17,7 +17,7 @@ namespace TrackMyShipment.Repository.Implementations
         public async Task<bool> Subscribe(int? carrierId, int? userId)
         {
             var subscribe = await _context.Supplies.AddAsync(new Supplies { CarrierId = carrierId, UserId = userId });
-            if (subscribe == null) return false;
+            if (subscribe.Entity == null) return false;
             await _context.SaveChangesAsync();
             return true;
         }

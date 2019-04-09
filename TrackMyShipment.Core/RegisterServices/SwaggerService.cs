@@ -2,7 +2,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using Swashbuckle.AspNetCore.Swagger;
 
-namespace TrackMyShipment.Core.Extension
+namespace TrackMyShipment.Core.RegisterServices
 {
     public partial class Services
     {

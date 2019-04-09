@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
+using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 
 namespace TrackMyShipment.Repository.Interfaces
 {
@@ -18,11 +20,12 @@ namespace TrackMyShipment.Repository.Interfaces
         /// <returns>Single <see cref="TEntity" /> object</returns>
         TEntity Get(int id);
 
-        //Task AddAsync(TEntity entity);
-        Task<IEnumerable<TEntity>> FindAsync(Expression<Func<TEntity, bool>> predicate);
+        Task<TEntity> FindAsync(params object[] entities);
         Task<IEnumerable<TEntity>> GetAllAsync();
         Task CompleteAsync();
         Task<TEntity> SingleOrDefaultAsync(Expression<Func<TEntity, bool>> predicate);
+
+        Task<EntityEntry<TEntity>> AddAsync(TEntity entity,CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         ///     Get all <see cref="TEntity" /> elements

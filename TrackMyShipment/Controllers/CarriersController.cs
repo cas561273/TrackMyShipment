@@ -96,24 +96,6 @@ namespace TrackMyShipment.Controllers
                 });
         }
 
-        [HttpGet("user/{id}")]
-        [Authorize(Roles = "admin,carrier")]
-        public async Task<IActionResult> ListUsersOfCarrier(int carrierId)
-        {
-            var myUsers = await _userManage.GetMyUsers(carrierId);
-            return myUsers != null
-                ? Json(new Request
-                {
-                    Data = myUsers,
-                    Msg = "Successfully received",
-                    State = RequestState.Success
-                })
-                : Json(new Request
-                {
-                    Msg = "Not received",
-                    State = RequestState.Success
-                });
-        }
 
         [HttpPost("ChangeStatusCarrier")]
         [Authorize(Roles = "admin,carrier")]
