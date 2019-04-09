@@ -1,8 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using TrackMyShipment.Core.Helper;
 using TrackMyShipment.Core.Interfaces;
 using TrackMyShipment.Repository.Constant;
-using TrackMyShipment.Repository.Helper;
+using TrackMyShipment.Repository.Extensions;
 using TrackMyShipment.Repository.Interfaces;
 using TrackMyShipment.Repository.Models;
 using Role = TrackMyShipment.Repository.Constant.Role;
@@ -32,12 +33,11 @@ namespace TrackMyShipment.Core.Services
             return addedUser.Entity;
         }
 
-        public async Task PutCarrier(User carrier)
+        public async Task PutUserCarrier(User carrier)
         {
             var existedUser = await _context.UserExists(carrier);
             if (existedUser == null)
             {
-                carrier.Password = PasswordHelper.CalculateHashedPassword(carrier.Email, carrier.Password);
                 carrier.RoleId = await _context.GetRoleId(Role.CARRIER);
                 carrier.SubscriptionId = await _context.GetSubscribeId(Subscribe.FREE);
                 _context.Add(carrier);

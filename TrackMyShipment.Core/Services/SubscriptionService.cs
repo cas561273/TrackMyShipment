@@ -25,6 +25,7 @@ namespace TrackMyShipment.Core.Services
             if (existRelation == null && !carrier.Status)
             {
                 await _context.Subscribe(carrier.Id, user.Id);
+                return true;
             }
             await _context.DeleteSubscribe(existRelation);
             return true;

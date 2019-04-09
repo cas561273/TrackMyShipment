@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using TrackMyShipment.Core.Interfaces;
+using TrackMyShipment.Repository.Extensions;
 using TrackMyShipment.Repository.Interfaces;
 using TrackMyShipment.Repository.Models;
 
@@ -40,16 +41,13 @@ namespace TrackMyShipment.Core.Services
             Address existedAddress = await _context.GetAddressById(address.Id);
 
             if (existedAddress != null)
-            {
-                existedAddress.State = address.State;
-                existedAddress.StreetLine1 = address.StreetLine1;
-                existedAddress.StreetLine2 = address.StreetLine2;
-                existedAddress.City = address.City;
-                return true;
-            }
-            address.UsersId = userId;
-            _context.Add(address);
+                existedAddress.CopyPropertyValues(address);   
 
+            else
+            {
+                address.UsersId = userId;
+                 _context.Add(address);
+            }
             await _context.CompleteAsync();
             return true;
         }

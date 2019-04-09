@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
+using TrackMyShipment.Core.Helper;
 using TrackMyShipment.Core.Interfaces;
 using TrackMyShipment.Repository.Models;
 using TrackMyShipment.Utils;
@@ -20,7 +21,8 @@ namespace TrackMyShipment.Manage
 
         public async Task<string> Login(LoginModel loginModel)
         {
-            var user = await _userService.GetUser(new User {Email = loginModel.Email, Password = loginModel.Password});
+
+            var user = await _userService.GetUser(new User {Email = loginModel.Email, Password = PasswordHelper.CalculateHashedPassword(loginModel.Email, loginModel.Password)});
             if (user == null) return null;
             var token = new Token().GetToken(user);
             return token;
@@ -30,6 +32,7 @@ namespace TrackMyShipment.Manage
         {
             var mapper = new MapperConfiguration(cfg => cfg.CreateMap<RegistrationModel, User>()).CreateMapper();
             var userModel = mapper.Map<RegistrationModel, User>(user);
+            userModel.Password = PasswordHelper.CalculateHashedPassword(user.Email, user.Password);
             var registeredUser =  await _userService.CreateUser(userModel);
             if (registeredUser != null) return registeredUser;
              return null;
@@ -39,7 +42,8 @@ namespace TrackMyShipment.Manage
         {
             var mapper = new MapperConfiguration(cfg => cfg.CreateMap<UserModel, User>()).CreateMapper();
             var carrierModel = mapper.Map<UserModel, User>(carrier);
-            await _userService.PutCarrier(carrierModel);
+            carrierModel.Password = PasswordHelper.CalculateHashedPassword(carrierModel.Email, carrierModel.Password);
+            await _userService.PutUserCarrier(carrierModel);
         }
 
         public async Task<IEnumerable<UserModel>> GetMyUsers(int carrierId)
@@ -57,6 +61,7 @@ namespace TrackMyShipment.Manage
 
         public async Task<User> GetUser(User user)
         {
+            user.Password = PasswordHelper.CalculateHashedPassword(user.Email, user.Password);
             return await _userService.GetUser(user);
         }
     }

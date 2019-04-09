@@ -21,7 +21,7 @@ namespace TrackMyShipment.Manage
 
         public async Task<Carrier> GetByIdCarrier(int carrierId)
         {
-            return await _carrierService.GetByIdCarrier(carrierId);
+            return await _carrierService.GetCarrierById(carrierId);
         }
 
         public async  Task<bool> DeleteCarrier(int id)

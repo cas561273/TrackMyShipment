@@ -2,7 +2,7 @@
 using System.Security.Cryptography;
 using System.Text;
 
-namespace TrackMyShipment.Repository.Helper
+namespace TrackMyShipment.Core.Helper
 {
     public static class PasswordHelper
     {

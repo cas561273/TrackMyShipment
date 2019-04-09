@@ -5,7 +5,6 @@ using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using TrackMyShipment.Repository.Extensions;
-using TrackMyShipment.Repository.Helper;
 using TrackMyShipment.Repository.Interfaces;
 using TrackMyShipment.Repository.Models;
 
@@ -39,8 +38,7 @@ namespace TrackMyShipment.Repository.Implementations
 
         public async Task<User> UserExists(User userExist)
         {
-            var encryptedPassword = PasswordHelper.CalculateHashedPassword(userExist.Email, userExist.Password);
-            return await FetchUser(u => u.Email.Equals(userExist.Email) && u.Password.Equals(encryptedPassword));
+           return await FetchUser(u => u.Email==userExist.Email && u.Password==userExist.Password);
         }
 
         public async Task<User> GetUserByEmail(string email)

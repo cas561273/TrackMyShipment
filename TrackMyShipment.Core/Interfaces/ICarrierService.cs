@@ -8,7 +8,7 @@ namespace TrackMyShipment.Core.Interfaces
     {
         Task<IEnumerable<Carrier>> GetMyCarriers(User person);
         Task<IEnumerable<Carrier>> GetAvailableCarriers(User user);
-        Task<Carrier> GetByIdCarrier(int carrierId);
+        Task<Carrier> GetCarrierById(int carrierId);
         Task<bool> AddOrUpdateCarrier(Carrier carrier);
         Task<bool> DeleteCarrier(int id);
         Task<bool?> ChangeStatusCarrier(int carrierId);

@@ -18,29 +18,29 @@ namespace TrackMyShipment.Core.Services
 
         public async Task<bool> AddOrUpdateCarrier(Carrier carrier)
         {
-            Carrier existedUser = await _context.SingleOrDefaultAsync(c => c.Name == carrier.Name);
+            Carrier existedCarrier = await _context.SingleOrDefaultAsync(c => c.Name == carrier.Name);
        
-            if (existedUser == null)
+            if (existedCarrier == null)
             {
                  _context.Add(carrier);
             }
             else
             {
-                await Task.Run(() => existedUser.CopyPropertyValues(carrier));
+                await Task.Run(() => existedCarrier.CopyPropertyValues(carrier));
             }
 
             await _context.CompleteAsync();
             return true;
         }
 
-        public async Task<Carrier> GetByIdCarrier(int carrierId)
+        public async Task<Carrier> GetCarrierById(int carrierId)
         {
             return await _context.SingleOrDefaultAsync(x => x.Id == carrierId);
         }
 
         public async Task<bool> DeleteCarrier(int id)
         {
-            var carrier = await GetByIdCarrier(id);
+            var carrier = await GetCarrierById(id);
             if (carrier != null)
             {
                 _context.Remove(carrier);
