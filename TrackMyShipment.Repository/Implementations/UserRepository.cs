@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using TrackMyShipment.Repository.Extensions;
 using TrackMyShipment.Repository.Interfaces;
 using TrackMyShipment.Repository.Models;
+using TrackMyShipment.Repository.Constant;
 
 namespace TrackMyShipment.Repository.Implementations
 {
@@ -30,10 +31,20 @@ namespace TrackMyShipment.Repository.Implementations
             return user;
         }
 
-        public async Task<IEnumerable<User>> GetMyUsers(int carrierId)
+        public async Task<User> GetUserById(int idUser)
+        {
+           return await _context.Users.SingleOrDefaultAsync(u => u.Id == idUser);
+        }
+
+        public async Task<IEnumerable<User>> GetMyUsers(int? carrierId)
         {
             var relation = await _context.Supplies.Include("User").WhereAsync(u => u.CarrierId == carrierId);
             return await Task.Run(() => relation.Select(u => u.User));
+        }
+        public async Task<IEnumerable<User>> GetCarrierUsers()
+        {
+            var carrier = await _context.Users.Include("Role").WhereAsync(u => u.Role.Name==Roles.CARRIER);
+            return carrier;
         }
 
         public async Task<User> UserExists(User userExist)

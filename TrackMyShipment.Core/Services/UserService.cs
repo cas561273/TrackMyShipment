@@ -3,10 +3,9 @@ using System.Threading.Tasks;
 using TrackMyShipment.Core.Helper;
 using TrackMyShipment.Core.Interfaces;
 using TrackMyShipment.Repository.Constant;
-using TrackMyShipment.Repository.Extensions;
 using TrackMyShipment.Repository.Interfaces;
 using TrackMyShipment.Repository.Models;
-using Role = TrackMyShipment.Repository.Constant.Role;
+using Roles = TrackMyShipment.Repository.Constant.Roles;
 
 namespace TrackMyShipment.Core.Services
 {
@@ -24,7 +23,7 @@ namespace TrackMyShipment.Core.Services
             var existedUser = await _context.GetUserByEmail(user.Email);
             if (existedUser != null) return null;
             user.Password = PasswordHelper.CalculateHashedPassword(user.Email, user.Password);
-            user.RoleId = await _context.GetRoleId(Role.CUSTOMER);
+            user.RoleId = await _context.GetRoleId(Roles.CUSTOMER);
             user.SubscriptionId = await _context.GetSubscribeId(Subscribe.FREE);
 
             var addedUser = await _context.AddAsync(user);
@@ -33,30 +32,42 @@ namespace TrackMyShipment.Core.Services
             return addedUser.Entity;
         }
 
-        public async Task PutUserCarrier(User carrier)
+        public async Task<User> PutUserCarrier(User carrier)
         {
             var existedUser = await _context.UserExists(carrier);
             if (existedUser == null)
             {
-                carrier.RoleId = await _context.GetRoleId(Role.CARRIER);
+                carrier.RoleId = await _context.GetRoleId(Roles.CARRIER);
                 carrier.SubscriptionId = await _context.GetSubscribeId(Subscribe.FREE);
-                _context.Add(carrier);
+                var addedUser  =  await _context.AddAsync(carrier);
+                return addedUser.Entity;
             }
-            else
+            return null;
+        }
+
+        public async Task<User> EditUserCarrier(User carrier)
+        {
+            var existedUser = await _context.GetUserById(carrier.Id);
+            if (existedUser != null)
             {
                 existedUser.FirstName = carrier.FirstName;
                 existedUser.LastName = carrier.LastName;
                 existedUser.Phone = carrier.Phone;
             }
             await _context.CompleteAsync();
+            return existedUser;
         }
 
-    
+        public async Task<IEnumerable<User>> GetCarrierUsers()
+        {
+           return await _context.GetCarrierUsers();
+        }
+
         public async Task<User> GetUserByEmail(string email)
         {
             return await _context.GetUserByEmail(email);
         }
-        public async Task<IEnumerable<User>> GetMyUsers(int carrierId)
+        public async Task<IEnumerable<User>> GetMyUsers(int? carrierId)
         {
             return await _context.GetMyUsers(carrierId);
         }

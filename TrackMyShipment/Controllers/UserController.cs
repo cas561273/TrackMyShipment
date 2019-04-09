@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using TrackMyShipment.Manage;
+using TrackMyShipment.Repository.Models;
 using TrackMyShipment.ViewModel;
 
 namespace TrackMyShipment.Controllers
@@ -14,6 +15,66 @@ namespace TrackMyShipment.Controllers
             : base(userManage, carrierManage, addressManage,companyManage, subscriptionManage)
         {
         }
+
+        [Route("AddUserCarrier")]
+        [HttpPut]
+        [Authorize(Roles = "admin")]
+        public async Task<IActionResult> AddUserCarrier([FromBody] UserModel carrier, int carrierId)
+        {
+            var currentCarrier = await _userManage.PutUserCarrier(carrier);
+            bool result = await _subscriptionManage.Subscribe(new Carrier { Id = carrierId }, currentCarrier);
+            return result
+                ? Json(new Request
+                {
+                    Msg = "Successfully added",
+                    State = RequestState.Success
+                })
+                : Json(new Request
+                {
+                    Msg = "Failed to add",
+                    State = RequestState.Failed
+                });
+        }
+
+        [Route("EditUserCarrier")]
+        [HttpPut]
+        [Authorize(Roles = "admin")]
+        public async Task<IActionResult> EditUserCarrier([FromBody] EditUserModel carrier)
+        {
+            var currentCarrier = await _userManage.EditUserCarrier(carrier);
+            return currentCarrier!=null
+                ? Json(new Request
+                {
+                    Msg = "Successfully edited",
+                    State = RequestState.Success
+                })
+                : Json(new Request
+                {
+                    Msg = "Failed to edit",
+                    State = RequestState.Failed
+                });
+        }
+
+        [Route("GetUsersCarrier")]
+        [HttpPut]
+        [Authorize(Roles = "admin")]
+        public async Task<IActionResult> GetUsersCarrier()
+        {
+            var carrierUsers = await _userManage.GetCarrierUsers();
+            return carrierUsers != null
+                ? Json(new Request
+                {
+                    Data = carrierUsers,
+                    Msg = "Receive successfully",
+                    State = RequestState.Success
+                })
+                : Json(new Request
+                {
+                    Msg = "Failed to receive",
+                    State = RequestState.Failed
+                });
+        }
+
 
         [HttpPost]
         [Route("Subscribe")]

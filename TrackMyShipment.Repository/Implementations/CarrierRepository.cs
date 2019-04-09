@@ -6,7 +6,7 @@ using TrackMyShipment.Repository.Constant;
 using TrackMyShipment.Repository.Extensions;
 using TrackMyShipment.Repository.Interfaces;
 using TrackMyShipment.Repository.Models;
-using Role = TrackMyShipment.Repository.Constant.Role;
+using Roles = TrackMyShipment.Repository.Constant.Roles;
 
 namespace TrackMyShipment.Repository.Implementations
 {
@@ -27,7 +27,7 @@ namespace TrackMyShipment.Repository.Implementations
 
         public async Task<IEnumerable<Carrier>> GetAvailableCarriers(User user)
         {
-            if (user.Role.Name.Equals(Role.ADMIN)) return await _context.Carriers.ToListAsync();
+            if (user.Role.Name.Equals(Roles.ADMIN)) return await _context.Carriers.ToListAsync();
 
             if (user.Subscription.Status.Equals(Subscribe.PAID))
                 return await _context.Carriers.WhereAsync(u => u.Status);

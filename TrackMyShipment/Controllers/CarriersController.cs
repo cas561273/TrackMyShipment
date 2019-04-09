@@ -35,6 +35,7 @@ namespace TrackMyShipment.Controllers
                 });
         }
 
+
         [Route("DeleteCarrier")]
         [HttpDelete]
         [Authorize(Roles = "admin")]
@@ -121,27 +122,6 @@ namespace TrackMyShipment.Controllers
                 Msg = "Cannot be activated",
                 State = RequestState.Failed
             });
-        }
-
-        [Route("AddUserCarrier")]
-        [HttpPut]
-        [Authorize(Roles = "admin")]
-        public async Task<IActionResult> AddUserCarrier([FromBody] UserModel carrier, int carrierId)
-        {
-            await _userManage.PutUserCarrier(carrier);
-            var currentCarrier = await _userManage.GetByEmailUser(carrier.Email);
-            bool result = await _subscriptionManage.Subscribe(new Carrier {Id = carrierId}, currentCarrier);
-            return result
-                ? Json(new Request
-                {
-                    Msg = "Successfully added",
-                    State = RequestState.Success
-                })
-                : Json(new Request
-                {
-                    Msg = "Failed to add",
-                    State = RequestState.Failed
-                });
         }
     }
 }

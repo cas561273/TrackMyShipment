@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using TrackMyShipment.Core.Helper;
 using TrackMyShipment.Core.Interfaces;
+using TrackMyShipment.Repository.Extensions;
 using TrackMyShipment.Repository.Models;
 using TrackMyShipment.Utils;
 using TrackMyShipment.ViewModel;
@@ -12,17 +13,19 @@ namespace TrackMyShipment.Manage
     public class UserManage
     {
         private readonly IUserService _userService;
-      
+
         public UserManage(IUserService userService)
         {
             _userService = userService;
-   
         }
 
         public async Task<string> Login(LoginModel loginModel)
         {
-
-            var user = await _userService.GetUser(new User {Email = loginModel.Email, Password = PasswordHelper.CalculateHashedPassword(loginModel.Email, loginModel.Password)});
+            var user = await _userService.GetUser(new User
+            {
+                Email = loginModel.Email,
+                Password = PasswordHelper.CalculateHashedPassword(loginModel.Email, loginModel.Password)
+            });
             if (user == null) return null;
             var token = new Token().GetToken(user);
             return token;
@@ -30,28 +33,53 @@ namespace TrackMyShipment.Manage
 
         public async Task<User> CreateUser(RegistrationModel user)
         {
-            var mapper = new MapperConfiguration(cfg => cfg.CreateMap<RegistrationModel, User>()).CreateMapper();
-            var userModel = mapper.Map<RegistrationModel, User>(user);
-            userModel.Password = PasswordHelper.CalculateHashedPassword(user.Email, user.Password);
-            var registeredUser =  await _userService.CreateUser(userModel);
-            if (registeredUser != null) return registeredUser;
-             return null;
+            if (user != null)
+            {
+                var mapper = new MapperConfiguration(cfg => cfg.CreateMap<RegistrationModel, User>()).CreateMapper();
+                var userModel = mapper.Map<RegistrationModel, User>(user);
+                userModel.Password = PasswordHelper.CalculateHashedPassword(user.Email, user.Password);
+                var registeredUser = await _userService.CreateUser(userModel);
+                if (registeredUser != null) return registeredUser;
+                return null;
+            }
+
+            return null;
         }
 
-        public async Task PutUserCarrier(UserModel carrier)
+        public async Task<User> PutUserCarrier(UserModel carrier)
         {
+            if (carrier == null) return null;
             var mapper = new MapperConfiguration(cfg => cfg.CreateMap<UserModel, User>()).CreateMapper();
             var carrierModel = mapper.Map<UserModel, User>(carrier);
-            carrierModel.Password = PasswordHelper.CalculateHashedPassword(carrierModel.Email, carrierModel.Password);
-            await _userService.PutUserCarrier(carrierModel);
+            carrierModel.Password =
+                PasswordHelper.CalculateHashedPassword(carrierModel.Email, carrierModel.Password);
+            return await _userService.PutUserCarrier(carrierModel);
         }
 
-        public async Task<IEnumerable<UserModel>> GetMyUsers(int carrierId)
+        public async Task<User> EditUserCarrier(EditUserModel carrier)
         {
-            var mapper = new MapperConfiguration(cfg => cfg.CreateMap<User, UserModel>()).CreateMapper();
+            if (carrier == null) return null;
+            var mapper = new MapperConfiguration(cfg => cfg.CreateMap<EditUserModel, User>()).CreateMapper();
+            var carrierModel = mapper.Map<EditUserModel, User>(carrier);
+            return await _userService.EditUserCarrier(carrierModel);
+        }
+
+        public async Task<IEnumerable<UserModel>> GetMyUsers(int? carrierId)
+        {
+            if (carrierId==null) return null;
             var people = await _userService.GetMyUsers(carrierId);
-            IEnumerable<UserModel> peopleShort = mapper.Map<IEnumerable<User>, IEnumerable<UserModel>>(people);
+            var mapper = new MapperConfiguration(cfg => cfg.CreateMap<User, UserModel>()).CreateMapper();
+            var peopleShort = mapper.Map<IEnumerable<User>, IEnumerable<UserModel>>(people);
             return peopleShort;
+        }
+
+        public async Task<IEnumerable<EditUserModel>> GetCarrierUsers()
+        {
+            var carrierUsers = await _userService.GetCarrierUsers();
+            if (carrierUsers == null) return null;
+            var mapper = new MapperConfiguration(cfg => cfg.CreateMap<User, EditUserModel>()).CreateMapper();
+            IEnumerable<EditUserModel> userCarrierShortModel = mapper.Map<IEnumerable<User>, IEnumerable<EditUserModel>>(carrierUsers);
+            return userCarrierShortModel;
         }
 
         public async Task<User> GetByEmailUser(string email)
