@@ -18,7 +18,7 @@ namespace TrackMyShipment.Core.Services
 
         public async Task<bool?> DeleteAddressAsync(int? id, int? userId)
         {
-            var address = await _context.GetAddressByIdAsync(id);
+            Address address = await _context.GetAddressByIdAsync(id);
             if (address.UsersId != userId) return null;
             _context.Remove(address);
             await _context.CompleteAsync();
@@ -27,7 +27,7 @@ namespace TrackMyShipment.Core.Services
 
         public async Task<bool?> StatusAddressAsync(int? id, int? userId)
         {
-            var address = await _context.GetAddressByIdAsync(id);
+            Address address = await _context.GetAddressByIdAsync(id);
             if (address.UsersId != userId) return null;
             address.Active = !address.Active;
             await _context.CompleteAsync();

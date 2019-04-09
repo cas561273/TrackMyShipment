@@ -1,5 +1,4 @@
-﻿
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using TrackMyShipment.Repository.Models;
 
 namespace TrackMyShipment.Repository.Interfaces

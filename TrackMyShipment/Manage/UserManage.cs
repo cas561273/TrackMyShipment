@@ -20,7 +20,7 @@ namespace TrackMyShipment.Manage
 
         public async Task<string> Login(LoginModel loginModel)
         {
-            var user = await _userService.GetUserAsync(new User
+            User user = await _userService.GetUserAsync(new User
             {
                 Email = loginModel.Email,
                 Password = PasswordHelper.CalculateHashedPassword(loginModel.Email, loginModel.Password)
@@ -34,7 +34,7 @@ namespace TrackMyShipment.Manage
         {
             if (user == null) return null;
                 var mapper = new MapperConfiguration(cfg => cfg.CreateMap<RegistrationModel, User>()).CreateMapper();
-                var userModel = mapper.Map<RegistrationModel, User>(user);
+                User userModel = mapper.Map<RegistrationModel, User>(user);
                 userModel.Password = PasswordHelper.CalculateHashedPassword(user.Email, user.Password);
                 return await _userService.CreateUserAsync(userModel);
         }
@@ -43,7 +43,7 @@ namespace TrackMyShipment.Manage
         {
             if (carrier == null) return null;
             var mapper = new MapperConfiguration(cfg => cfg.CreateMap<UserModel, User>()).CreateMapper();
-            var carrierModel = mapper.Map<UserModel, User>(carrier);
+            User carrierModel = mapper.Map<UserModel, User>(carrier);
             carrierModel.Password = PasswordHelper.CalculateHashedPassword(carrierModel.Email, carrierModel.Password);
             return await _userService.PutUserCarrierAsync(carrierModel);
         }
@@ -52,15 +52,15 @@ namespace TrackMyShipment.Manage
         {
             if (carrier == null) return null;
             var mapper = new MapperConfiguration(cfg => cfg.CreateMap<EditUserModel, User>()).CreateMapper();
-            var carrierModel = mapper.Map<EditUserModel, User>(carrier);
+            User carrierModel = mapper.Map<EditUserModel, User>(carrier);
             return await _userService.EditUserCarrierAsync(carrierModel);
         }
 
         public async Task<IEnumerable<UserModel>> GetMyUsers(int? carrierId)
         {
             if (carrierId==null) return null;
-            var people = await _userService.GetMyUsersAsync(carrierId);
             var mapper = new MapperConfiguration(cfg => cfg.CreateMap<User, UserModel>()).CreateMapper();
+            IEnumerable<User> people = await _userService.GetMyUsersAsync(carrierId);
             return mapper.Map<IEnumerable<User>, IEnumerable<UserModel>>(people);
         }
 
@@ -82,5 +82,7 @@ namespace TrackMyShipment.Manage
             user.Password = PasswordHelper.CalculateHashedPassword(user.Email, user.Password);
             return await _userService.GetUserAsync(user);
         }
+
     }
+
 }

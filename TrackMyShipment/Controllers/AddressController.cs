@@ -1,7 +1,9 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using TrackMyShipment.Manage;
+using TrackMyShipment.Repository.Models;
 using TrackMyShipment.ViewModel;
 
 namespace TrackMyShipment.Controllers
@@ -20,9 +22,9 @@ namespace TrackMyShipment.Controllers
         [Authorize(Roles = "admin,customer")]
         public async Task<IActionResult> PutAddress([FromBody] AddressModel address)
         {
-            var user = await CurrentUser();
-            var userId = user.Id;
-            var result = await _addressManage.PutOrUpdateAddress(address, userId);
+            User user = await CurrentUser();
+            int userId = user.Id;
+            bool? result = await _addressManage.PutOrUpdateAddress(address, userId);
             if (result == true)
             return Json(new Request
                 {
@@ -41,9 +43,9 @@ namespace TrackMyShipment.Controllers
         [Authorize(Roles = "admin,customer")]
         public async Task<IActionResult> DeleteAddress([FromBody] int? id)
         {
-            var user = await CurrentUser();
-            var userId = user.Id;
-            var result = await _addressManage.DeleteAddress(id, userId);
+            User user = await CurrentUser();
+            int userId = user.Id;
+            bool? result = await _addressManage.DeleteAddress(id, userId);
             if (result == true)
                 return Json(new Request
                 {
@@ -63,9 +65,9 @@ namespace TrackMyShipment.Controllers
         [Authorize(Roles = "admin,customer")]
         public async Task<IActionResult> MyAddress()
         {
-            var user = await CurrentUser();
-            var userId = user.Id;
-            var myAddress = await _addressManage.MyAddress(userId);
+            User user = await CurrentUser();
+            int userId = user.Id;
+            IEnumerable<AddressModel> myAddress = await _addressManage.MyAddress(userId);
 
             return myAddress != null
                 ? Json(new Request
@@ -86,9 +88,9 @@ namespace TrackMyShipment.Controllers
         [Authorize(Roles = "admin,customer")]
         public async Task<IActionResult> ChangeStatusAddress([FromBody] int? id)
         {
-            var user = await CurrentUser();
-            var userId = user.Id;
-            var result = await _addressManage.ChangeStatusAddress(id, userId);
+            User user = await CurrentUser();
+            int userId = user.Id;
+            bool? result = await _addressManage.ChangeStatusAddress(id, userId);
             return result == true
                 ? Json(new Request
                 {

@@ -21,7 +21,7 @@ namespace TrackMyShipment.Core.Services
 
         public async Task<bool> SubscribeAsync(Carrier carrier, User user)
         {
-            var existRelation = await _context.GetSubscribeAsync(user.Id, carrier.Id);
+            Supplies existRelation = await _context.GetSubscribeAsync(user.Id, carrier.Id);
             if (existRelation == null && !carrier.Status)
             {
                 await _context.SubscribeAsync(carrier.Id, user.Id);

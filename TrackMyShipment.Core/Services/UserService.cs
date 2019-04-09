@@ -20,7 +20,7 @@ namespace TrackMyShipment.Core.Services
 
         public async Task<User> CreateUserAsync(User user)
         {
-            var existedUser = await _context.GetUserByEmailAsync(user.Email);
+            User existedUser = await _context.GetUserByEmailAsync(user.Email);
             if (existedUser != null) return null;
             user.Password = PasswordHelper.CalculateHashedPassword(user.Email, user.Password);
             user.RoleId = await _context.GetRoleIdAsync(Roles.CUSTOMER);
@@ -34,7 +34,7 @@ namespace TrackMyShipment.Core.Services
 
         public async Task<User> PutUserCarrierAsync(User carrier)
         {
-            var existedUser = await _context.UserExistsAsync(carrier);
+            User existedUser = await _context.UserExistsAsync(carrier);
             if (existedUser == null)
             {
                 carrier.RoleId = await _context.GetRoleIdAsync(Roles.CARRIER);
@@ -47,7 +47,7 @@ namespace TrackMyShipment.Core.Services
 
         public async Task<User> EditUserCarrierAsync(User carrier)
         {
-            var existedUser = await _context.GetUserByIdAsync(carrier.Id);
+            User existedUser = await _context.GetUserByIdAsync(carrier.Id);
             if (existedUser != null)
             {
                 existedUser.FirstName = carrier.FirstName;

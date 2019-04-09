@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using TrackMyShipment.Repository.Constant;
@@ -38,9 +37,7 @@ namespace TrackMyShipment.Repository.Implementations
         public async Task<bool?> ChangeStatusCarrierAsync(int carrierId)
         {
             var carrier = await _context.Carriers.SingleOrDefaultAsync(u => u.Id == carrierId);
-
             if (carrier == null) return null;
-
             carrier.Status = !carrier.Status;
             await _context.SaveChangesAsync();
             return carrier.Status;
