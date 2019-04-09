@@ -22,7 +22,7 @@ namespace TrackMyShipment.Repository.Implementations
         public async Task<IEnumerable<Carrier>> GetCarriersAsync(User user)
         {
             var carriers = await _context.Supplies.Include("Carrier").WhereAsync(u => u.UserId == user.Id);
-            return await Task.Run(() => carriers.Select(c => c.Carrier));
+            return await carriers.SelectAsync(c => c.Carrier);
         }
 
         public async Task<IEnumerable<Carrier>> GetAvailableCarriersAsync(User user)

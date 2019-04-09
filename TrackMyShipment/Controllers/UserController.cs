@@ -98,7 +98,7 @@ namespace TrackMyShipment.Controllers
         }
 
 
-        [HttpGet("Carrier/{id}")]
+        [HttpGet("Users/{carrierId}")]
         [Authorize(Roles = "admin,carrier")]
         public async Task<IActionResult> ListUsersOfCarrier(int carrierId)
         {

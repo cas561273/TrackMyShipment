@@ -12,5 +12,10 @@ namespace TrackMyShipment.Repository.Extensions
             return await Task.Run(() => source.Where(selector));
         }
 
+        public static async Task<IEnumerable<TResult>> SelectAsync<TSource, TResult>(this IEnumerable<TSource> source,Func<TSource, TResult> selector)
+        {
+            return await Task.Run(() => source.Select(selector));
+        }
     }
+
 }

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
@@ -39,11 +38,11 @@ namespace TrackMyShipment.Repository.Implementations
         public async Task<IEnumerable<User>> GetMyUsersAsync(int? carrierId)
         {
             var relation = await _context.Supplies.Include("User").WhereAsync(u => u.CarrierId == carrierId);
-            return await Task.Run(() => relation.Select(u => u.User));
+            return await relation.SelectAsync(u => u.User);
         }
         public async Task<IEnumerable<User>> GetCarrierUsersAsync()
         {
-            var carrier = await _context.Users.Include("Role").WhereAsync(u => u.Role.Name==Roles.CARRIER);
+            var carrier = await _context.Users.Include("Role").WhereAsync(u => u.Role.Name.Equals(Roles.CARRIER));
             return carrier;
         }
 
