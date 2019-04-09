@@ -1,19 +1,16 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
-import { HttpHeaders } from '@angular/common/http';
 import { AuthService } from './authService';
-import { Person } from '../models/Person';
-import { Carrier } from '../models/Carrier';
-import { IRequestResult } from '../models/Requst';
+import { IRequestResult } from '../models/Request';
 
 @Injectable()
 export class CarrierService {
-  private _url = 'https://localhost:44395/api/carriers/';
+  private _url = 'https://localhost:44395/api/carrier/';
 
   constructor(private http: HttpClient, private router: Router, private authService: AuthService) { }
 
-  RequestCarrier() {
+  public requestCarrier() {
     let headers = this.authService.initAuthHeaders();
     return this.http.get<IRequestResult>(this._url + "GetCarriers", { headers });
   }

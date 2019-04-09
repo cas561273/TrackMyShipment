@@ -66,7 +66,7 @@ namespace TrackMyShipment.Manage
 
         public async Task<IEnumerable<EditUserModel>> GetCarrierUsers()
         {
-            var carrierUsers = await _userService.GetCarrierUsersAsync();
+            IEnumerable<User> carrierUsers = await _userService.GetCarrierUsersAsync();
             if (carrierUsers == null) return null;
             var mapper = new MapperConfiguration(cfg => cfg.CreateMap<User, EditUserModel>()).CreateMapper();
             return  mapper.Map<IEnumerable<User>, IEnumerable<EditUserModel>>(carrierUsers);

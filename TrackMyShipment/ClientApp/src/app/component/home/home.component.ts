@@ -17,7 +17,7 @@ export class HomeComponent implements OnInit {
   constructor(private router: Router, private http: HttpClient, private carrierService: CarrierService) { }
 
   ngOnInit() {
-    this.carrierService.RequestCarrier().subscribe((data) => {
+    this.carrierService.requestCarrier().subscribe((data) => {
       let requestCarriers = data.data as Carrier[];
       this.carriers = requestCarriers;
       console.log(data);

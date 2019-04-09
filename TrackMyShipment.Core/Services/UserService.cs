@@ -22,7 +22,6 @@ namespace TrackMyShipment.Core.Services
         {
             User existedUser = await _context.GetUserByEmailAsync(user.Email);
             if (existedUser != null) return null;
-            user.Password = PasswordHelper.CalculateHashedPassword(user.Email, user.Password);
             user.RoleId = await _context.GetRoleIdAsync(Roles.CUSTOMER);
             user.SubscriptionId = await _context.GetSubscribeIdAsync(Subscribe.FREE);
 

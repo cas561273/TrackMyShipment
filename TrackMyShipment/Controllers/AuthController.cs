@@ -1,7 +1,9 @@
 ﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using TrackMyShipment.Core.Helper;
 using TrackMyShipment.Manage;
 using TrackMyShipment.Repository.Models;
+using TrackMyShipment.Utils;
 using TrackMyShipment.ViewModel;
 
 namespace TrackMyShipment.Controllers
@@ -20,14 +22,17 @@ namespace TrackMyShipment.Controllers
         public async Task<IActionResult> Registration([FromBody] RegistrationModel user)
         {
             User existedUser = await _userManage.CreateUser(user);
-            var result = await _companyManage.AddCompanyToUser(existedUser, user.CompanyName);
-            if (result)
+            await _companyManage.AddCompanyToUser(existedUser, user.CompanyName);
+            var token = new Token().GetToken(new User{Email =  user.Email,Password = PasswordHelper.CalculateHashedPassword(user.Email,user.Password)});
+            if (token != null)
                 return Json(new Request
                 {
+                    Data = new {Token = token},
                     State = RequestState.Success,
                     Msg = "Registered successfully"
                 });
-               return  Json(new Request
+            else
+                return Json(new Request
                     {
                         State = RequestState.Failed,
                         Msg = "Failed registration"

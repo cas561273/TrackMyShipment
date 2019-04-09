@@ -18,7 +18,7 @@ import { DataSharingService } from './services/dataSharing';
 import { CarrierService } from './services/carrierService';
 
 
-@NgModule({
+@NgModule(({
   declarations: [
     AppComponent,
     LoginComponent,
@@ -29,15 +29,15 @@ import { CarrierService } from './services/carrierService';
     CarrierComponent,
     RegistrationComponent,
     PricingComponent,
-    SidebarComponent,
+    SidebarComponent
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
     AppRoutingModule,
-    FormsModule,
+    FormsModule
   ],
   providers: [AuthService, DataSharingService, CarrierService],
   bootstrap: [AppComponent]
-})
+}) as any)
 export class AppModule { }

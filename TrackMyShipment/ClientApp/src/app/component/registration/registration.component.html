@@ -1,18 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
 
     <head>
-
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-
-        <!-- CSS -->
-        <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:400,100,300,500">
         <link rel="stylesheet" href="assets/form/bootstrap/css/bootstrap.min.css">
-	    	<link rel="stylesheet" href="assets/form/css/form-elements.css">
-        <link rel="stylesheet" href="assets/form/css/style.css">
-     
     </head>
 
     <body>
@@ -42,26 +30,33 @@
                                   </div>
                                   </div>
                                   <div class="form-bottom">
-                                <form role="form" action="" method="post" class="registration-form">
-                                  <div class="form-group">
-                                    <label class="sr-only" for="form-first-name">First name</label>
-                                      <input type="text" name="form-first-name" placeholder="First name..." class="form-first-name form-control" id="form-first-name">
-                                    </div>
-                                    <div class="form-group">
-                                      <label class="sr-only" for="form-last-name">Last name</label>
-                                      <input type="text" name="form-last-name" placeholder="Last name..." class="form-last-name form-control" id="form-last-name">
-                                    </div>
-                                    <div class="form-group">
-                                      <label class="sr-only" for="form-email">Email</label>
-                                      <input type="text" name="form-email" placeholder="Email..." class="form-email form-control" id="form-email">
-                                    </div>
-                                    <div class="form-group">
-                                      <label class="sr-only" for="form-about-yourself">About yourself</label>
-                                      <textarea name="form-about-yourself" placeholder="About yourself..." 
-                                            class="form-about-yourself form-control" id="form-about-yourself"></textarea>
-                                    </div>
-                                    <button type="submit" class="btn">Sign me up!</button>
-                                </form>
+                                    <form role="form" action="" method="post" class="registration-form" #registrationForm="ngForm" (ngSubmit)="registration(registrationForm)">
+                                      <div class="form-group">
+                                        <label class="sr-only" for="form-first-name">FirstName</label>
+                                        <input type="text" name="firstName" placeholder="First name..." ngModel class="form-first-name form-control" id="form-first-name">
+                                      </div>
+                                      <div class="form-group">
+                                        <label class="sr-only" for="form-last-name">Last name</label>
+                                        <input type="text" name="lastName" placeholder="Last name..." ngModel class="form-last-name form-control" id="form-last-name">
+                                      </div>
+                                      <div class="form-group">
+                                        <label class="sr-only" for="form-email">Email</label>
+                                        <input type="text" name="email" placeholder="Email..." ngModel class="form-email form-control" id="form-email">
+                                      </div>
+                                      <div class="form-group">
+                                        <label class="sr-only" for="form-email">Password</label>
+                                        <input type="text" name="password" placeholder="Password..." ngModel class="form-email form-control" id="form-email">
+                                      </div>
+                                      <div class="form-group">
+                                        <label class="sr-only" for="form-email">Phone</label>
+                                        <input type="text" name="phone" placeholder="Phone..." ngModel class="form-email form-control" id="form-email">
+                                      </div>
+                                      <div class="form-group">
+                                        <label class="sr-only" for="form-email">Company Name</label>
+                                        <input type="text" name="companyName" placeholder="CompanyName..." ngModel class="form-email form-control" id="form-email">
+                                      </div>
+                                      <button type="submit" class="btn">Sign me up!</button>
+                                    </form>
                               </div>
 		                    </div>
 		                
@@ -103,4 +98,3 @@
 
     </body>
 
-</html>

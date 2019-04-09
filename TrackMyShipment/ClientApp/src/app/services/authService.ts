@@ -1,10 +1,10 @@
-import { Component, OnInit, Injectable } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { Router, CanActivate } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { HttpHeaders } from '@angular/common/http';
 import { Person } from '../models/Person';
 import { NgForm } from '@angular/forms';
-import { IRequestResult } from '../models/Requst';
+import { IRequestResult } from '../models/Request';
 import { DataSharingService } from './dataSharing';
 
 
@@ -17,7 +17,7 @@ export class AuthService implements CanActivate {
 
   login(form: NgForm) {
     let credentials = JSON.stringify(form.value);
-    this.http.post<IRequestResult>(this._url + "auth", credentials, {
+    this.http.post<IRequestResult>(this._url + "login", credentials, {
       headers: new HttpHeaders({
         "Content-Type": "application/json"
       })
@@ -25,6 +25,24 @@ export class AuthService implements CanActivate {
       let token = (<any>response).data.token;
       console.log(token);
       localStorage.setItem('jwt', token);
+      this.invalidLogin = false;
+      this.router.navigate(["/main"]);
+    }, err => {
+      this.invalidLogin = true;
+    });
+  }
+
+    registration(form: NgForm) {
+    let credentials = JSON.stringify(form.value);
+    this.http.put<IRequestResult>(this._url + "register", credentials, {
+      headers: new HttpHeaders({
+        "Content-Type": "application/json"
+      })
+    }).subscribe(response => {
+      console.log(response.msg);
+      let token = (<any>response).data.token;
+      localStorage.setItem('jwt', token);
+      console.log(token);
       this.invalidLogin = false;
       this.router.navigate(["/main"]);
     }, err => {
