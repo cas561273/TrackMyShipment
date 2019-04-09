@@ -7,7 +7,7 @@ namespace TrackMyShipment.Repository.Interfaces
 {
     public interface IAddressRepository : IRepository<Address>
     {
-        Task<IEnumerable<Address>> GetMyAddress(int? userId);
-        Task<Address> GetAddressById(int? id);
+        Task<IEnumerable<Address>> GetMyAddressAsync(int? userId);
+        Task<Address> GetAddressByIdAsync(int? id);
     }
 }

@@ -8,6 +8,6 @@ namespace TrackMyShipment.Core.Interfaces
 {
     public interface ICompanyService
     {
-        Task<bool> PutCompany(string companyName, User user);
+        Task<bool> PutCompanyAsync(string companyName, User user);
     }
 }

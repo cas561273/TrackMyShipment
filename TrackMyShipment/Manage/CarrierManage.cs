@@ -16,32 +16,32 @@ namespace TrackMyShipment.Manage
 
         public async Task<bool> AddOrUpdateCarrier(Carrier carrier)
         {
-          return await _carrierService.AddOrUpdateCarrier(carrier);
+          return await _carrierService.AddOrUpdateCarrierAsync(carrier);
         }
 
         public async Task<Carrier> GetByIdCarrier(int carrierId)
         {
-            return await _carrierService.GetCarrierById(carrierId);
+            return await _carrierService.GetCarrierByIdAsync(carrierId);
         }
 
         public async  Task<bool> DeleteCarrier(int id)
         {
-            return await _carrierService.DeleteCarrier(id);
+            return await _carrierService.DeleteCarrierAsync(id);
         }
 
         public async Task<IEnumerable<Carrier>> GetAvailableCarriers(User user)
         {
-            return await _carrierService.GetAvailableCarriers(user);
+            return await _carrierService.GetAvailableCarriersAsync(user);
         }
 
         public async Task<IEnumerable<Carrier>> GetMyCarriers(User user)
         {
-            return await _carrierService.GetMyCarriers(user);
+            return await _carrierService.GetMyCarriersAsync(user);
         }
 
         public async Task<bool?> ChangeStatusCarrier(int carrierId)
         {
-            return  await _carrierService.ChangeStatusCarrier(carrierId);
+            return  await _carrierService.ChangeStatusCarrierAsync(carrierId);
         }
     }
 }

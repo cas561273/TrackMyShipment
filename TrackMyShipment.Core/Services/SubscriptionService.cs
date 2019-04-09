@@ -14,20 +14,20 @@ namespace TrackMyShipment.Core.Services
             _context = context;
         }
 
-        public async Task<Supplies> GetSubscribe(int? userId, int? carrierId)
+        public async Task<Supplies> GetSubscribeAsync(int? userId, int? carrierId)
         {
-            return await _context.GetSubscribe(userId, carrierId);
+            return await _context.GetSubscribeAsync(userId, carrierId);
         }
 
-        public async Task<bool> Subscribe(Carrier carrier, User user)
+        public async Task<bool> SubscribeAsync(Carrier carrier, User user)
         {
-            var existRelation = await _context.GetSubscribe(user.Id, carrier.Id);
+            var existRelation = await _context.GetSubscribeAsync(user.Id, carrier.Id);
             if (existRelation == null && !carrier.Status)
             {
-                await _context.Subscribe(carrier.Id, user.Id);
+                await _context.SubscribeAsync(carrier.Id, user.Id);
                 return true;
             }
-            await _context.DeleteSubscribe(existRelation);
+            await _context.DeleteSubscribeAsync(existRelation);
             return true;
         }
     }

@@ -6,11 +6,11 @@ namespace TrackMyShipment.Core.Interfaces
 {
     public interface ICarrierService
     {
-        Task<IEnumerable<Carrier>> GetMyCarriers(User person);
-        Task<IEnumerable<Carrier>> GetAvailableCarriers(User user);
-        Task<Carrier> GetCarrierById(int carrierId);
-        Task<bool> AddOrUpdateCarrier(Carrier carrier);
-        Task<bool> DeleteCarrier(int id);
-        Task<bool?> ChangeStatusCarrier(int carrierId);
+        Task<IEnumerable<Carrier>> GetMyCarriersAsync(User person);
+        Task<IEnumerable<Carrier>> GetAvailableCarriersAsync(User user);
+        Task<Carrier> GetCarrierByIdAsync(int carrierId);
+        Task<bool> AddOrUpdateCarrierAsync(Carrier carrier);
+        Task<bool> DeleteCarrierAsync(int id);
+        Task<bool?> ChangeStatusCarrierAsync(int carrierId);
     }
 }

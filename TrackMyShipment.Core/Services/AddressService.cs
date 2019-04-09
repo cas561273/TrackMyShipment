@@ -16,29 +16,29 @@ namespace TrackMyShipment.Core.Services
             _context = context;
         }
 
-        public async Task<bool?> DeleteAddress(int? id, int? userId)
+        public async Task<bool?> DeleteAddressAsync(int? id, int? userId)
         {
-            var address = await _context.GetAddressById(id);
+            var address = await _context.GetAddressByIdAsync(id);
             if (address.UsersId != userId) return null;
             _context.Remove(address);
             await _context.CompleteAsync();
             return true;
         }
 
-        public async Task<bool?> StatusAddress(int? id, int? userId)
+        public async Task<bool?> StatusAddressAsync(int? id, int? userId)
         {
-            var address = await _context.GetAddressById(id);
+            var address = await _context.GetAddressByIdAsync(id);
             if (address.UsersId != userId) return null;
             address.Active = !address.Active;
             await _context.CompleteAsync();
             return true;
         }
 
-        public async Task<bool?> PutOrUpdate(Address address, int? userId)
+        public async Task<bool?> PutOrUpdateAsync(Address address, int? userId)
         {
             if (address == null) return null;
 
-            Address existedAddress = await _context.GetAddressById(address.Id);
+            Address existedAddress = await _context.GetAddressByIdAsync(address.Id);
 
             if (existedAddress != null)
                 existedAddress.CopyPropertyValues(address);   
@@ -52,9 +52,9 @@ namespace TrackMyShipment.Core.Services
             return true;
         }
 
-        public async Task<IEnumerable<Address>> MyAddress(int? userId)
+        public async Task<IEnumerable<Address>> MyAddressAsync(int? userId)
         {
-            return await _context.GetMyAddress(userId);
+            return await _context.GetMyAddressAsync(userId);
         }
 
     }

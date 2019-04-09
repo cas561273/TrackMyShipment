@@ -18,13 +18,13 @@ namespace TrackMyShipment.Core.Services
             _context = context;
         }
 
-        public async Task<User> CreateUser(User user)
+        public async Task<User> CreateUserAsync(User user)
         {
-            var existedUser = await _context.GetUserByEmail(user.Email);
+            var existedUser = await _context.GetUserByEmailAsync(user.Email);
             if (existedUser != null) return null;
             user.Password = PasswordHelper.CalculateHashedPassword(user.Email, user.Password);
-            user.RoleId = await _context.GetRoleId(Roles.CUSTOMER);
-            user.SubscriptionId = await _context.GetSubscribeId(Subscribe.FREE);
+            user.RoleId = await _context.GetRoleIdAsync(Roles.CUSTOMER);
+            user.SubscriptionId = await _context.GetSubscribeIdAsync(Subscribe.FREE);
 
             var addedUser = await _context.AddAsync(user);
 
@@ -32,22 +32,22 @@ namespace TrackMyShipment.Core.Services
             return addedUser.Entity;
         }
 
-        public async Task<User> PutUserCarrier(User carrier)
+        public async Task<User> PutUserCarrierAsync(User carrier)
         {
-            var existedUser = await _context.UserExists(carrier);
+            var existedUser = await _context.UserExistsAsync(carrier);
             if (existedUser == null)
             {
-                carrier.RoleId = await _context.GetRoleId(Roles.CARRIER);
-                carrier.SubscriptionId = await _context.GetSubscribeId(Subscribe.FREE);
+                carrier.RoleId = await _context.GetRoleIdAsync(Roles.CARRIER);
+                carrier.SubscriptionId = await _context.GetSubscribeIdAsync(Subscribe.FREE);
                 var addedUser  =  await _context.AddAsync(carrier);
                 return addedUser.Entity;
             }
             return null;
         }
 
-        public async Task<User> EditUserCarrier(User carrier)
+        public async Task<User> EditUserCarrierAsync(User carrier)
         {
-            var existedUser = await _context.GetUserById(carrier.Id);
+            var existedUser = await _context.GetUserByIdAsync(carrier.Id);
             if (existedUser != null)
             {
                 existedUser.FirstName = carrier.FirstName;
@@ -58,23 +58,23 @@ namespace TrackMyShipment.Core.Services
             return existedUser;
         }
 
-        public async Task<IEnumerable<User>> GetCarrierUsers()
+        public async Task<IEnumerable<User>> GetCarrierUsersAsync()
         {
-           return await _context.GetCarrierUsers();
+           return await _context.GetCarrierUsersAsync();
         }
 
-        public async Task<User> GetUserByEmail(string email)
+        public async Task<User> GetUserByEmailAsync(string email)
         {
-            return await _context.GetUserByEmail(email);
+            return await _context.GetUserByEmailAsync(email);
         }
-        public async Task<IEnumerable<User>> GetMyUsers(int? carrierId)
+        public async Task<IEnumerable<User>> GetMyUsersAsync(int? carrierId)
         {
-            return await _context.GetMyUsers(carrierId);
+            return await _context.GetMyUsersAsync(carrierId);
         }
 
-        public async Task<User> GetUser(User user)
+        public async Task<User> GetUserAsync(User user)
         {
-            return await _context.UserExists(user);
+            return await _context.UserExistsAsync(user);
         }
     }
 }

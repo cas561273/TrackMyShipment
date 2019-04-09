@@ -9,9 +9,9 @@ namespace TrackMyShipment.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class CarriersController : BaseController
+    public class CarrierController : BaseController
     {
-        public CarriersController(UserManage userManage, CarrierManage carrierManage, AddressManage addressManage,CompanyManage companyManage,SubscriptionManage subscriptionManage)
+        public CarrierController(UserManage userManage, CarrierManage carrierManage, AddressManage addressManage,CompanyManage companyManage,SubscriptionManage subscriptionManage)
             : base(userManage, carrierManage, addressManage,companyManage,subscriptionManage)
         {
         }

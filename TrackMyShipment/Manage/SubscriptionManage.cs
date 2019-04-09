@@ -14,12 +14,12 @@ namespace TrackMyShipment.Manage
         }
         public async Task<Supplies> GetSubscribe(int? userId, int? carrierId)
         {
-            return await _subscriptionService.GetSubscribe(userId, carrierId);
+            return await _subscriptionService.GetSubscribeAsync(userId, carrierId);
         }
 
         public async Task<bool> Subscribe(Carrier carrier, User user)
         {
-            return await _subscriptionService.Subscribe(carrier, user);
+            return await _subscriptionService.SubscribeAsync(carrier, user);
         }
     }
 }

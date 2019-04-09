@@ -75,7 +75,6 @@ namespace TrackMyShipment.Controllers
                 });
         }
 
-
         [HttpPost]
         [Route("Subscribe")]
         [Authorize(Roles = "admin,customer")]
@@ -99,7 +98,7 @@ namespace TrackMyShipment.Controllers
         }
 
 
-        [HttpGet("user/{id}")]
+        [HttpGet("Carrier/{id}")]
         [Authorize(Roles = "admin,carrier")]
         public async Task<IActionResult> ListUsersOfCarrier(int carrierId)
         {

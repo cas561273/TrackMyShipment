@@ -15,7 +15,7 @@ namespace TrackMyShipment.Manage
 
         public async Task<bool> AddCompanyToUser(User user,string companyName)
         {
-            var result = await _companyService.PutCompany(companyName, user);
+            var result = await _companyService.PutCompanyAsync(companyName, user);
             if (result) return true;
              return false;
         }

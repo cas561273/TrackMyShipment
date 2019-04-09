@@ -14,7 +14,7 @@ namespace TrackMyShipment.Repository.Implementations
             _context = context;
         }
 
-        public async Task<bool> Subscribe(int? carrierId, int? userId)
+        public async Task<bool> SubscribeAsync(int? carrierId, int? userId)
         {
             var subscribe = await _context.Supplies.AddAsync(new Supplies { CarrierId = carrierId, UserId = userId });
             if (subscribe.Entity == null) return false;
@@ -22,12 +22,12 @@ namespace TrackMyShipment.Repository.Implementations
             return true;
         }
 
-        public async Task<Supplies> GetSubscribe(int? userId, int? carrierId)
+        public async Task<Supplies> GetSubscribeAsync(int? userId, int? carrierId)
         {
             return await _context.Supplies.SingleOrDefaultAsync(u => u.CarrierId == carrierId && u.UserId == userId);
         }
 
-        public async Task<bool> DeleteSubscribe(Supplies relation)
+        public async Task<bool> DeleteSubscribeAsync(Supplies relation)
         {
             var subs = _context.Supplies.Remove(relation);
             if (subs == null) return false;

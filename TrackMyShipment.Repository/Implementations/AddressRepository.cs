@@ -16,12 +16,12 @@ namespace TrackMyShipment.Repository.Implementations
             _context = context;
         }
 
-        public async Task<Address> GetAddressById(int? id)
+        public async Task<Address> GetAddressByIdAsync(int? id)
         {
             return await _context.Address.SingleOrDefaultAsync(_ => _.Id.Equals(id));
         }
 
-        public async Task<IEnumerable<Address>> GetMyAddress(int? userId)
+        public async Task<IEnumerable<Address>> GetMyAddressAsync(int? userId)
         {
             return await _context.Address.WhereAsync(u => u.UsersId == userId);
         }

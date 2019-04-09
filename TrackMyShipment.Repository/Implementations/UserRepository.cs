@@ -19,7 +19,7 @@ namespace TrackMyShipment.Repository.Implementations
         {
             _context = context;
         }
-        private async Task<User> FetchUser(Expression<Func<User, bool>> predicate)
+        private async Task<User> FetchUserAsync(Expression<Func<User, bool>> predicate)
         {
             var user = await _context.Users.SingleOrDefaultAsync(predicate);
             if (user != null)
@@ -31,38 +31,38 @@ namespace TrackMyShipment.Repository.Implementations
             return user;
         }
 
-        public async Task<User> GetUserById(int idUser)
+        public async Task<User> GetUserByIdAsync(int idUser)
         {
            return await _context.Users.SingleOrDefaultAsync(u => u.Id == idUser);
         }
 
-        public async Task<IEnumerable<User>> GetMyUsers(int? carrierId)
+        public async Task<IEnumerable<User>> GetMyUsersAsync(int? carrierId)
         {
             var relation = await _context.Supplies.Include("User").WhereAsync(u => u.CarrierId == carrierId);
             return await Task.Run(() => relation.Select(u => u.User));
         }
-        public async Task<IEnumerable<User>> GetCarrierUsers()
+        public async Task<IEnumerable<User>> GetCarrierUsersAsync()
         {
             var carrier = await _context.Users.Include("Role").WhereAsync(u => u.Role.Name==Roles.CARRIER);
             return carrier;
         }
 
-        public async Task<User> UserExists(User userExist)
+        public async Task<User> UserExistsAsync(User userExist)
         {
-           return await FetchUser(u => u.Email==userExist.Email && u.Password==userExist.Password);
+           return await FetchUserAsync(u => u.Email==userExist.Email && u.Password==userExist.Password);
         }
 
-        public async Task<User> GetUserByEmail(string email)
+        public async Task<User> GetUserByEmailAsync(string email)
         {
-            return await FetchUser(_ => _.Email.Equals(email));
+            return await FetchUserAsync(_ => _.Email.Equals(email));
         }
 
-        public async Task<int> GetSubscribeId(string subscribeStatus)
+        public async Task<int> GetSubscribeIdAsync(string subscribeStatus)
         {
             var subscription = await _context.Subscriptions.SingleOrDefaultAsync(s => s.Status.Equals(subscribeStatus));
             return subscription.Id;
         }
-        public async Task<int> GetRoleId(string roleName)
+        public async Task<int> GetRoleIdAsync(string roleName)
         {
             var myRole = await _context.Roles.SingleOrDefaultAsync(r => r.Name.Equals(roleName));
             return myRole.Id;

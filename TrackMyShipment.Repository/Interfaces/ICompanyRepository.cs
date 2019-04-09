@@ -6,6 +6,6 @@ namespace TrackMyShipment.Repository.Interfaces
 {
     public interface ICompanyRepository : IRepository<Company>
     {
-        Task<Company> GetCompanyByName(string companyName);
+        Task<Company> GetCompanyByNameAsync(string companyName);
     }
 }

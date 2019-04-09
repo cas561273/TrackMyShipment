@@ -16,7 +16,7 @@ namespace TrackMyShipment.Core.Services
             _context = context;
         }
 
-        public async Task<bool> AddOrUpdateCarrier(Carrier carrier)
+        public async Task<bool> AddOrUpdateCarrierAsync(Carrier carrier)
         {
             Carrier existedCarrier = await _context.SingleOrDefaultAsync(c => c.Name == carrier.Name);
        
@@ -33,14 +33,14 @@ namespace TrackMyShipment.Core.Services
             return true;
         }
 
-        public async Task<Carrier> GetCarrierById(int carrierId)
+        public async Task<Carrier> GetCarrierByIdAsync(int carrierId)
         {
             return await _context.SingleOrDefaultAsync(x => x.Id == carrierId);
         }
 
-        public async Task<bool> DeleteCarrier(int id)
+        public async Task<bool> DeleteCarrierAsync(int id)
         {
-            var carrier = await GetCarrierById(id);
+            var carrier = await GetCarrierByIdAsync(id);
             if (carrier != null)
             {
                 _context.Remove(carrier);
@@ -50,20 +50,20 @@ namespace TrackMyShipment.Core.Services
             return false;
         }
 
-        public async Task<IEnumerable<Carrier>> GetAvailableCarriers(User user)
+        public async Task<IEnumerable<Carrier>> GetAvailableCarriersAsync(User user)
         {
-            return await _context.GetAvailableCarriers(user);
+            return await _context.GetAvailableCarriersAsync(user);
         }
 
-        public async Task<IEnumerable<Carrier>> GetMyCarriers(User user)
+        public async Task<IEnumerable<Carrier>> GetMyCarriersAsync(User user)
         {
-            return await _context.GetCarriers(user);
+            return await _context.GetCarriersAsync(user);
         }
 
 
-        public async Task<bool?> ChangeStatusCarrier(int carrierId)
+        public async Task<bool?> ChangeStatusCarrierAsync(int carrierId)
         {
-            return await _context.ChangeStatusCarrier(carrierId);
+            return await _context.ChangeStatusCarrierAsync(carrierId);
         }
 
         public async Task<IEnumerable<Carrier>> GetAllAsync()

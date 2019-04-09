@@ -14,7 +14,7 @@ namespace TrackMyShipment.Repository.Implementations
             _context = context;
         }
 
-        public async Task<Company> GetCompanyByName(string companyName)
+        public async Task<Company> GetCompanyByNameAsync(string companyName)
         {
            return  await _context.Company.SingleOrDefaultAsync(c => c.Name.Equals(companyName));
         }

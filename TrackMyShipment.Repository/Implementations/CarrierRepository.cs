@@ -19,13 +19,13 @@ namespace TrackMyShipment.Repository.Implementations
             _context = context;
         }
 
-        public async Task<IEnumerable<Carrier>> GetCarriers(User user)
+        public async Task<IEnumerable<Carrier>> GetCarriersAsync(User user)
         {
             var carriers = await _context.Supplies.Include("Carrier").WhereAsync(u => u.UserId == user.Id);
             return await Task.Run(() => carriers.Select(c => c.Carrier));
         }
 
-        public async Task<IEnumerable<Carrier>> GetAvailableCarriers(User user)
+        public async Task<IEnumerable<Carrier>> GetAvailableCarriersAsync(User user)
         {
             if (user.Role.Name.Equals(Roles.ADMIN)) return await _context.Carriers.ToListAsync();
 
@@ -35,7 +35,7 @@ namespace TrackMyShipment.Repository.Implementations
             return await _context.Carriers.WhereAsync(u => u.Cost == 0 && u.Status);
         }
 
-        public async Task<bool?> ChangeStatusCarrier(int carrierId)
+        public async Task<bool?> ChangeStatusCarrierAsync(int carrierId)
         {
             var carrier = await _context.Carriers.SingleOrDefaultAsync(u => u.Id == carrierId);
 

@@ -14,9 +14,9 @@ namespace TrackMyShipment.Core.Services
             _context = context;
         }
 
-        public async Task<bool> PutCompany(string companyName, User existedUser)
+        public async Task<bool> PutCompanyAsync(string companyName, User existedUser)
         {
-            var company = await _context.GetCompanyByName(companyName);
+            var company = await _context.GetCompanyByNameAsync(companyName);
             if (company != null)
             {
                 existedUser.CompanyId = company.Id;

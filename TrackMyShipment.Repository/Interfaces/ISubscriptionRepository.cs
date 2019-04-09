@@ -5,9 +5,9 @@ namespace TrackMyShipment.Repository.Interfaces
 {
     public interface ISubscriptionRepository
     {
-        Task<Supplies> GetSubscribe(int? userId, int? carrierId);
-        Task<bool> Subscribe(int? carrierId, int? userId);
-        Task<bool> DeleteSubscribe(Supplies relation);
+        Task<Supplies> GetSubscribeAsync(int? userId, int? carrierId);
+        Task<bool> SubscribeAsync(int? carrierId, int? userId);
+        Task<bool> DeleteSubscribeAsync(Supplies relation);
 
     }
 }
