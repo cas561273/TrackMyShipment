@@ -23,7 +23,8 @@ namespace TrackMyShipment.Controllers
         {
             User existedUser = await _userManage.CreateUser(user);
             await _companyManage.AddCompanyToUser(existedUser, user.CompanyName);
-            var token = new Token().GetToken(new User{Email =  user.Email,Password = PasswordHelper.CalculateHashedPassword(user.Email,user.Password)});
+
+            var token = new Token().GetToken(existedUser);
             if (token != null)
                 return Json(new Request
                 {
