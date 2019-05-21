@@ -16,7 +16,7 @@ namespace TrackMyShipment.Controllers
         protected readonly CompanyManage _companyManage;
         protected readonly AddressManage _addressManage;
         protected readonly SubscriptionManage _subscriptionManage;
-        protected readonly ObjectiveManage ObjectiveManage;
+        protected readonly ObjectiveManage _objectiveManage;
 
         protected BaseController(ObjectiveManage objectiveManage,UserManage userManage, CarrierManage carrierManage,AddressManage addressManage, CompanyManage companyManage, SubscriptionManage subscriptionManage)
         {
@@ -25,7 +25,7 @@ namespace TrackMyShipment.Controllers
             _addressManage = addressManage;
             _companyManage = companyManage;
             _subscriptionManage = subscriptionManage;
-            ObjectiveManage = objectiveManage;
+            _objectiveManage = objectiveManage;
         }
  
         protected async Task<User> CurrentUser()

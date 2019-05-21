@@ -31,5 +31,11 @@ namespace TrackMyShipment.Core.Services
         {
             return  await _context.GetMyTask(userId);
         }
+
+        public async Task<bool> ChangeStatusTask(int userId, int taskId)
+        {
+
+            return await _context.ChangeStatusTask(userId, taskId);
+        }
     }
 }

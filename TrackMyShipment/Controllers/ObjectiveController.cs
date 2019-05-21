@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+﻿using System.Data.SqlClient;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -25,7 +25,7 @@ namespace TrackMyShipment.Controllers
         {
             User user = await CurrentUser();
             int userId = user.Id;
-            bool result = await ObjectiveManage.AddTask(userId, task);
+            bool result = await _objectiveManage.AddTask(userId, task);
 
             return result 
                 ? Json(new Request
@@ -42,12 +42,12 @@ namespace TrackMyShipment.Controllers
 
         [HttpGet]
         [Route("GetMyTask")]
-        [Authorize(Roles = "admin,customer")]
+        [Authorize(Roles = "customer,carrier")]
         public async Task<IActionResult> GetMyTask()
         {
             User user = await CurrentUser();
             int userId = user.Id;
-            var tasks = await ObjectiveManage.GetMyTask(userId);
+            var tasks = await _objectiveManage.GetMyTask(userId);
 
             return tasks!=null
                 ? Json(new Request
@@ -63,5 +63,25 @@ namespace TrackMyShipment.Controllers
                 });
         }
 
+        [HttpPost]
+        [Route("ChangeStatusTask")]
+        [Authorize(Roles = "carrier")]
+        public async Task<IActionResult> ChangeStatusTask(int objectiveId)
+        {
+            User user = await CurrentUser();
+            int userId = user.Id;
+            bool result = await _objectiveManage.ChangeStatusTask(userId, objectiveId);
+            return result
+                ? Json(new Request
+                {
+                    Msg = "Changed successful",
+                    State = RequestState.Success
+                })
+                : Json(new Request
+                {
+                    Msg = "Can not changed!",
+                    State = RequestState.Failed
+                });
+        }
     }
 }

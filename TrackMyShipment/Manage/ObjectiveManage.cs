@@ -23,6 +23,13 @@ namespace TrackMyShipment.Manage
             return await _objectiveService.GetMyTask(userId);
         }
 
+        public async Task<bool> ChangeStatusTask(int userId,int taskId)
+        {
+            
+            return await _objectiveService.ChangeStatusTask(userId,taskId);
+        }
+
+
     }
 
 }

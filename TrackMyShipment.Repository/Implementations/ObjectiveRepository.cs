@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Remotion.Linq.Utilities;
+using TrackMyShipment.Repository.Constant;
 using TrackMyShipment.Repository.Extensions;
 using TrackMyShipment.Repository.Interfaces;
 using TrackMyShipment.Repository.Models;
@@ -32,9 +33,22 @@ namespace TrackMyShipment.Repository.Implementations
 
         public async Task<int?> GetCarrierId(int carrierUserId)
         {
-
             var carrier = await _context.Supplies.SingleOrDefaultAsync(x => x.UserId == carrierUserId);
                 return carrier.CarrierId;
         }
+
+        public async Task<bool> ChangeStatusTask(int userId, int taskId)
+        {
+            var user = await _context.Users.Include(x => x.Role).SingleOrDefaultAsync(x => x.Id == userId);
+            var task = await _context.Task.SingleOrDefaultAsync(x => x.Id == taskId);
+            if (user != null && task != null)
+            {
+                task.Status = !task.Status;
+                await _context.SaveChangesAsync();
+                return true;
+            }
+            return false;
+        }
+
     }
 }

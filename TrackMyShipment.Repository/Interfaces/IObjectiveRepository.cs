@@ -10,5 +10,7 @@ namespace TrackMyShipment.Repository.Interfaces
     {
         Task<IEnumerable<Objective>> GetMyTask(int userId);
         Task<int?> GetCarrierId(int carrierUserId);
+        Task<bool> ChangeStatusTask(int userId, int taskId);
+
     }
 }
