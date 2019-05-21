@@ -29,10 +29,10 @@
  /* INPUTMASK PUBLIC CLASS DEFINITION
   * ================================= */
 
-  var Inputmask = function (element, options) {
+  var Inputmask = function (user, options) {
     if (isAndroid) return // No support because caret positioning doesn't work on Android
     
-    this.$element = $(element)
+    this.$user = $(user)
     this.options = $.extend({}, $.fn.inputmask.defaults, options)
     this.mask = String(options.mask)
     
@@ -69,9 +69,9 @@
         if (c != '?') return defs[c] ? this.options.placeholder : c
       }, this))
       
-      this.focusText = this.$element.val()
+      this.focusText = this.$user.val()
 
-      this.$element.data("rawMaskFn", $.proxy(function() {
+      this.$user.data("rawMaskFn", $.proxy(function() {
         return $.map(this.buffer, function(c, i) {
           return this.tests[i] && c != this.options.placeholder ? c : null
         }).join('')
@@ -79,11 +79,11 @@
     },
     
     listen: function() {
-      if (this.$element.attr("readonly")) return
+      if (this.$user.attr("readonly")) return
 
       var pasteEventName = (navigator.userAgent.match(/msie/i) ? 'paste' : 'input') + ".mask"
 
-      this.$element
+      this.$user
         .on("unmask", $.proxy(this.unmask, this))
         
         .on("focus.mask", $.proxy(this.focusEvent, this))
@@ -97,10 +97,10 @@
 
     //Helper Function for Caret positioning
     caret: function(begin, end) {
-      if (this.$element.length === 0) return
+      if (this.$user.length === 0) return
       if (typeof begin == 'number') {
         end = (typeof end == 'number') ? end : begin
-        return this.$element.each(function() {
+        return this.$user.each(function() {
           if (this.setSelectionRange) {
             this.setSelectionRange(begin, end)
           } else if (this.createTextRange) {
@@ -112,9 +112,9 @@
           }
         })
       } else {
-        if (this.$element[0].setSelectionRange) {
-          begin = this.$element[0].selectionStart
-          end = this.$element[0].selectionEnd
+        if (this.$user[0].setSelectionRange) {
+          begin = this.$user[0].selectionStart
+          end = this.$user[0].selectionEnd
         } else if (document.selection && document.selection.createRange) {
           var range = document.selection.createRange()
           begin = 0 - range.duplicate().moveStart('character', -100000)
@@ -176,13 +176,13 @@
     },
 
     unmask: function() {
-      this.$element
+      this.$user
         .unbind(".mask")
         .removeData("inputmask")
     },
     
     focusEvent: function() {
-      this.focusText = this.$element.val()
+      this.focusText = this.$user.val()
       var len = this.mask.length 
       var pos = this.checkVal()
       this.writeBuffer()
@@ -203,8 +203,8 @@
     
     blurEvent: function() {
       this.checkVal()
-      if (this.$element.val() != this.focusText)
-        this.$element.trigger('change')
+      if (this.$user.val() != this.focusText)
+        this.$user.trigger('change')
     },
         
     keydownEvent: function(e) {
@@ -225,7 +225,7 @@
 
         return false
       } else if (k == 27) {//escape
-        this.$element.val(this.focusText)
+        this.$user.val(this.focusText)
         this.caret(0, this.checkVal())
         return false
       }
@@ -278,13 +278,13 @@
     },
 
     writeBuffer: function() {
-      return this.$element.val(this.buffer.join('')).val()
+      return this.$user.val(this.buffer.join('')).val()
     },
 
     checkVal: function(allow) {
       var len = this.mask.length
       //try to place characters where they belong
-      var test = this.$element.val()
+      var test = this.$user.val()
       var lastMatch = -1
       
       for (var i = 0, pos = 0; i < len; i++) {
@@ -306,11 +306,11 @@
         }
       }
       if (!allow && lastMatch + 1 < this.partialPosition) {
-        this.$element.val("")
+        this.$user.val("")
         this.clearBuffer(0, len)
       } else if (allow || lastMatch + 1 >= this.partialPosition) {
         this.writeBuffer()
-        if (!allow) this.$element.val(this.$element.val().substring(0, lastMatch + 1))
+        if (!allow) this.$user.val(this.$user.val().substring(0, lastMatch + 1))
       }
       return (this.partialPosition ? i : this.firstNonMaskPos)
     }

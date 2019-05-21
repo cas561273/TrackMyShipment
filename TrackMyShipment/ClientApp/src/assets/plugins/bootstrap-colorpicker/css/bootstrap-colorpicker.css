@@ -142,8 +142,8 @@
 .colorpicker-selectors i + i {
   margin-left: 3px;
 }
-.colorpicker-element .input-group-addon i,
-.colorpicker-element .add-on i {
+.colorpicker-user .input-group-addon i,
+.colorpicker-user .add-on i {
   display: inline-block;
   cursor: pointer;
   height: 16px;

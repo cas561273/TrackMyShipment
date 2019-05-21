@@ -83,19 +83,19 @@
 
 	// Picker object
 
-	var Datepicker = function(element, options){
-		$(element).data('datepicker', this);
+	var Datepicker = function(user, options){
+		$(user).data('datepicker', this);
 		this._process_options(options);
 
 		this.dates = new DateArray();
 		this.viewDate = this.o.defaultViewDate;
 		this.focusDate = null;
 
-		this.element = $(element);
+		this.user = $(user);
 		this.isInline = false;
-		this.isInput = this.element.is('input');
-		this.component = this.element.hasClass('date') ? this.element.find('.add-on, .input-group-addon, .btn') : false;
-		this.hasInput = this.component && this.element.find('input').length;
+		this.isInput = this.user.is('input');
+		this.component = this.user.hasClass('date') ? this.user.find('.add-on, .input-group-addon, .btn') : false;
+		this.hasInput = this.component && this.user.find('input').length;
 		if (this.component && this.component.length === 0)
 			this.component = false;
 
@@ -104,7 +104,7 @@
 		this._attachEvents();
 
 		if (this.isInline){
-			this.picker.addClass('datepicker-inline').appendTo(this.element);
+			this.picker.addClass('datepicker-inline').appendTo(this.user);
 		}
 		else {
 			this.picker.addClass('datepicker-dropdown dropdown-menu');
@@ -349,37 +349,37 @@
 
             if (this.isInput) { // single input
                 this._events = [
-                    [this.element, events]
+                    [this.user, events]
                 ];
             }
             else if (this.component && this.hasInput) { // component: input + button
                 this._events = [
                     // For components that are not readonly, allow keyboard nav
-                    [this.element.find('input'), events],
+                    [this.user.find('input'), events],
                     [this.component, {
                         click: $.proxy(this.show, this)
                     }]
                 ];
             }
-			else if (this.element.is('div')){  // inline datepicker
+			else if (this.user.is('div')){  // inline datepicker
 				this.isInline = true;
 			}
 			else {
 				this._events = [
-					[this.element, {
+					[this.user, {
 						click: $.proxy(this.show, this)
 					}]
 				];
 			}
 			this._events.push(
-				// Component: listen for blur on element descendants
-				[this.element, '*', {
+				// Component: listen for blur on user descendants
+				[this.user, '*', {
 					blur: $.proxy(function(e){
 						this._focused_from = e.target;
 					}, this)
 				}],
-				// Input: listen for blur on element
-				[this.element, {
+				// Input: listen for blur on user
+				[this.user, {
 					blur: $.proxy(function(e){
 						this._focused_from = e.target;
 					}, this)
@@ -388,7 +388,7 @@
 
 			if (this.o.immediateUpdates) {
 				// Trigger input updates immediately on changed year/month
-				this._events.push([this.element, {
+				this._events.push([this.user, {
 					'changeYear changeMonth': $.proxy(function(e){
 						this.update(e.date);
 					}, this)
@@ -406,8 +406,8 @@
 					mousedown: $.proxy(function(e){
 						// Clicked outside the datepicker, hide it
 						if (!(
-							this.element.is(e.target) ||
-							this.element.find(e.target).length ||
+							this.user.is(e.target) ||
+							this.user.find(e.target).length ||
 							this.picker.is(e.target) ||
 							this.picker.find(e.target).length ||
 							this.picker.hasClass('datepicker-inline')
@@ -436,7 +436,7 @@
 			var date = altdate || this.dates.get(-1),
 				local_date = this._utc_to_local(date);
 
-			this.element.trigger({
+			this.user.trigger({
 				type: event,
 				date: local_date,
 				dates: $.map(this.dates, this._utc_to_local),
@@ -457,8 +457,8 @@
 		},
 
 		show: function(){
-      var element = this.component ? this.element.find('input') : this.element;
-			if (element.attr('readonly') && this.o.enableOnReadonly === false)
+      var user = this.component ? this.user.find('input') : this.user;
+			if (user.attr('readonly') && this.o.enableOnReadonly === false)
 				return;
 			if (!this.isInline)
 				this.picker.appendTo(this.o.container);
@@ -467,7 +467,7 @@
 			this._attachSecondaryEvents();
 			this._trigger('show');
 			if ((window.navigator.msMaxTouchPoints || 'ontouchstart' in document) && this.o.disableTouchKeyboard) {
-				$(this.element).blur();
+				$(this.user).blur();
 			}
 			return this;
 		},
@@ -486,8 +486,8 @@
 			if (
 				this.o.forceParse &&
 				(
-					this.isInput && this.element.val() ||
-					this.hasInput && this.element.find('input').val()
+					this.isInput && this.user.val() ||
+					this.hasInput && this.user.find('input').val()
 				)
 			)
 				this.setValue();
@@ -500,9 +500,9 @@
 			this._detachEvents();
 			this._detachSecondaryEvents();
 			this.picker.remove();
-			delete this.element.data().datepicker;
+			delete this.user.data().datepicker;
 			if (!this.isInput){
-				delete this.element.data().date;
+				delete this.user.data().date;
 			}
 			return this;
 		},
@@ -561,15 +561,15 @@
 		},
 
 		clearDates: function(){
-			var element;
+			var user;
 			if (this.isInput) {
-				element = this.element;
+				user = this.user;
 			} else if (this.component) {
-				element = this.element.find('input');
+				user = this.user.find('input');
 			}
 
-			if (element) {
-				element.val('');
+			if (user) {
+				user.val('');
 			}
 
 			this.update();
@@ -602,11 +602,11 @@
 			var formatted = this.getFormattedDate();
 			if (!this.isInput){
 				if (this.component){
-					this.element.find('input').val(formatted);
+					this.user.find('input').val(formatted);
 				}
 			}
 			else {
-				this.element.val(formatted);
+				this.user.val(formatted);
 			}
 			return this;
 		},
@@ -666,14 +666,14 @@
 				appendOffset = container.offset();
 
 			var parentsZindex = [];
-			this.element.parents().each(function(){
+			this.user.parents().each(function(){
 				var itemZIndex = $(this).css('z-index');
 				if (itemZIndex !== 'auto' && itemZIndex !== 0) parentsZindex.push(parseInt(itemZIndex));
 			});
 			var zIndex = Math.max.apply(Math, parentsZindex) + this.o.zIndexOffset;
-			var offset = this.component ? this.component.parent().offset() : this.element.offset();
-			var height = this.component ? this.component.outerHeight(true) : this.element.outerHeight(false);
-			var width = this.component ? this.component.outerWidth(true) : this.element.outerWidth(false);
+			var offset = this.component ? this.component.parent().offset() : this.user.offset();
+			var height = this.component ? this.component.outerHeight(true) : this.user.outerHeight(false);
+			var width = this.component ? this.component.outerWidth(true) : this.user.outerWidth(false);
 			var left = offset.left - appendOffset.left,
 				top = offset.top - appendOffset.top;
 
@@ -758,13 +758,13 @@
 			}
 			else {
 				dates = this.isInput
-						? this.element.val()
-						: this.element.data('date') || this.element.find('input').val();
+						? this.user.val()
+						: this.user.data('date') || this.user.find('input').val();
 				if (dates && this.o.multidate)
 					dates = dates.split(this.o.multidateSeparator);
 				else
 					dates = [dates];
-				delete this.element.data().date;
+				delete this.user.data().date;
 			}
 
 			dates = $.map(dates, $.proxy(function(date){
@@ -800,7 +800,7 @@
 				this._trigger('clearDate');
 
 			this.fill();
-			this.element.change();
+			this.user.change();
 			return this;
 		},
 
@@ -1231,15 +1231,15 @@
 			if (!which || which !== 'view') {
 				this._trigger('changeDate');
 			}
-			var element;
+			var user;
 			if (this.isInput){
-				element = this.element;
+				user = this.user;
 			}
 			else if (this.component){
-				element = this.element.find('input');
+				user = this.user.find('input');
 			}
-			if (element){
-				element.change();
+			if (user){
+				user.change();
 			}
 			if (this.o.autoclose && (!which || which === 'date')){
 				this.hide();
@@ -1428,15 +1428,15 @@
 					this._trigger('changeDate');
 				else
 					this._trigger('clearDate');
-				var element;
+				var user;
 				if (this.isInput){
-					element = this.element;
+					user = this.user;
 				}
 				else if (this.component){
-					element = this.element.find('input');
+					user = this.user.find('input');
 				}
-				if (element){
-					element.change();
+				if (user){
+					user.change();
 				}
 			}
 		},
@@ -1454,9 +1454,9 @@
 		}
 	};
 
-	var DateRangePicker = function(element, options){
-		$(element).data('datepicker', this);
-		this.element = $(element);
+	var DateRangePicker = function(user, options){
+		$(user).data('datepicker', this);
+		this.user = $(user);
 		this.inputs = $.map(options.inputs, function(i){
 			return i.jquery ? i[0] : i;
 		});
@@ -1530,12 +1530,12 @@
 		},
 		remove: function(){
 			$.map(this.pickers, function(p){ p.remove(); });
-			delete this.element.data().datepicker;
+			delete this.user.data().datepicker;
 		}
 	};
 
 	function opts_from_el(el, prefix){
-		// Derive options from element data-attrs
+		// Derive options from user data-attrs
 		var data = $(el).data(),
 			out = {}, inkey,
 			replace = new RegExp('^' + prefix.toLowerCase() + '([A-Z])');
@@ -1609,7 +1609,7 @@
 			return this;
 
 		if (this.length > 1)
-			throw new Error('Using only allowed for the collection of a single element (' + option + ' function)');
+			throw new Error('Using only allowed for the collection of a single user (' + option + ' function)');
 		else
 			return internal_return;
 	};

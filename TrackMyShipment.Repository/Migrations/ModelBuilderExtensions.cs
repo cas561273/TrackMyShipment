@@ -1,21 +1,21 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using TrackMyShipment.Repository.Constant;
 using TrackMyShipment.Repository.Models;
 
 namespace TrackMyShipment.Repository.Migrations
 {
     public static class ModelBuilderExtensions
     {
-        //todo. Replace string literals with constants.
         public static void Seed(this ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Role>().HasData(
-                new Role {Id = 1, Name = "admin"},
-                new Role {Id = 2, Name = "customer"},
-                new Role {Id = 3, Name = "carrier"});
+                new Role { Id = 1, Name = "admin" },
+                new Role { Id = 2, Name = "customer" },
+                new Role { Id = 3, Name = "carrier" });
 
             modelBuilder.Entity<Subscription>().HasData(
-                new Subscription {Id = 1, Status = "free"},
-                new Subscription {Id = 2, Status = "paid"});
+                new Subscription { Id = 1, Status = "free" },
+                new Subscription { Id = 2, Status = "paid" });
 
             modelBuilder.Entity<User>()
                 .HasIndex(u => u.Email)

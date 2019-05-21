@@ -1,154 +1,184 @@
+<style>
+  #inner {
+    width: 80%;
+    margin: 0 0 0 200px;
+  }
+</style>
 
-<div class="state-overview">
+
+
+<div *ngIf="currentUser?.role==='admin'">
+  <div class="state-overview">
+    <div class="row">
+      <div class="col-xl-3 col-md-6 col-12">
+        <div class="info-box bg-blue">
+          <span class="info-box-icon push-bottom"><i class="material-icons">style</i></span>
+          <div class="info-box-content">
+            <span class="info-box-text">Count Carriers</span>
+            <span class="info-box-number">{{carriers?.length!=null ? '' : 'Loading..' }} {{carriers?.length}}</span>
+            <div class="progress">
+              <div class="progress-bar width-60"></div>
+            </div>
+            <span class="progress-description">
+              60% Increase in 28 Days
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-xl-3 col-md-6 col-12">
+        <div class="info-box bg-orange">
+          <span class="info-box-icon push-bottom"><i class="material-icons">card_travel</i></span>
+          <div class="info-box-content">
+            <span class="info-box-text">New Booking</span>
+            <span class="info-box-number">155</span>
+            <div class="progress">
+              <div class="progress-bar width-40"></div>
+            </div>
+            <span class="progress-description">
+              40% Increase in 28 Days
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-xl-3 col-md-6 col-12">
+        <div class="info-box bg-purple">
+          <span class="info-box-icon push-bottom"><i class="material-icons">phone_in_talk</i></span>
+          <div class="info-box-content">
+            <span class="info-box-text">Inquiry</span>
+            <span class="info-box-number">52</span>
+            <div class="progress">
+              <div class="progress-bar width-80"></div>
+            </div>
+            <span class="progress-description">
+              80% Increase in 28 Days
+            </span>
+          </div>
+        </div>
+      </div>
+      <div class="col-xl-3 col-md-6 col-12">
+        <div class="info-box bg-success">
+          <span class="info-box-icon push-bottom"><i class="material-icons">monetization_on</i></span>
+          <div class="info-box-content">
+            <span class="info-box-text">Total Price</span>
+            <span class="info-box-number">13,921</span><span>$</span>
+            <div class="progress">
+              <div class="progress-bar width-60"></div>
+            </div>
+            <span class="progress-description">
+              60% Increase in 28 Days
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
   <div class="row">
-    <div class="col-xl-3 col-md-6 col-12">
-      <div class="info-box bg-blue">
-        <span class="info-box-icon push-bottom"><i class="material-icons">style</i></span>
-        <div class="info-box-content">
-          <span class="info-box-text">Orders</span>
-          <span class="info-box-number">450</span>
-          <div class="progress">
-            <div class="progress-bar width-60"></div>
+    <div class="col-md-12">
+      <div class="card card-box">
+        <div class="card-head">
+          <header>Chart Survey</header>
+          <div class="tools">
+            <a class="fa fa-repeat btn-color " href="javascript:;"></a>
+            <a class=" btn-color fa fa-chevron-down" href="javascript:;"></a>
+            <a class=" btn-color fa fa-times" href="javascript:;"></a>
           </div>
-          <span class="progress-description">
-            60% Increase in 28 Days
-          </span>
         </div>
-      </div>
-    </div>
-
-    <div class="col-xl-3 col-md-6 col-12">
-      <div class="info-box bg-orange">
-        <span class="info-box-icon push-bottom"><i class="material-icons">card_travel</i></span>
-        <div class="info-box-content">
-          <span class="info-box-text">New Booking</span>
-          <span class="info-box-number">155</span>
-          <div class="progress">
-            <div class="progress-bar width-40"></div>
+        <div class="card-body">
+          <div class="row text-center">
+            <div class="col-sm-3 col-6">
+              <h4 class="margin-0">$ 209 </h4>
+              <p class="text-muted"> Today's Income</p>
+            </div>
+            <div class="col-sm-3 col-6">
+              <h4 class="margin-0">$ 837 </h4>
+              <p class="text-muted">This Week's Income</p>
+            </div>
+            <div class="col-sm-3 col-6">
+              <h4 class="margin-0">$ 3410 </h4>
+              <p class="text-muted">This Month's Income</p>
+            </div>
+            <div class="col-sm-3 col-6">
+              <h4 class="margin-0">$ 78,000 </h4>
+              <p class="text-muted">This Year's Income</p>
+            </div>
           </div>
-          <span class="progress-description">
-            40% Increase in 28 Days
-          </span>
-        </div>
-      </div>
-    </div>
-
-    <div class="col-xl-3 col-md-6 col-12">
-      <div class="info-box bg-purple">
-        <span class="info-box-icon push-bottom"><i class="material-icons">phone_in_talk</i></span>
-        <div class="info-box-content">
-          <span class="info-box-text">Inquiry</span>
-          <span class="info-box-number">52</span>
-          <div class="progress">
-            <div class="progress-bar width-80"></div>
+          <div class="row">
+            <div id="area_line_chart" class="width-100"></div>
           </div>
-          <span class="progress-description">
-            80% Increase in 28 Days
-          </span>
-        </div>
-      </div>
-    </div>
-    <div class="col-xl-3 col-md-6 col-12">
-      <div class="info-box bg-success">
-        <span class="info-box-icon push-bottom"><i class="material-icons">monetization_on</i></span>
-        <div class="info-box-content">
-          <span class="info-box-text">Total Earning</span>
-          <span class="info-box-number">13,921</span><span>$</span>
-          <div class="progress">
-            <div class="progress-bar width-60"></div>
-          </div>
-          <span class="progress-description">
-            60% Increase in 28 Days
-          </span>
         </div>
       </div>
     </div>
   </div>
 </div>
 
-<div class="row">
-  <div class="col-md-12">
-    <div class="card card-box">
-      <div class="card-head">
-        <header>Chart Survey</header>
-        <div class="tools">
-          <a class="fa fa-repeat btn-color box-refresh" href="javascript:;"></a>
-          <a class="t-collapse btn-color fa fa-chevron-down" href="javascript:;"></a>
-          <a class="t-close btn-color fa fa-times" href="javascript:;"></a>
-        </div>
-      </div>
-      <div class="card-body no-padding height-9">
-        <div class="row text-center">
-          <div class="col-sm-3 col-6">
-            <h4 class="margin-0">$ 209 </h4>
-            <p class="text-muted"> Today's Income</p>
-          </div>
-          <div class="col-sm-3 col-6">
-            <h4 class="margin-0">$ 837 </h4>
-            <p class="text-muted">This Week's Income</p>
-          </div>
-          <div class="col-sm-3 col-6">
-            <h4 class="margin-0">$ 3410 </h4>
-            <p class="text-muted">This Month's Income</p>
-          </div>
-          <div class="col-sm-3 col-6">
-            <h4 class="margin-0">$ 78,000 </h4>
-            <p class="text-muted">This Year's Income</p>
-          </div>
-        </div>
-        <div class="row">
-          <div id="area_line_chart" class="width-100"></div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
+<div *ngIf="currentUser?.role==='admin';else other_content">
 
-
-<div class="row">
-  <div class="col-md-12 col-sm-12">
-    <div class="card  card-box">
-      <div class="card-head">
-        <header>Carriers list</header>
-        <div class="tools">
-          <a class="fa fa-repeat btn-color box-refresh" href="javascript:;"></a>
-          <a class="t-collapse btn-color fa fa-chevron-down" href="javascript:;"></a>
-          <a class="t-close btn-color fa fa-times" href="javascript:;"></a>
+  <div class="row">
+    <div class="col-md-12 col-sm-12">
+      <div class="card  card-box">
+        <div class="card-head">
+          <header>Carriers list</header>
+          <div class="tools">
+            <a class="fa fa-repeat btn-color " (click)="refresh()"></a>
+            <a class=" btn-color fa fa-plus" (click)="openDialog()"></a>
+            <a class=" btn-color fa fa-times" href="javascript:;"></a>
+          </div>
         </div>
-      </div>
-      <div class="card-body ">
-        <div class="table-wrap">
+        <div class="card-body ">
           <div class="table-responsive">
-            <table class="table display product-overview mb-30" id="support_table5">
+            <table class="table display" id="support_table5">
               <thead>
                 <tr>
                   <th>Id</th>
                   <th>Name</th>
-                  <th>Code</th>
                   <th>Phone</th>
-                  <th>Logo</th>
-                  <th>Edit</th>
-                  <th>Price</th>
+                  <th>Cost</th>
+                  <th>Status</th>
                   <th>Edit</th>
                 </tr>
               </thead>
               <tbody>
-                <tr *ngFor="let carrier of carriers" [ngClass]="{'': carrier.status}">
-                  <td>{{carrier.id}}</td>
-                  <td>{{carrier.name}}</td>
-                  <td>{{carrier.code}}</td>
+                <tr *ngFor="let carrier of carriers; let i=index; trackBy:identify">
+                  <th scope="row">{{i+1}}</th>
+                  <td>{{carrier.name + ' ' + carrier.code}}</td>
                   <td>{{carrier.phone}}</td>
-                  <td>{{carrier.logo}}</td>
-                  <td>Single</td>
+
                   <td>
-                    <span class="label label-sm label-success">paid</span>
+                    <div *ngIf="carrier.cost;else other_content">
+                      <span class="label label-sm label-success">paid</span>
+                    </div>
+                    <ng-template #other_content>
+                      <span class="label label-sm label-warning">free</span>
+                    </ng-template>
                   </td>
+
                   <td>
-                    <a href="edit_booking.html" class="btn btn-tbl-edit btn-xs">
+
+                    <div *ngIf="carrier.status; else deactivateStatus">
+                      <button class="label label-sm label-success" (click)="changeStatus(carrier)">Active</button>
+                    </div>
+
+                    <ng-template #deactivateStatus>
+                      <button class="label label-sm label-primary" (click)="changeStatus(carrier)">Deactivate</button>
+                    </ng-template>
+
+
+                  </td>
+
+                  <td>
+                    <button class="btn btn-tbl-edit btn-xs" [routerLink]="['/main/carrier-detail',carrier.id]">
                       <i class="fa fa-pencil"></i>
-                    </a>
-                    <button class="btn btn-tbl-delete btn-xs">
+                    </button>
+                    <button class="btn btn-tbl-delete btn-xs" (click)="delete(carrier)">
                       <i class="fa fa-trash-o "></i>
+                    </button>
+
+                    <button class="btn btn-tbl-add btn-xs" [routerLink]="['/main/carrier',carrier.id] ">
+                      <i class="fa fa-users "></i>
                     </button>
                   </td>
                 </tr>
@@ -159,4 +189,54 @@
       </div>
     </div>
   </div>
+
+
 </div>
+<ng-template #other_content>
+  <div id="inner">
+    <div class="row">
+      <div class="col-md-10 col-sm-10">
+        <div class="card  card-box">
+          <div class="card-head">
+            <header>Available Carriers list</header>
+            <div class="tools">
+              <a class="fa fa-repeat btn-color " (click)="refresh()"></a>
+              <a class=" btn-color fa fa-cart-plus" href="javascript:;"></a>
+              <a class=" btn-color fa fa-times" href="javascript:;"></a>
+            </div>
+          </div>
+          <div class="card-body ">
+            <div class="table-responsive">
+              <table class="table display" id="support_table5">
+                <thead>
+                  <tr>
+                    <th>Id</th>
+                    <th>Logo</th>
+                    <th>Name</th>
+                    <th>Connect</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let carrier of carriers;let i=index; trackBy:identify">
+                    <th scope="row">{{i+1}}</th>
+                    <td>
+                      <div class="sidebar-logocarrier">
+                        <img src="{{carrier.logo}}" class="img-responsive" alt="Not Found Logo" />
+                      </div>
+                    </td>
+                    <td>{{carrier.name}}</td>
+
+                    <td>
+                      <button mat-raised-button color="primary" (click)="subscribe(carrier)">Subscribe</button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</ng-template>

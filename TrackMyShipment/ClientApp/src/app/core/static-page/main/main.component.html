@@ -1,0 +1,50 @@
+
+  <!-- start header -->
+  <app-header></app-header>
+  <!-- end header -->
+  <!-- start page container -->
+  <div class="page-container">
+
+    <div class="sidebar-container">
+
+      <app-sidebar></app-sidebar>
+    
+
+
+    <div class="page-content-wrapper">
+
+      <div class="page-content">
+        <div class="wrap">
+          <div class="page-bar">
+            <div class="page-title-breadcrumb">
+              <div class=" pull-left">
+                <div class="page-title">Dashboard</div>
+              </div>
+              <ol class="breadcrumb page-breadcrumb pull-right">
+                <li>
+                  <i class="fa fa-home"></i>&nbsp;<a class="parent-item" [routerLink]="['home']">Home</a>&nbsp;<i class="fa fa-angle-right"></i>
+                </li>
+                <li class="active">Dashboard</li>
+              </ol>
+            </div>
+          </div>
+          <router-outlet></router-outlet>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  </div>
+
+<!--<div class="page-footer">
+  <div class="page-footer-inner">
+    2019 &copy; IT-Craft Template
+    <a href="mailto:redstartheme@gmail.com" target="_top" class="makerCss">TrackMyShipment-Theme</a>
+  </div>
+  <div class="scroll-to-top">
+    <i class="icon-arrow-up"></i>
+  </div>
+
+</div>-->
+<!-- end page container -->

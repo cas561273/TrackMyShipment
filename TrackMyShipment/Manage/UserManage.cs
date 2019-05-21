@@ -71,6 +71,13 @@ namespace TrackMyShipment.Manage
             var mapper = new MapperConfiguration(cfg => cfg.CreateMap<User, EditUserModel>()).CreateMapper();
             return  mapper.Map<IEnumerable<User>, IEnumerable<EditUserModel>>(carrierUsers);
         }
+        public async Task<IEnumerable<EditUserModel>> GetCarrierUsersByIdAsync(int id)
+        {
+            IEnumerable<User> carrierUsers = await _userService.GetCarrierUsersByIdAsync(id);
+            if (carrierUsers == null) return null;
+            var mapper = new MapperConfiguration(cfg => cfg.CreateMap<User, EditUserModel>()).CreateMapper();
+            return mapper.Map<IEnumerable<User>, IEnumerable<EditUserModel>>(carrierUsers);
+        }
 
         public async Task<User> GetByEmailUser(string email)
         {

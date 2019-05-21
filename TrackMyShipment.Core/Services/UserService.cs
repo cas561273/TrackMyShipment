@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using TrackMyShipment.Core.Helper;
 using TrackMyShipment.Core.Interfaces;
 using TrackMyShipment.Repository.Constant;
 using TrackMyShipment.Repository.Interfaces;
@@ -31,6 +30,7 @@ namespace TrackMyShipment.Core.Services
             return addedUser.Entity;
         }
 
+
         public async Task<User> PutUserCarrierAsync(User carrier)
         {
             User existedUser = await _context.UserExistsAsync(carrier);
@@ -39,6 +39,7 @@ namespace TrackMyShipment.Core.Services
                 carrier.RoleId = await _context.GetRoleIdAsync(Roles.CARRIER);
                 carrier.SubscriptionId = await _context.GetSubscribeIdAsync(Subscribe.FREE);
                 var addedUser  =  await _context.AddAsync(carrier);
+                await _context.CompleteAsync();
                 return addedUser.Entity;
             }
             return null;
@@ -60,6 +61,11 @@ namespace TrackMyShipment.Core.Services
         public async Task<IEnumerable<User>> GetCarrierUsersAsync()
         {
            return await _context.GetCarrierUsersAsync();
+        }
+
+        public async Task<IEnumerable<User>> GetCarrierUsersByIdAsync(int id)
+        {
+            return await _context.GetCarrierUsersByIdAsync(id);
         }
 
         public async Task<User> GetUserByEmailAsync(string email)

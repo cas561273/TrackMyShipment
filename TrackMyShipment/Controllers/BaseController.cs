@@ -16,14 +16,16 @@ namespace TrackMyShipment.Controllers
         protected readonly CompanyManage _companyManage;
         protected readonly AddressManage _addressManage;
         protected readonly SubscriptionManage _subscriptionManage;
+        protected readonly ObjectiveManage ObjectiveManage;
 
-        protected BaseController(UserManage userManage, CarrierManage carrierManage,AddressManage addressManage, CompanyManage companyManage, SubscriptionManage subscriptionManage)
+        protected BaseController(ObjectiveManage objectiveManage,UserManage userManage, CarrierManage carrierManage,AddressManage addressManage, CompanyManage companyManage, SubscriptionManage subscriptionManage)
         {
             _userManage = userManage;
             _carrierManage = carrierManage;
             _addressManage = addressManage;
             _companyManage = companyManage;
             _subscriptionManage = subscriptionManage;
+            ObjectiveManage = objectiveManage;
         }
  
         protected async Task<User> CurrentUser()
@@ -33,13 +35,13 @@ namespace TrackMyShipment.Controllers
             return  await _userManage.GetByEmailUser(claimsIdentity.Name);
         }
   
-        protected async Task<RegistrationModel> UserInfo()
+        protected async Task<InfoUserModel> UserInfo()
         {
             var claimsIdentity = User.Identity as ClaimsIdentity;
             if (claimsIdentity == null) return null;
             var user =  await _userManage.GetByEmailUser(claimsIdentity.Name);
-            return new RegistrationModel {FirstName = user.FirstName, LastName = user.LastName,
-                Phone = user.Phone,CompanyName = user.Company.Name,Email = user.Email};
+            return new InfoUserModel {FirstName = user.FirstName, LastName = user.LastName,
+                Phone = user.Phone,CompanyName = user.Company.Name,Email = user.Email,Role = user.Role.Name};
         }
     }
 }

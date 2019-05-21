@@ -1,0 +1,32 @@
+<form role="form" action="" method="put"  #carrier="ngForm" (ngSubmit)="addCarrier(carrier)">
+  <div class="form-group">
+    <ol>
+      <li>
+        <mat-form-field>
+          <input matInput name="firstName" [(ngModel)]="firstName" placeholder="FirstName">
+        </mat-form-field>
+      </li>
+      <li>
+        <mat-form-field>
+          <input matInput name="lastName" [(ngModel)]="lastName" placeholder="LastName">
+        </mat-form-field>
+      </li>
+      <li>
+        <mat-form-field>
+          <input matInput name="email" [(ngModel)]="email" placeholder="Email">
+        </mat-form-field>
+      </li>
+      <li>
+        <mat-form-field>
+          <input matInput name="phone"  [(ngModel)]="phone" placeholder="Phone">
+        </mat-form-field>
+      </li>
+      <li>
+        <mat-form-field>
+          <input matInput type="password" name="password" [(ngModel)]="password" placeholder="Password">
+        </mat-form-field>
+      </li>
+    </ol>
+    <button type="submit" class="btn">Add!</button>
+  </div>
+  </form>

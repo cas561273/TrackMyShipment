@@ -9,5 +9,7 @@ namespace TrackMyShipment.Repository.Interfaces
     {
         Task<IEnumerable<Address>> GetMyAddressAsync(int? userId);
         Task<Address> GetAddressByIdAsync(int? id);
+        Task<Address> MyActiveAddressAsync(int? userId);
+
     }
 }

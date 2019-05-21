@@ -12,8 +12,8 @@ namespace TrackMyShipment.Controllers
     [ApiController]
     public class AddressController : BaseController
     {
-        public AddressController(UserManage userManage, CarrierManage carrierManage, AddressManage addressManage, CompanyManage companyManage, SubscriptionManage subscriptionManage)
-            : base(userManage, carrierManage, addressManage, companyManage, subscriptionManage)
+        public AddressController(ObjectiveManage objectiveManage,UserManage userManage, CarrierManage carrierManage, AddressManage addressManage, CompanyManage companyManage, SubscriptionManage subscriptionManage)
+            : base(objectiveManage,userManage, carrierManage, addressManage, companyManage, subscriptionManage)
         {
         }
 
@@ -69,6 +69,28 @@ namespace TrackMyShipment.Controllers
             int userId = user.Id;
             IEnumerable<AddressModel> myAddress = await _addressManage.MyAddress(userId);
 
+            return myAddress != null
+                ? Json(new Request
+                {
+                    Msg = "Received successful",
+                    Data = myAddress,
+                    State = RequestState.Success
+                })
+                : Json(new Request
+                {
+                    Msg = "Not Found",
+                    State = RequestState.Failed
+                });
+        }
+
+        [HttpGet]
+        [Route("MyActiveAddress")]
+        [Authorize(Roles = "admin,customer")]
+        public async Task<IActionResult> MyActiveAddress()
+        {
+            User user = await CurrentUser();
+            AddressModel myAddress = await _addressManage.MyActiveAddress(user);
+            
             return myAddress != null
                 ? Json(new Request
                 {

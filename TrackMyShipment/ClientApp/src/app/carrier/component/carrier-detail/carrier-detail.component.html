@@ -1,0 +1,77 @@
+
+<style>
+  .example-form img {
+    height: 100px;
+    width: 100px;
+  }
+
+  .wrap-detail {
+    margin: 1% 22% 0 17%;
+  }
+</style>
+
+<div class="wrap-detail">
+<div class="row">
+  <div class="col-md-10">
+    <div class="card card-box">
+      <div class="card-head">
+        <header>Edit Carrier</header>
+        <div class="tools">
+          <a class="fa fa-repeat btn-color " href="javascript:;"></a>
+          <a class=" btn-color fa fa-plus"(click)="openModal()"></a>
+          <a class=" btn-color fa fa-times" href="javascript:;"></a>
+        </div>
+      </div>
+      <div class="card-body ">
+        <div class="table-responsive">
+          <form class="example-form">
+            <div class="sidebar-userpic">
+              <img src="{{carrier.logo}}"/>
+            </div>
+            <mat-form-field class="example-full-width">
+              <input matInput placeholder="Identification (disabled)"  disabled="" value="{{carrier?.id!=null ? '' : 'loading..' }} {{carrier?.id}} ">
+            </mat-form-field>
+            <table class="example-full-width" cellspacing="0">
+              <tr>
+                <td>
+                  <mat-form-field class="example-full-width">
+                    <input placeholder="Name" matInput [(ngModel)]="carrier.name" name="name">
+                  </mat-form-field>
+                </td>
+                <td>
+                  <mat-form-field class="example-full-width">
+                    <input placeholder="Phone" matInput [(ngModel)]="carrier.phone" name="phone">
+                  </mat-form-field>
+                </td>
+              </tr>
+            </table>
+
+            <table class="example-full-width" cellspacing="0">
+              <tr>
+                <td>
+                  <mat-form-field class="example-full-width">
+                    <input placeholder="Code" matInput [(ngModel)]="carrier.code" name="code">
+                  </mat-form-field>
+                </td>
+                <td>
+                  <mat-form-field class="example-full-width">
+                    <input placeholder="Status" matInput [(ngModel)]="carrier.status" name="status">
+                  </mat-form-field>
+                </td>
+                <td>
+                  <mat-form-field class="example-full-width">
+                    <input matInput maxlength="5" placeholder="Cost" [(ngModel)]="carrier.cost" name="cost">
+                  </mat-form-field>
+                </td>
+              </tr>
+            </table>
+            <button mat-raised-button (click)="save()">Save</button>
+            <p *ngIf="msg!=null">Saved</p>
+
+          </form>
+        </div>
+      </div>
+    </div>
+    </div>
+</div>
+</div>

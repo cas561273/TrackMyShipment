@@ -696,7 +696,7 @@
    */
   var defaults = {
     horizontal: false, // horizontal mode layout ?
-    inline: false, //forces to show the colorpicker as an inline element
+    inline: false, //forces to show the colorpicker as an inline user
     color: false, //forces a color
     format: false, //forces a format
     input: 'input', // children input selector
@@ -753,31 +753,31 @@
       '<div class="colorpicker-selectors"></div>' +
       '</div>',
     align: 'right',
-    customClass: null, // custom class added to the colorpicker element
+    customClass: null, // custom class added to the colorpicker user
     colorSelectors: null // custom color aliases
   };
 
   /**
    * Colorpicker component class
    *
-   * @param {Object|String} element
+   * @param {Object|String} user
    * @param {Object} options
    * @constructor
    */
-  var Colorpicker = function(element, options) {
-    this.element = $(element).addClass('colorpicker-element');
-    this.options = $.extend(true, {}, defaults, this.element.data(), options);
+  var Colorpicker = function(user, options) {
+    this.user = $(user).addClass('colorpicker-user');
+    this.options = $.extend(true, {}, defaults, this.user.data(), options);
     this.component = this.options.component;
-    this.component = (this.component !== false) ? this.element.find(this.component) : false;
+    this.component = (this.component !== false) ? this.user.find(this.component) : false;
     if (this.component && (this.component.length === 0)) {
       this.component = false;
     }
-    this.container = (this.options.container === true) ? this.element : this.options.container;
+    this.container = (this.options.container === true) ? this.user : this.options.container;
     this.container = (this.container !== false) ? $(this.container) : false;
 
-    // Is the element an input? Should we search inside for any input?
-    this.input = this.element.is('input') ? this.element : (this.options.input ?
-      this.element.find(this.options.input) : false);
+    // Is the user an input? Should we search inside for any input?
+    this.input = this.user.is('input') ? this.user : (this.options.input ?
+      this.user.find(this.options.input) : false);
     if (this.input && (this.input.length === 0)) {
       this.input = false;
     }
@@ -864,12 +864,12 @@
         'change.colorpicker': $.proxy(this.change, this)
       });
       if (this.component === false) {
-        this.element.on({
+        this.user.on({
           'focus.colorpicker': $.proxy(this.show, this)
         });
       }
       if (this.options.inline === false) {
-        this.element.on({
+        this.user.on({
           'focusout.colorpicker': $.proxy(this.hide, this)
         });
       }
@@ -882,7 +882,7 @@
     }
 
     if ((this.input === false) && (this.component === false)) {
-      this.element.on({
+      this.user.on({
         'click.colorpicker': $.proxy(this.show, this)
       });
     }
@@ -898,7 +898,7 @@
     this.update();
 
     $($.proxy(function() {
-      this.element.trigger('create');
+      this.user.trigger('create');
     }, this));
   };
 
@@ -908,15 +908,15 @@
     constructor: Colorpicker,
     destroy: function() {
       this.picker.remove();
-      this.element.removeData('colorpicker', 'color').off('.colorpicker');
+      this.user.removeData('colorpicker', 'color').off('.colorpicker');
       if (this.input !== false) {
         this.input.off('.colorpicker');
       }
       if (this.component !== false) {
         this.component.off('.colorpicker');
       }
-      this.element.removeClass('colorpicker-element');
-      this.element.trigger({
+      this.user.removeClass('colorpicker-user');
+      this.user.trigger({
         type: 'destroy'
       });
     },
@@ -925,13 +925,13 @@
         return false;
       }
       var type = this.container && this.container[0] !== window.document.body ? 'position' : 'offset';
-      var element = this.component || this.element;
-      var offset = element[type]();
+      var user = this.component || this.user;
+      var offset = user[type]();
       if (this.options.align === 'right') {
-        offset.left -= this.picker.outerWidth() - element.outerWidth();
+        offset.left -= this.picker.outerWidth() - user.outerWidth();
       }
       this.picker.css({
-        top: offset.top + element.outerHeight(),
+        top: offset.top + user.outerHeight(),
         left: offset.left
       });
     },
@@ -954,14 +954,14 @@
           'mousedown.colorpicker': $.proxy(this.hide, this)
         });
       }
-      this.element.trigger({
+      this.user.trigger({
         type: 'showPicker',
         color: this.color
       });
     },
     hide: function(e) {
       if ((typeof e !== 'undefined') && e.target) {
-        // Prevent hide if triggered by an event and an element inside the colorpicker has been clicked/touched
+        // Prevent hide if triggered by an event and an user inside the colorpicker has been clicked/touched
         if (
           $(e.currentTarget).parents('.colorpicker').length > 0 ||
           $(e.target).parents('.colorpicker').length > 0
@@ -975,14 +975,14 @@
         'mousedown.colorpicker': this.hide
       });
       this.update();
-      this.element.trigger({
+      this.user.trigger({
         type: 'hidePicker',
         color: this.color
       });
     },
     updateData: function(val) {
       val = val || this.color.toString(false, this.format);
-      this.element.data('color', val);
+      this.user.data('color', val);
       return val;
     },
     updateInput: function(val) {
@@ -1066,7 +1066,7 @@
     setValue: function(val) { // set color manually
       this.color = this.createColor(val);
       this.update(true);
-      this.element.trigger({
+      this.user.trigger({
         type: 'changeColor',
         color: this.color,
         value: val
@@ -1093,7 +1093,7 @@
       if (this.hasInput()) {
         val = this.input.val();
       } else {
-        val = this.element.data('color');
+        val = this.user.data('color');
       }
       if ((val === undefined) || (val === '') || (val === null)) {
         // if not defined or empty, return default
@@ -1112,7 +1112,7 @@
         this.input.prop('disabled', true);
       }
       this.disabled = true;
-      this.element.trigger({
+      this.user.trigger({
         type: 'disable',
         color: this.color,
         value: this.getValue()
@@ -1124,7 +1124,7 @@
         this.input.prop('disabled', false);
       }
       this.disabled = false;
-      this.element.trigger({
+      this.user.trigger({
         type: 'enable',
         color: this.color,
         value: this.getValue()
@@ -1230,7 +1230,7 @@
       }
       this.update(true);
 
-      this.element.trigger({
+      this.user.trigger({
         type: 'changeColor',
         color: this.color
       });
@@ -1275,7 +1275,7 @@
           this.updatePicker();
         }
       }
-      this.element.trigger({
+      this.user.trigger({
         type: 'changeColor',
         color: this.color,
         value: this.input.val()
@@ -1287,7 +1287,7 @@
 
   $.fn.colorpicker = function(option) {
     var apiArgs = Array.prototype.slice.call(arguments, 1),
-      isSingleElement = (this.length === 1),
+      isSingleuser = (this.length === 1),
       returnValue = null;
 
     var $jq = this.each(function() {
@@ -1314,7 +1314,7 @@
         returnValue = $this;
       }
     });
-    return isSingleElement ? returnValue : $jq;
+    return isSingleuser ? returnValue : $jq;
   };
 
   $.fn.colorpicker.constructor = Colorpicker;

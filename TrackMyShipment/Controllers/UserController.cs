@@ -1,6 +1,6 @@
-﻿using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
 using TrackMyShipment.Manage;
 using TrackMyShipment.Repository.Models;
 using TrackMyShipment.ViewModel;
@@ -11,18 +11,18 @@ namespace TrackMyShipment.Controllers
     [ApiController]
     public class UserController : BaseController
     {
-        public UserController(UserManage userManage, CarrierManage carrierManage, AddressManage addressManage,CompanyManage companyManage,SubscriptionManage subscriptionManage)
-            : base(userManage, carrierManage, addressManage,companyManage, subscriptionManage)
+        public UserController(ObjectiveManage objectiveManage,UserManage userManage, CarrierManage carrierManage, AddressManage addressManage, CompanyManage companyManage, SubscriptionManage subscriptionManage)
+            : base(objectiveManage,userManage, carrierManage, addressManage, companyManage, subscriptionManage)
         {
         }
 
-        [Route("AddUserCarrier")]
-        [HttpPut]
+        [Route("AddUserCarrier/{id}")]
+        [HttpPost]
         [Authorize(Roles = "admin")]
-        public async Task<IActionResult> AddUserCarrier([FromBody] UserModel carrier, int carrierId)
+        public async Task<IActionResult> AddUserCarrier(int id,[FromBody] UserModel carrier)
         {
-            var currentCarrier = await _userManage.PutUserCarrier(carrier);
-            bool result = await _subscriptionManage.Subscribe(new Carrier { Id = carrierId }, currentCarrier);
+            User currentCarrier = await _userManage.PutUserCarrier(carrier);
+            bool result = await _subscriptionManage.Subscribe(new Carrier { Id = id }, currentCarrier);
             return result
                 ? Json(new Request
                 {
@@ -41,8 +41,8 @@ namespace TrackMyShipment.Controllers
         [Authorize(Roles = "admin")]
         public async Task<IActionResult> EditUserCarrier([FromBody] EditUserModel carrier)
         {
-            var currentCarrier = await _userManage.EditUserCarrier(carrier);
-            return currentCarrier!=null
+            User currentCarrier = await _userManage.EditUserCarrier(carrier);
+            return currentCarrier != null
                 ? Json(new Request
                 {
                     Msg = "Successfully edited",
@@ -56,7 +56,7 @@ namespace TrackMyShipment.Controllers
         }
 
         [Route("GetUsersCarrier")]
-        [HttpPut]
+        [HttpGet]
         [Authorize(Roles = "admin")]
         public async Task<IActionResult> GetUsersCarrier()
         {
@@ -75,34 +75,34 @@ namespace TrackMyShipment.Controllers
                 });
         }
 
-        [HttpPost]
-        [Route("Subscribe")]
-        [Authorize(Roles = "admin,customer")]
-        public async Task<IActionResult> Subscription([FromBody] int carrierId)
+        //carriers  carrier-id
+        [Route("usersOfCarrier/{id}")]
+        [HttpGet]
+        [Authorize(Roles = "admin")]
+        public async Task<IActionResult> GetUsersCarrierById(int id)
         {
-            var user = await CurrentUser();
-            var carrier = await _carrierManage?.GetByIdCarrier(carrierId);
-            var subscriptionStatus = await _subscriptionManage.Subscribe(carrier, user);
-
-            if (subscriptionStatus)
-                return Json(new Request
+            var carrierUsers = await _userManage.GetCarrierUsersByIdAsync(id);
+            return carrierUsers != null
+                ? Json(new Request
                 {
-                    State = RequestState.Success,
-                    Msg = "Successfully to subscribe"
+                    Data = carrierUsers,
+                    Msg = "Receive successfully",
+                    State = RequestState.Success
+                })
+                : Json(new Request
+                {
+                    Msg = "Failed to receive",
+                    State = RequestState.Failed
                 });
-            return Json(new Request
-            {
-                State = RequestState.Failed,
-                Msg = "Failed to subscribe"
-            });
         }
 
 
-        [HttpGet("Users/{carrierId}")]
+        //customer  carrier-id
+        [HttpGet("Users/{id}")]
         [Authorize(Roles = "admin,carrier")]
-        public async Task<IActionResult> ListUsersOfCarrier(int carrierId)
+        public async Task<IActionResult> ListUsersOfCarrier(int id)
         {
-            var myUsers = await _userManage.GetMyUsers(carrierId);
+            var myUsers = await _userManage.GetMyUsers(id);
             return myUsers != null
                 ? Json(new Request
                 {
@@ -115,6 +115,35 @@ namespace TrackMyShipment.Controllers
                     Msg = "Not received",
                     State = RequestState.Success
                 });
+        }
+
+
+        [HttpPost]
+        [Route("Subscribe")]
+        [Authorize(Roles = "admin,customer")]
+        public async Task<IActionResult> Subscription([FromBody] int carrierId)
+        {
+            User user = await CurrentUser();
+            Carrier carrier = await _carrierManage?.GetByIdCarrier(carrierId);
+            bool subscriptionStatus = await _subscriptionManage.Subscribe(carrier, user);
+
+            if (subscriptionStatus)
+            {
+                return Json(new Request
+                {
+                    State = RequestState.Success,
+                    Msg = "Successfully to Subscribe"
+                });
+            }
+            else
+            {
+                return Json(new Request
+                {
+                    State = RequestState.Failed,
+                    Msg = "Successfully to Unsubscribe"
+                });
+            }
+
         }
     }
 }

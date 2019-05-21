@@ -35,17 +35,27 @@ namespace TrackMyShipment.Repository.Implementations
             return await _context.Users.SingleOrDefaultAsync(u => u.Id == idUser);
         }
 
+        //Customer
         public async Task<IEnumerable<User>> GetMyUsersAsync(int? carrierId)
         {
-            IEnumerable<Supplies> relation = await _context.Supplies.Include("User").WhereAsync(u => u.CarrierId == carrierId);
-            return await relation.SelectAsync(u => u.User);
+            var supplies = await _context.Supplies.Include(x => x.User.Role).
+                WhereAsync(u => u.CarrierId == carrierId && u.User.Role.Name.Equals(Roles.CUSTOMER));
+            return await supplies.SelectAsync(u => u.User);
         }
         public async Task<IEnumerable<User>> GetCarrierUsersAsync()
         {
-            IEnumerable<User> carrier = await _context.Users.Include("Role").WhereAsync(u => u.Role.Name.Equals(Roles.CARRIER));
+            IEnumerable<User> carrier = await _context.Users.Include(nameof(Role)).WhereAsync(u => u.Role.Name.Equals(Roles.CARRIER));
             return carrier;
         }
 
+        //Carriers
+        public async Task<IEnumerable<User>> GetCarrierUsersByIdAsync(int id)
+        {
+            var supplies = await _context.Supplies.Include(x=> x.User.Role).
+                WhereAsync(u => u.CarrierId == id && u.User.Role.Name.Equals(Roles.CARRIER));
+            return await supplies.SelectAsync(u => u.User);
+        }
+    
         public async Task<User> UserExistsAsync(User userExist)
         {
             return await FetchUserAsync(u => u.Email == userExist.Email && u.Password == userExist.Password);

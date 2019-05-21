@@ -11,8 +11,8 @@ namespace TrackMyShipment.Controllers
     [ApiController]
     public class CarrierController : BaseController
     {
-        public CarrierController(UserManage userManage, CarrierManage carrierManage, AddressManage addressManage,CompanyManage companyManage,SubscriptionManage subscriptionManage)
-            : base(userManage, carrierManage, addressManage,companyManage,subscriptionManage)
+        public CarrierController(ObjectiveManage objectiveManage,UserManage userManage, CarrierManage carrierManage, AddressManage addressManage,CompanyManage companyManage,SubscriptionManage subscriptionManage)
+            : base(objectiveManage,userManage, carrierManage, addressManage,companyManage,subscriptionManage)
         {
         }
 
@@ -37,7 +37,7 @@ namespace TrackMyShipment.Controllers
 
 
         [Route("DeleteCarrier")]
-        [HttpDelete]
+        [HttpPost]
         [Authorize(Roles = "admin")]
         public async Task<IActionResult> DeleteCarrier([FromBody] int id)
         {
@@ -76,6 +76,26 @@ namespace TrackMyShipment.Controllers
                 });
         }
 
+        [Route("carrier/{id}")]
+        [HttpGet]
+        [Authorize(Roles = "admin")]
+        public async Task<IActionResult> GetCarrierById(int id)
+        {
+            var carrier = await _carrierManage.GetByIdCarrier(id);
+            return carrier != null
+                ? Json(new Request
+                {
+                    Data = carrier,
+                    Msg = "Receive successfully",
+                    State = RequestState.Success
+                })
+                : Json(new Request
+                {
+                    Msg = "Failed to receive",
+                    State = RequestState.Failed
+                });
+        }
+
         [Route("MyCarriers")]
         [HttpGet]
         [Authorize(Roles = "admin,customer,carrier")]
@@ -96,15 +116,15 @@ namespace TrackMyShipment.Controllers
                     State = RequestState.Success
                 });
         }
+    
 
-
-        [HttpPost("ChangeStatusCarrier")]
+    [HttpPost("ChangeStatusCarrier")]
         [Authorize(Roles = "admin,carrier")]
         public async Task<IActionResult> ChangeStatusCarrier([FromBody] int id)
         {
             var user = await CurrentUser();
             var relation = await _subscriptionManage.GetSubscribe(user.Id, id);
-            if (relation != null)
+            if (relation != null || user.Role.Name.Equals("admin"))
                 return await _carrierManage.ChangeStatusCarrier(id) == true
                     ? Json(new Request
                     {

@@ -9,11 +9,11 @@ $.fn.editableTableWidget = function (options) {
 			},
 			activeOptions = $.extend(buildDefaultOptions(), options),
 			ARROW_LEFT = 37, ARROW_UP = 38, ARROW_RIGHT = 39, ARROW_DOWN = 40, ENTER = 13, ESC = 27, TAB = 9,
-			element = $(this),
-			editor = activeOptions.editor.css('position', 'absolute').hide().appendTo(element.parent()),
+			user = $(this),
+			editor = activeOptions.editor.css('position', 'absolute').hide().appendTo(user.parent()),
 			active,
 			showEditor = function (select) {
-				active = element.find('td:focus');
+				active = user.find('td:focus');
 				if (active.length) {
 					editor.val(active.text())
 						.removeClass('error')
@@ -41,15 +41,15 @@ $.fn.editableTableWidget = function (options) {
 					active.html(originalContent);
 				}
 			},
-			movement = function (element, keycode) {
+			movement = function (user, keycode) {
 				if (keycode === ARROW_RIGHT) {
-					return element.next('td');
+					return user.next('td');
 				} else if (keycode === ARROW_LEFT) {
-					return element.prev('td');
+					return user.prev('td');
 				} else if (keycode === ARROW_UP) {
-					return element.parent().prev().children().eq(element.index());
+					return user.parent().prev().children().eq(user.index());
 				} else if (keycode === ARROW_DOWN) {
-					return element.parent().next().children().eq(element.index());
+					return user.parent().next().children().eq(user.index());
 				}
 				return [];
 			};
@@ -89,7 +89,7 @@ $.fn.editableTableWidget = function (options) {
 				editor.removeClass('error');
 			}
 		});
-		element.on('click keypress dblclick', showEditor)
+		user.on('click keypress dblclick', showEditor)
 		.css('cursor', 'pointer')
 		.keydown(function (e) {
 			var prevent = true,
@@ -110,7 +110,7 @@ $.fn.editableTableWidget = function (options) {
 			}
 		});
 
-		element.find('td').prop('tabindex', 1);
+		user.find('td').prop('tabindex', 1);
 
 		$(window).on('resize', function () {
 			if (editor.is(':visible')) {

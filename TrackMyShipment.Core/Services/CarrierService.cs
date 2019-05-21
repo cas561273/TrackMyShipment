@@ -4,6 +4,7 @@ using TrackMyShipment.Core.Interfaces;
 using TrackMyShipment.Repository.Interfaces;
 using TrackMyShipment.Repository.Models;
 using TrackMyShipment.Repository.Extensions;
+using Task = System.Threading.Tasks.Task;
 
 namespace TrackMyShipment.Core.Services
 {
@@ -50,7 +51,6 @@ namespace TrackMyShipment.Core.Services
         {
             return await _context.GetCarriersAsync(user);
         }
-
 
         public async Task<bool?> ChangeStatusCarrierAsync(int carrierId)
         {

@@ -1,12 +1,15 @@
 import { PricingComponent } from './component/pricing/pricing.component';
-import { RegistrationComponent } from './component/registration/registration.component';
-import { MainComponent } from './component/main/main.component';
+import { RegistrationComponent } from './core/auth/registration/registration.component';
+import { MainComponent } from './core/static-page/main/main.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { LoginComponent } from './component/login/login.component';
+import { LoginComponent } from './core/auth/login/login.component';
 import { HomeComponent } from './component/home/home.component';
-import { CarrierComponent } from './component/carrier/carrier.component';
-import { AuthService } from './services/authService';
+import { UsersCarrierComponent } from "./carrier/component/users-carrier/users-carrier.component";
+import { CarrierDetailComponent } from './carrier/component/carrier-detail/carrier-detail.component';
+import { MyCarriersComponent } from "./carrier/component/my-carriers/my-carriers.component";
+import { UserProfileComponent } from "./user/component/user-profile/user-profile.component";
+import { AddressComponent } from "./component/address/address.component";
 
 const routes: Routes = [ {path: '', redirectTo: 'login', pathMatch: 'full'},
 {path: 'login', component: LoginComponent},
@@ -17,7 +20,12 @@ const routes: Routes = [ {path: '', redirectTo: 'login', pathMatch: 'full'},
     { path: '', redirectTo: 'home', pathMatch: 'full'},
     { path: 'home', component: HomeComponent },
     { path: 'pricing', component: PricingComponent },
-    { path: 'carrier', component: CarrierComponent }
+    { path: 'carriers', component: UsersCarrierComponent },
+    { path: 'carrier/:id', component: UsersCarrierComponent },
+    { path: 'carrier-detail/:id', component: CarrierDetailComponent },
+    { path: 'my-carriers', component: MyCarriersComponent },
+    { path: 'user-profile', component: UserProfileComponent },
+    { path: 'my-address', component: AddressComponent }
   ]
   },
 ];

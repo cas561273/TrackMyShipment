@@ -1,0 +1,44 @@
+<mat-radio-group aria-label="Select an option">
+
+  <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+
+    <!--- Note that these columns can be defined in any order.
+          The actual rendered columns are set as a property on the row definition" -->
+    <!-- Position Column -->
+    <ng-container matColumnDef="position">
+      <th mat-header-cell *matHeaderCellDef> No. </th>
+      <td mat-cell *matCellDef="let element; let i=index"> {{i+1}} </td>
+    </ng-container>
+
+
+    <ng-container matColumnDef="city">
+      <th mat-header-cell *matHeaderCellDef> city </th>
+      <td mat-cell *matCellDef="let element let i=index">
+        <mat-radio-button  value="{{i}}">{{element.city}}</mat-radio-button>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="streetLine1">
+      <th mat-header-cell *matHeaderCellDef> streetLine1 </th>
+      <td mat-cell *matCellDef="let element"> {{element.streetLine1}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="streetLine2">
+      <th mat-header-cell *matHeaderCellDef> streetLine2 </th>
+      <td mat-cell *matCellDef="let element"> {{element.streetLine2}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="state">
+      <th mat-header-cell *matHeaderCellDef> state </th>
+      <td mat-cell *matCellDef="let element"> {{element.state}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="zipCode">
+      <th mat-header-cell *matHeaderCellDef> zipCode </th>
+      <td mat-cell *matCellDef="let element"> {{element.zipCode}} </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+</mat-radio-group>

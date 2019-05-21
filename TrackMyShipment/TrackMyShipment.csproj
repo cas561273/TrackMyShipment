@@ -38,6 +38,13 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="ClientApp\src\assets\css\pages\animate_page.css" />
+    <None Remove="ClientApp\src\assets\css\pages\animate_page.css" />
+    <None Remove="ClientApp\src\assets\css\pages\pricing.css" />
+    <None Remove="ClientApp\src\assets\css\pages\pricing.css" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\TrackMyShipment.Core\TrackMyShipment.Core.csproj" />
     <ProjectReference Include="..\TrackMyShipment.Repository\TrackMyShipment.Repository.csproj" />
   </ItemGroup>

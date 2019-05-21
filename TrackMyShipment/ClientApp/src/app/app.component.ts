@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { AuthService } from './services/authService';
+import { AuthService } from './core/auth/authService';
 import { Person } from './models/Person';
 import { Router } from '@angular/router';
 import { DataSharingService } from './services/dataSharing';

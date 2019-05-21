@@ -4543,6 +4543,13 @@ h4.media-heading {
     border: 2px solid rgb(210, 214, 222);
     border-radius: 50% 50% 50% 50%;
 }
+
+.sidebar-logocarrier img {
+
+  width: 75px;
+  border: 2px solid rgb(210, 214, 222);
+  border-radius: 50% 50% 50% 50%;
+}
 .sidebar-userpic-btn{
 	display: flex;
 	place-content: space-around;
@@ -5083,6 +5090,21 @@ tr.group:hover {
     padding: 5px !important;
     color: #fff !important;
     box-shadow: 0px 5px 25px 0px rgba(0, 0, 0, 0.2);
+}
+.btn-tbl-add{
+  background-color: green;
+  border-radius: 50% !important;
+  padding: 5px !important;
+  color: #fff !important;
+  box-shadow: 0px 5px 25px 0px rgba(0, 0, 0, 0.2);
+}
+
+.btn-tbl-users {
+  background-color: blue;
+  border-radius: 50% !important;
+  padding: 5px !important;
+  color: #fff !important;
+  box-shadow: 0px 5px 25px 0px rgba(0, 0, 0, 0.2);
 }
 .btn-tbl-edit:HOVER, .btn-tbl-delete:HOVER{
 	color: #fff;

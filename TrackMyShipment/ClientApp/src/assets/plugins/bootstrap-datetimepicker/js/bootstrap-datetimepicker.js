@@ -50,11 +50,11 @@
     }
   }
 
-  function elementOrParentIsFixed (element) {
-    var $element = $(element);
-    var $checkElements = $element.add($element.parents());
+  function userOrParentIsFixed (user) {
+    var $user = $(user);
+    var $checkusers = $user.add($user.parents());
     var isFixed = false;
-    $checkElements.each(function(){
+    $checkusers.each(function(){
       if ($(this).css('position') === 'fixed') {
         isFixed = true;
         return false;
@@ -73,41 +73,41 @@
   }
 
   // Picker object
-  var Datetimepicker = function (element, options) {
+  var Datetimepicker = function (user, options) {
     var that = this;
 
-    this.element = $(element);
+    this.user = $(user);
 
     // add container for single page application
     // when page switch the datetimepicker div will be removed also.
     this.container = options.container || 'body';
 
-    this.language = options.language || this.element.data('date-language') || 'en';
+    this.language = options.language || this.user.data('date-language') || 'en';
     this.language = this.language in dates ? this.language : this.language.split('-')[0]; // fr-CA fallback to fr
     this.language = this.language in dates ? this.language : 'en';
     this.isRTL = dates[this.language].rtl || false;
-    this.formatType = options.formatType || this.element.data('format-type') || 'standard';
-    this.format = DPGlobal.parseFormat(options.format || this.element.data('date-format') || dates[this.language].format || DPGlobal.getDefaultFormat(this.formatType, 'input'), this.formatType);
+    this.formatType = options.formatType || this.user.data('format-type') || 'standard';
+    this.format = DPGlobal.parseFormat(options.format || this.user.data('date-format') || dates[this.language].format || DPGlobal.getDefaultFormat(this.formatType, 'input'), this.formatType);
     this.isInline = false;
     this.isVisible = false;
-    this.isInput = this.element.is('input');
-    this.fontAwesome = options.fontAwesome || this.element.data('font-awesome') || false;
+    this.isInput = this.user.is('input');
+    this.fontAwesome = options.fontAwesome || this.user.data('font-awesome') || false;
 
-    this.bootcssVer = options.bootcssVer || (this.isInput ? (this.element.is('.form-control') ? 3 : 2) : ( this.bootcssVer = this.element.is('.input-group') ? 3 : 2 ));
+    this.bootcssVer = options.bootcssVer || (this.isInput ? (this.user.is('.form-control') ? 3 : 2) : ( this.bootcssVer = this.user.is('.input-group') ? 3 : 2 ));
 
-    this.component = this.element.is('.date') ? ( this.bootcssVer == 3 ? this.element.find('.input-group-addon .glyphicon-th, .input-group-addon .glyphicon-time, .input-group-addon .glyphicon-remove, .input-group-addon .glyphicon-calendar, .input-group-addon .fa-calendar, .input-group-addon .fa-clock-o').parent() : this.element.find('.add-on .icon-th, .add-on .icon-time, .add-on .icon-calendar, .add-on .fa-calendar, .add-on .fa-clock-o').parent()) : false;
-    this.componentReset = this.element.is('.date') ? ( this.bootcssVer == 3 ? this.element.find('.input-group-addon .glyphicon-remove, .input-group-addon .fa-times').parent():this.element.find('.add-on .icon-remove, .add-on .fa-times').parent()) : false;
-    this.hasInput = this.component && this.element.find('input').length;
+    this.component = this.user.is('.date') ? ( this.bootcssVer == 3 ? this.user.find('.input-group-addon .glyphicon-th, .input-group-addon .glyphicon-time, .input-group-addon .glyphicon-remove, .input-group-addon .glyphicon-calendar, .input-group-addon .fa-calendar, .input-group-addon .fa-clock-o').parent() : this.user.find('.add-on .icon-th, .add-on .icon-time, .add-on .icon-calendar, .add-on .fa-calendar, .add-on .fa-clock-o').parent()) : false;
+    this.componentReset = this.user.is('.date') ? ( this.bootcssVer == 3 ? this.user.find('.input-group-addon .glyphicon-remove, .input-group-addon .fa-times').parent():this.user.find('.add-on .icon-remove, .add-on .fa-times').parent()) : false;
+    this.hasInput = this.component && this.user.find('input').length;
     if (this.component && this.component.length === 0) {
       this.component = false;
     }
-    this.linkField = options.linkField || this.element.data('link-field') || false;
-    this.linkFormat = DPGlobal.parseFormat(options.linkFormat || this.element.data('link-format') || DPGlobal.getDefaultFormat(this.formatType, 'link'), this.formatType);
-    this.minuteStep = options.minuteStep || this.element.data('minute-step') || 5;
-    this.pickerPosition = options.pickerPosition || this.element.data('picker-position') || 'bottom-right';
-    this.showMeridian = options.showMeridian || this.element.data('show-meridian') || false;
+    this.linkField = options.linkField || this.user.data('link-field') || false;
+    this.linkFormat = DPGlobal.parseFormat(options.linkFormat || this.user.data('link-format') || DPGlobal.getDefaultFormat(this.formatType, 'link'), this.formatType);
+    this.minuteStep = options.minuteStep || this.user.data('minute-step') || 5;
+    this.pickerPosition = options.pickerPosition || this.user.data('picker-position') || 'bottom-right';
+    this.showMeridian = options.showMeridian || this.user.data('show-meridian') || false;
     this.initialDate = options.initialDate || new Date();
-    this.zIndex = options.zIndex || this.element.data('z-index') || undefined;
+    this.zIndex = options.zIndex || this.user.data('z-index') || undefined;
     this.title = typeof options.title === 'undefined' ? false : options.title;
     this.defaultTimeZone = (new Date).toString().split('(')[1].slice(0, -1);
     this.timezone = options.timezone || this.defaultTimeZone;
@@ -130,53 +130,53 @@
     this.formatViewType = 'datetime';
     if ('formatViewType' in options) {
       this.formatViewType = options.formatViewType;
-    } else if ('formatViewType' in this.element.data()) {
-      this.formatViewType = this.element.data('formatViewType');
+    } else if ('formatViewType' in this.user.data()) {
+      this.formatViewType = this.user.data('formatViewType');
     }
 
     this.minView = 0;
     if ('minView' in options) {
       this.minView = options.minView;
-    } else if ('minView' in this.element.data()) {
-      this.minView = this.element.data('min-view');
+    } else if ('minView' in this.user.data()) {
+      this.minView = this.user.data('min-view');
     }
     this.minView = DPGlobal.convertViewMode(this.minView);
 
     this.maxView = DPGlobal.modes.length - 1;
     if ('maxView' in options) {
       this.maxView = options.maxView;
-    } else if ('maxView' in this.element.data()) {
-      this.maxView = this.element.data('max-view');
+    } else if ('maxView' in this.user.data()) {
+      this.maxView = this.user.data('max-view');
     }
     this.maxView = DPGlobal.convertViewMode(this.maxView);
 
     this.wheelViewModeNavigation = false;
     if ('wheelViewModeNavigation' in options) {
       this.wheelViewModeNavigation = options.wheelViewModeNavigation;
-    } else if ('wheelViewModeNavigation' in this.element.data()) {
-      this.wheelViewModeNavigation = this.element.data('view-mode-wheel-navigation');
+    } else if ('wheelViewModeNavigation' in this.user.data()) {
+      this.wheelViewModeNavigation = this.user.data('view-mode-wheel-navigation');
     }
 
     this.wheelViewModeNavigationInverseDirection = false;
 
     if ('wheelViewModeNavigationInverseDirection' in options) {
       this.wheelViewModeNavigationInverseDirection = options.wheelViewModeNavigationInverseDirection;
-    } else if ('wheelViewModeNavigationInverseDirection' in this.element.data()) {
-      this.wheelViewModeNavigationInverseDirection = this.element.data('view-mode-wheel-navigation-inverse-dir');
+    } else if ('wheelViewModeNavigationInverseDirection' in this.user.data()) {
+      this.wheelViewModeNavigationInverseDirection = this.user.data('view-mode-wheel-navigation-inverse-dir');
     }
 
     this.wheelViewModeNavigationDelay = 100;
     if ('wheelViewModeNavigationDelay' in options) {
       this.wheelViewModeNavigationDelay = options.wheelViewModeNavigationDelay;
-    } else if ('wheelViewModeNavigationDelay' in this.element.data()) {
-      this.wheelViewModeNavigationDelay = this.element.data('view-mode-wheel-navigation-delay');
+    } else if ('wheelViewModeNavigationDelay' in this.user.data()) {
+      this.wheelViewModeNavigationDelay = this.user.data('view-mode-wheel-navigation-delay');
     }
 
     this.startViewMode = 2;
     if ('startView' in options) {
       this.startViewMode = options.startView;
-    } else if ('startView' in this.element.data()) {
-      this.startViewMode = this.element.data('start-view');
+    } else if ('startView' in this.user.data()) {
+      this.startViewMode = this.user.data('start-view');
     }
     this.startViewMode = DPGlobal.convertViewMode(this.startViewMode);
     this.viewMode = this.startViewMode;
@@ -184,16 +184,16 @@
     this.viewSelect = this.minView;
     if ('viewSelect' in options) {
       this.viewSelect = options.viewSelect;
-    } else if ('viewSelect' in this.element.data()) {
-      this.viewSelect = this.element.data('view-select');
+    } else if ('viewSelect' in this.user.data()) {
+      this.viewSelect = this.user.data('view-select');
     }
     this.viewSelect = DPGlobal.convertViewMode(this.viewSelect);
 
     this.forceParse = true;
     if ('forceParse' in options) {
       this.forceParse = options.forceParse;
-    } else if ('dateForceParse' in this.element.data()) {
-      this.forceParse = this.element.data('date-force-parse');
+    } else if ('dateForceParse' in this.user.data()) {
+      this.forceParse = this.user.data('date-force-parse');
     }
     var template = this.bootcssVer === 3 ? DPGlobal.templateV3 : DPGlobal.template;
     while (template.indexOf('{iconType}') !== -1) {
@@ -206,7 +206,7 @@
       template = template.replace('{rightArrow}', this.icons.rightArrow);
     }
     this.picker = $(template)
-      .appendTo(this.isInline ? this.element : this.container) // 'body')
+      .appendTo(this.isInline ? this.user : this.container) // 'body')
       .on({
         click:     $.proxy(this.click, this),
         mousedown: $.proxy(this.mousedown, this)
@@ -236,33 +236,33 @@
     this.autoclose = false;
     if ('autoclose' in options) {
       this.autoclose = options.autoclose;
-    } else if ('dateAutoclose' in this.element.data()) {
-      this.autoclose = this.element.data('date-autoclose');
+    } else if ('dateAutoclose' in this.user.data()) {
+      this.autoclose = this.user.data('date-autoclose');
     }
 
     this.keyboardNavigation = true;
     if ('keyboardNavigation' in options) {
       this.keyboardNavigation = options.keyboardNavigation;
-    } else if ('dateKeyboardNavigation' in this.element.data()) {
-      this.keyboardNavigation = this.element.data('date-keyboard-navigation');
+    } else if ('dateKeyboardNavigation' in this.user.data()) {
+      this.keyboardNavigation = this.user.data('date-keyboard-navigation');
     }
 
-    this.todayBtn = (options.todayBtn || this.element.data('date-today-btn') || false);
-    this.clearBtn = (options.clearBtn || this.element.data('date-clear-btn') || false);
-    this.todayHighlight = (options.todayHighlight || this.element.data('date-today-highlight') || false);
+    this.todayBtn = (options.todayBtn || this.user.data('date-today-btn') || false);
+    this.clearBtn = (options.clearBtn || this.user.data('date-clear-btn') || false);
+    this.todayHighlight = (options.todayHighlight || this.user.data('date-today-highlight') || false);
 
-    this.weekStart = ((options.weekStart || this.element.data('date-weekstart') || dates[this.language].weekStart || 0) % 7);
+    this.weekStart = ((options.weekStart || this.user.data('date-weekstart') || dates[this.language].weekStart || 0) % 7);
     this.weekEnd = ((this.weekStart + 6) % 7);
     this.startDate = -Infinity;
     this.endDate = Infinity;
     this.datesDisabled = [];
     this.daysOfWeekDisabled = [];
-    this.setStartDate(options.startDate || this.element.data('date-startdate'));
-    this.setEndDate(options.endDate || this.element.data('date-enddate'));
-    this.setDatesDisabled(options.datesDisabled || this.element.data('date-dates-disabled'));
-    this.setDaysOfWeekDisabled(options.daysOfWeekDisabled || this.element.data('date-days-of-week-disabled'));
-    this.setMinutesDisabled(options.minutesDisabled || this.element.data('date-minute-disabled'));
-    this.setHoursDisabled(options.hoursDisabled || this.element.data('date-hour-disabled'));
+    this.setStartDate(options.startDate || this.user.data('date-startdate'));
+    this.setEndDate(options.endDate || this.user.data('date-enddate'));
+    this.setDatesDisabled(options.datesDisabled || this.user.data('date-dates-disabled'));
+    this.setDaysOfWeekDisabled(options.daysOfWeekDisabled || this.user.data('date-days-of-week-disabled'));
+    this.setMinutesDisabled(options.minutesDisabled || this.user.data('date-minute-disabled'));
+    this.setHoursDisabled(options.hoursDisabled || this.user.data('date-hour-disabled'));
     this.fillDow();
     this.fillMonths();
     this.update();
@@ -281,7 +281,7 @@
       this._detachEvents();
       if (this.isInput) { // single input
         this._events = [
-          [this.element, {
+          [this.user, {
             focus:   $.proxy(this.show, this),
             keyup:   $.proxy(this.update, this),
             keydown: $.proxy(this.keydown, this)
@@ -291,7 +291,7 @@
       else if (this.component && this.hasInput) { // component: input + button
         this._events = [
           // For components that are not readonly, allow keyboard nav
-          [this.element.find('input'), {
+          [this.user.find('input'), {
             focus:   $.proxy(this.show, this),
             keyup:   $.proxy(this.update, this),
             keydown: $.proxy(this.keydown, this)
@@ -307,12 +307,12 @@
           ]);
         }
       }
-      else if (this.element.is('div')) {  // inline datetimepicker
+      else if (this.user.is('div')) {  // inline datetimepicker
         this.isInline = true;
       }
       else {
         this._events = [
-          [this.element, {
+          [this.user, {
             click: $.proxy(this.show, this)
           }]
         ];
@@ -335,7 +335,7 @@
 
     show: function (e) {
       this.picker.show();
-      this.height = this.component ? this.component.outerHeight() : this.element.outerHeight();
+      this.height = this.component ? this.component.outerHeight() : this.user.outerHeight();
       if (this.forceParse) {
         this.update();
       }
@@ -346,7 +346,7 @@
         e.preventDefault();
       }
       this.isVisible = true;
-      this.element.trigger({
+      this.user.trigger({
         type: 'show',
         date: this.date
       });
@@ -366,13 +366,13 @@
       if (
         this.forceParse &&
           (
-            this.isInput && this.element.val() ||
-              this.hasInput && this.element.find('input').val()
+            this.isInput && this.user.val() ||
+              this.hasInput && this.user.find('input').val()
             )
         )
         this.setValue();
       this.isVisible = false;
-      this.element.trigger({
+      this.user.trigger({
         type: 'hide',
         date: this.date
       });
@@ -383,7 +383,7 @@
       $(document).off('mousedown', this.clickedOutside);
       this.picker.remove();
       delete this.picker;
-      delete this.element.data().datetimepicker;
+      delete this.user.data().datetimepicker;
     },
 
     getDate: function () {
@@ -414,7 +414,7 @@
         this.viewDate = this.date;
         this.fill();
       } else {
-        this.element.trigger({
+        this.user.trigger({
           type:      'outOfRange',
           date:      d,
           startDate: this.startDate,
@@ -425,13 +425,13 @@
 
     setFormat: function (format) {
       this.format = DPGlobal.parseFormat(format, this.formatType);
-      var element;
+      var user;
       if (this.isInput) {
-        element = this.element;
+        user = this.user;
       } else if (this.component) {
-        element = this.element.find('input');
+        user = this.user.find('input');
       }
-      if (element && element.val()) {
+      if (user && user.val()) {
         this.setValue();
       }
     },
@@ -440,11 +440,11 @@
       var formatted = this.getFormattedDate();
       if (!this.isInput) {
         if (this.component) {
-          this.element.find('input').val(formatted);
+          this.user.find('input').val(formatted);
         }
-        this.element.data('date', formatted);
+        this.user.data('date', formatted);
       } else {
-        this.element.val(formatted);
+        this.user.val(formatted);
       }
       if (this.linkField) {
         $('#' + this.linkField).val(this.getFormattedDate(this.linkFormat));
@@ -556,10 +556,10 @@
           left += this.component.outerWidth() - this.picker.outerWidth();
         }
       } else {
-        offset = this.element.offset();
+        offset = this.user.offset();
         left = offset.left;
         if (this.pickerPosition == 'bottom-left' || this.pickerPosition == 'top-left') {
-          left += this.element.outerWidth() - this.picker.outerWidth();
+          left += this.user.outerWidth() - this.picker.outerWidth();
         }
       }
 
@@ -590,7 +590,7 @@
         date = arguments[0];
         fromArgs = true;
       } else {
-        date = (this.isInput ? this.element.val() : this.element.find('input').val()) || this.element.data('date') || this.initialDate;
+        date = (this.isInput ? this.user.val() : this.user.find('input').val()) || this.user.data('date') || this.initialDate;
         if (typeof date == 'string' || date instanceof String) {
           date = date.replace(/^\s+|\s+$/g,'');
         }
@@ -925,7 +925,7 @@
       }
       if (target.length == 1) {
         if (target.is('.disabled')) {
-          this.element.trigger({
+          this.user.trigger({
             type:      'outOfRange',
             date:      this.viewDate,
             startDate: this.startDate,
@@ -958,7 +958,7 @@
                     break;
                 }
                 this.fill();
-                this.element.trigger({
+                this.user.trigger({
                   type:      target[0].className + ':' + this.convertViewModeText(this.viewMode),
                   date:      this.viewDate,
                   startDate: this.startDate,
@@ -1003,7 +1003,7 @@
                 month = target.parent().find('span').index(target);
                 day = this.viewDate.getUTCDate();
                 this.viewDate.setUTCMonth(month);
-                this.element.trigger({
+                this.user.trigger({
                   type: 'changeMonth',
                   date: this.viewDate
                 });
@@ -1014,7 +1014,7 @@
                 this.viewDate.setUTCDate(1);
                 year = parseInt(target.text(), 10) || 0;
                 this.viewDate.setUTCFullYear(year);
-                this.element.trigger({
+                this.user.trigger({
                   type: 'changeYear',
                   date: this.viewDate
                 });
@@ -1031,7 +1031,7 @@
                   }
                 }
                 this.viewDate.setUTCHours(hours);
-                this.element.trigger({
+                this.user.trigger({
                   type: 'changeHour',
                   date: this.viewDate
                 });
@@ -1041,7 +1041,7 @@
               } else if (target.is('.minute')) {
                 minutes = parseInt(target.text().substr(target.text().indexOf(':') + 1), 10) || 0;
                 this.viewDate.setUTCMinutes(minutes);
-                this.element.trigger({
+                this.user.trigger({
                   type: 'changeMinute',
                   date: this.viewDate
                 });
@@ -1089,7 +1089,7 @@
               }
               this.viewDate.setUTCFullYear(year);
               this.viewDate.setUTCMonth(month, day);
-              this.element.trigger({
+              this.user.trigger({
                 type: 'changeDay',
                 date: this.viewDate
               });
@@ -1115,19 +1115,19 @@
         this.viewDate = date;
       this.fill();
       this.setValue();
-      var element;
+      var user;
       if (this.isInput) {
-        element = this.element;
+        user = this.user;
       } else if (this.component) {
-        element = this.element.find('input');
+        user = this.user.find('input');
       }
-      if (element) {
-        element.change();
+      if (user) {
+        user.change();
         if (this.autoclose && (!which || which == 'date')) {
           //this.hide();
         }
       }
-      this.element.trigger({
+      this.user.trigger({
         type: 'changeDate',
         date: this.getDate()
       });
@@ -1323,16 +1323,16 @@
           break;
       }
       if (dateChanged) {
-        var element;
+        var user;
         if (this.isInput) {
-          element = this.element;
+          user = this.user;
         } else if (this.component) {
-          element = this.element.find('input');
+          user = this.user.find('input');
         }
-        if (element) {
-          element.change();
+        if (user) {
+          user.change();
         }
-        this.element.trigger({
+        this.user.trigger({
           type: 'changeDate',
           date: this.getDate()
         });
@@ -1343,7 +1343,7 @@
       if (dir) {
         var newViewMode = Math.max(0, Math.min(DPGlobal.modes.length - 1, this.viewMode + dir));
         if (newViewMode >= this.minView && newViewMode <= this.maxView) {
-          this.element.trigger({
+          this.user.trigger({
             type:        'changeMode',
             date:        this.viewDate,
             oldViewMode: this.viewMode,

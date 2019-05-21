@@ -1,4 +1,4 @@
-import { browser, by, element } from 'protractor';
+import { browser, by, user } from 'protractor';
 
 export class AppPage {
   navigateTo() {
@@ -6,6 +6,6 @@ export class AppPage {
   }
 
   getTitleText() {
-    return element(by.css('app-root h1')).getText() as Promise<string>;
+    return user(by.css('app-root h1')).getText() as Promise<string>;
   }
 }

@@ -39,6 +39,16 @@ namespace TrackMyShipment.Manage
             IMapper mapper = new MapperConfiguration(cfg => cfg.CreateMap<Address, AddressModel>()).CreateMapper();
             return mapper.Map<IEnumerable<Address>, IEnumerable<AddressModel>>(myAddress);
         }
+
+        public async Task<AddressModel> MyActiveAddress(User user)
+        {
+            Address myAddress = await _addressService.MyActiveAddressAsync(user.Id);
+            IMapper mapper = new MapperConfiguration(cfg => cfg.CreateMap<Address, AddressModel>()).CreateMapper();
+            AddressModel addressModel =  mapper.Map<Address, AddressModel>(myAddress);
+            addressModel.CompanyName = user.Company.Name;
+            await _addressService.Complete();
+            return addressModel;
+        }
     }
 
 }

@@ -1,0 +1,61 @@
+<style>
+  .empty {
+  font-size: 25px;
+  padding:5% 5% 5% 46%
+  }
+</style>
+
+<div class="row">
+  <div class="col-md-12 col-sm-12">
+    <div class="card  card-box">
+      <div class="card-head">
+        <header>Carriers list</header>
+        <div class="tools">
+          <a class="fa fa-repeat btn-color " (click)="refresh()"></a>
+          <a class=" btn-color fa fa-plus" (click)="openModal()"></a>
+          <a class=" btn-color fa fa-times" href="javascript:;"></a>
+        </div>
+      </div>
+
+      <div *ngIf="!users?.length==0 ; else empty">     
+        <div class="card-body ">
+          <div class="table-responsive">
+            <table class="table display" id="support_table5">
+              <thead>
+              <tr>
+                <th>Id</th>
+                <th>FirstName</th>
+                <th>LastName</th>
+                <th>Phone</th>
+                <th>Detail</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr *ngFor="let user of users; let i=index; trackBy:identify">
+                <th scope="row">{{i+1}}</th>
+                <td>{{user.firstName}}</td>
+                <td>{{user.lastName}}</td>
+                <td>{{user.phone}}</td>
+
+                <td>
+                  <button class="btn btn-tbl-edit btn-xs" (click)="openDialog()">
+                    <i class="fa fa-pencil"></i>
+                  </button>
+                  <button class="btn btn-tbl-delete btn-xs" (click)="delete(carrier)">
+                    <i class="fa fa-trash-o "></i>
+                  </button>
+                 
+                </td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <ng-template #empty>
+      <div class="empty"><b>EMPTY</b></div>
+    </ng-template>
+    </div>
+</div>

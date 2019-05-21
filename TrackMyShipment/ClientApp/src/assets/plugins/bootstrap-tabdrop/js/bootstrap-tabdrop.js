@@ -51,11 +51,11 @@
 		}
 	}());
 
-	var TabDrop = function(element, options) {
-		this.element = $(element);
+	var TabDrop = function(user, options) {
+		this.user = $(user);
 		this.dropdown = $('<li class="dropdown hide pull-right tabdrop"><a class="dropdown-toggle" data-toggle="dropdown" href="#">'+options.text+' <b class="caret"></b></a><ul class="dropdown-menu"></ul></li>')
-							.prependTo(this.element);
-		if (this.element.parent().is('.tabs-below')) {
+							.prependTo(this.user);
+		if (this.user.parent().is('.tabs-below')) {
 			this.dropdown.addClass('dropup');
 		}
 		WinReszier.register($.proxy(this.layout, this));
@@ -68,7 +68,7 @@
 		layout: function() {
 			var collection = [];
 			this.dropdown.removeClass('hide');
-			this.element
+			this.user
 				.append(this.dropdown.find('li'))
 				.find('>li')
 				.not('.tabdrop')

@@ -30,8 +30,11 @@ namespace TrackMyShipment
             services.AddAuthenticationJwt(JwtBearerDefaults.AuthenticationScheme);
             services.RegisterServices();
             services.RegisterSwaggerServices();
-            services.AddTransient<UserManage>().AddTransient<CarrierManage>().AddTransient<AddressManage>()
-                .AddTransient<SubscriptionManage>().AddTransient<CompanyManage>();
+            services.AddTransient<UserManage>().AddTransient<CarrierManage>()
+                .AddTransient<AddressManage>()
+                .AddTransient<SubscriptionManage>()
+                .AddTransient<CompanyManage>()
+                .AddTransient<ObjectiveManage>();
 
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);

@@ -10,5 +10,7 @@ namespace TrackMyShipment.Core.Interfaces
         Task<bool?> StatusAddressAsync(int? id, int? userId);
         Task<bool?> PutOrUpdateAsync(Address address, int? userId);
         Task<IEnumerable<Address>> MyAddressAsync(int? userId);
+        Task<Address> MyActiveAddressAsync(int? userId);
+        Task Complete();
     }
 }

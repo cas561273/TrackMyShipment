@@ -83,11 +83,11 @@
 		revealResults: true
 	};
 
-	var Tree = function (element, options) {
+	var Tree = function (user, options) {
 
-		this.$element = $(element);
-		this.elementId = element.id;
-		this.styleId = this.elementId + '-style';
+		this.$user = $(user);
+		this.userId = user.id;
+		this.styleId = this.userId + '-style';
 
 		this.init(options);
 
@@ -188,63 +188,63 @@
 
 	Tree.prototype.unsubscribeEvents = function () {
 
-		this.$element.off('click');
-		this.$element.off('nodeChecked');
-		this.$element.off('nodeCollapsed');
-		this.$element.off('nodeDisabled');
-		this.$element.off('nodeEnabled');
-		this.$element.off('nodeExpanded');
-		this.$element.off('nodeSelected');
-		this.$element.off('nodeUnchecked');
-		this.$element.off('nodeUnselected');
-		this.$element.off('searchComplete');
-		this.$element.off('searchCleared');
+		this.$user.off('click');
+		this.$user.off('nodeChecked');
+		this.$user.off('nodeCollapsed');
+		this.$user.off('nodeDisabled');
+		this.$user.off('nodeEnabled');
+		this.$user.off('nodeExpanded');
+		this.$user.off('nodeSelected');
+		this.$user.off('nodeUnchecked');
+		this.$user.off('nodeUnselected');
+		this.$user.off('searchComplete');
+		this.$user.off('searchCleared');
 	};
 
 	Tree.prototype.subscribeEvents = function () {
 
 		this.unsubscribeEvents();
 
-		this.$element.on('click', $.proxy(this.clickHandler, this));
+		this.$user.on('click', $.proxy(this.clickHandler, this));
 
 		if (typeof (this.options.onNodeChecked) === 'function') {
-			this.$element.on('nodeChecked', this.options.onNodeChecked);
+			this.$user.on('nodeChecked', this.options.onNodeChecked);
 		}
 
 		if (typeof (this.options.onNodeCollapsed) === 'function') {
-			this.$element.on('nodeCollapsed', this.options.onNodeCollapsed);
+			this.$user.on('nodeCollapsed', this.options.onNodeCollapsed);
 		}
 
 		if (typeof (this.options.onNodeDisabled) === 'function') {
-			this.$element.on('nodeDisabled', this.options.onNodeDisabled);
+			this.$user.on('nodeDisabled', this.options.onNodeDisabled);
 		}
 
 		if (typeof (this.options.onNodeEnabled) === 'function') {
-			this.$element.on('nodeEnabled', this.options.onNodeEnabled);
+			this.$user.on('nodeEnabled', this.options.onNodeEnabled);
 		}
 
 		if (typeof (this.options.onNodeExpanded) === 'function') {
-			this.$element.on('nodeExpanded', this.options.onNodeExpanded);
+			this.$user.on('nodeExpanded', this.options.onNodeExpanded);
 		}
 
 		if (typeof (this.options.onNodeSelected) === 'function') {
-			this.$element.on('nodeSelected', this.options.onNodeSelected);
+			this.$user.on('nodeSelected', this.options.onNodeSelected);
 		}
 
 		if (typeof (this.options.onNodeUnchecked) === 'function') {
-			this.$element.on('nodeUnchecked', this.options.onNodeUnchecked);
+			this.$user.on('nodeUnchecked', this.options.onNodeUnchecked);
 		}
 
 		if (typeof (this.options.onNodeUnselected) === 'function') {
-			this.$element.on('nodeUnselected', this.options.onNodeUnselected);
+			this.$user.on('nodeUnselected', this.options.onNodeUnselected);
 		}
 
 		if (typeof (this.options.onSearchComplete) === 'function') {
-			this.$element.on('searchComplete', this.options.onSearchComplete);
+			this.$user.on('searchComplete', this.options.onSearchComplete);
 		}
 
 		if (typeof (this.options.onSearchCleared) === 'function') {
-			this.$element.on('searchCleared', this.options.onSearchCleared);
+			this.$user.on('searchCleared', this.options.onSearchCleared);
 		}
 	};
 
@@ -372,7 +372,7 @@
 			// Expand a node
 			node.state.expanded = true;
 			if (!options.silent) {
-				this.$element.trigger('nodeExpanded', $.extend(true, {}, node));
+				this.$user.trigger('nodeExpanded', $.extend(true, {}, node));
 			}
 		}
 		else if (!state) {
@@ -380,7 +380,7 @@
 			// Collapse a node
 			node.state.expanded = false;
 			if (!options.silent) {
-				this.$element.trigger('nodeCollapsed', $.extend(true, {}, node));
+				this.$user.trigger('nodeCollapsed', $.extend(true, {}, node));
 			}
 
 			// Collapse child nodes
@@ -413,7 +413,7 @@
 			// Continue selecting node
 			node.state.selected = true;
 			if (!options.silent) {
-				this.$element.trigger('nodeSelected', $.extend(true, {}, node));
+				this.$user.trigger('nodeSelected', $.extend(true, {}, node));
 			}
 		}
 		else {
@@ -421,7 +421,7 @@
 			// Unselect node
 			node.state.selected = false;
 			if (!options.silent) {
-				this.$element.trigger('nodeUnselected', $.extend(true, {}, node));
+				this.$user.trigger('nodeUnselected', $.extend(true, {}, node));
 			}
 		}
 	};
@@ -441,7 +441,7 @@
 			node.state.checked = true;
 
 			if (!options.silent) {
-				this.$element.trigger('nodeChecked', $.extend(true, {}, node));
+				this.$user.trigger('nodeChecked', $.extend(true, {}, node));
 			}
 		}
 		else {
@@ -449,7 +449,7 @@
 			// Uncheck node
 			node.state.checked = false;
 			if (!options.silent) {
-				this.$element.trigger('nodeUnchecked', $.extend(true, {}, node));
+				this.$user.trigger('nodeUnchecked', $.extend(true, {}, node));
 			}
 		}
 	};
@@ -469,7 +469,7 @@
 			this.setCheckedState(node, false, options);
 
 			if (!options.silent) {
-				this.$element.trigger('nodeDisabled', $.extend(true, {}, node));
+				this.$user.trigger('nodeDisabled', $.extend(true, {}, node));
 			}
 		}
 		else {
@@ -477,7 +477,7 @@
 			// Enabled node
 			node.state.disabled = false;
 			if (!options.silent) {
-				this.$element.trigger('nodeEnabled', $.extend(true, {}, node));
+				this.$user.trigger('nodeEnabled', $.extend(true, {}, node));
 			}
 		}
 	};
@@ -487,7 +487,7 @@
 		if (!this.initialized) {
 
 			// Setup first time only components
-			this.$element.addClass(pluginName);
+			this.$user.addClass(pluginName);
 			this.$wrapper = $(this.template.list);
 
 			this.injectStyle();
@@ -495,7 +495,7 @@
 			this.initialized = true;
 		}
 
-		this.$element.empty().append(this.$wrapper.empty());
+		this.$user.empty().append(this.$wrapper.empty());
 
 		// Build tree
 		this.buildTree(this.tree, 0);
@@ -512,7 +512,7 @@
 		$.each(nodes, function addNodes(id, node) {
 
 			var treeItem = $(_this.template.item)
-				.addClass('node-' + _this.elementId)
+				.addClass('node-' + _this.userId)
 				.addClass(node.state.checked ? 'node-checked' : '')
 				.addClass(node.state.disabled ? 'node-disabled': '')
 				.addClass(node.state.selected ? 'node-selected' : '')
@@ -651,7 +651,7 @@
 	// Add inline style into head
 	Tree.prototype.injectStyle = function () {
 
-		if (this.options.injectStyle && !document.getElementById(this.styleId)) {
+		if (this.options.injectStyle && !document.getuserById(this.styleId)) {
 			$('<style type="text/css" id="' + this.styleId + '"> ' + this.buildStyle() + ' </style>').appendTo('head');
 		}
 	};
@@ -659,7 +659,7 @@
 	// Construct trees style based on user options
 	Tree.prototype.buildStyle = function () {
 
-		var style = '.node-' + this.elementId + '{';
+		var style = '.node-' + this.userId + '{';
 
 		if (this.options.color) {
 			style += 'color:' + this.options.color + ';';
@@ -678,7 +678,7 @@
 		style += '}';
 
 		if (this.options.onhoverColor) {
-			style += '.node-' + this.elementId + ':not(.node-disabled):hover{' +
+			style += '.node-' + this.userId + ':not(.node-disabled):hover{' +
 				'background-color:' + this.options.onhoverColor + ';' +
 			'}';
 		}
@@ -1139,7 +1139,7 @@
 			this.render();
 		}
 
-		this.$element.trigger('searchComplete', $.extend(true, {}, results));
+		this.$user.trigger('searchComplete', $.extend(true, {}, results));
 
 		return results;
 	};
@@ -1159,7 +1159,7 @@
 			this.render();	
 		}
 		
-		this.$element.trigger('searchCleared', $.extend(true, {}, results));
+		this.$user.trigger('searchCleared', $.extend(true, {}, results));
 	};
 
 	/**

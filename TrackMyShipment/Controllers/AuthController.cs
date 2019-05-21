@@ -1,6 +1,5 @@
 ﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using TrackMyShipment.Core.Helper;
 using TrackMyShipment.Manage;
 using TrackMyShipment.Repository.Models;
 using TrackMyShipment.Utils;
@@ -12,8 +11,8 @@ namespace TrackMyShipment.Controllers
     [ApiController]
     public class AuthController : BaseController
     {
-        public AuthController(UserManage userManage, CarrierManage carrierManage, AddressManage addressManage,CompanyManage companyManage,SubscriptionManage subscriptionManage)
-            : base(userManage, carrierManage, addressManage,companyManage,subscriptionManage)
+        public AuthController(ObjectiveManage objectiveManage,UserManage userManage, CarrierManage carrierManage, AddressManage addressManage,CompanyManage companyManage,SubscriptionManage subscriptionManage)
+            : base(objectiveManage,userManage, carrierManage, addressManage,companyManage,subscriptionManage)
         {
         }
 
@@ -67,7 +66,7 @@ namespace TrackMyShipment.Controllers
 
         [HttpGet]
         [Route("shortInfo")]
-        public async Task<RegistrationModel> GetUserInfo()
+        public async Task<InfoUserModel> GetUserInfo()
         {
             return await UserInfo();
         }

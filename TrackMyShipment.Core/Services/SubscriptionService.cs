@@ -22,13 +22,13 @@ namespace TrackMyShipment.Core.Services
         public async Task<bool> SubscribeAsync(Carrier carrier, User user)
         {
             Supplies existRelation = await _context.GetSubscribeAsync(user.Id, carrier.Id);
-            if (existRelation == null && !carrier.Status)
+            if (existRelation == null )//&& carrier.Status)
             {
                 await _context.SubscribeAsync(carrier.Id, user.Id);
                 return true;
             }
             await _context.DeleteSubscribeAsync(existRelation);
-            return true;
+            return false;
         }
     }
 }

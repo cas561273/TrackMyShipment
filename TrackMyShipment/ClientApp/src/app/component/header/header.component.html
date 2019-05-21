@@ -8,25 +8,20 @@
       </a>
     </div>
     <!-- logo end -->
-    <ul class="nav navbar-nav navbar-left in">
-      <li><a href="#" class="menu-toggler sidebar-toggler"><i class="icon-menu"></i></a></li>
-    </ul>
+
+
+  
+
     <form class="search-form-opened" action="#" method="GET">
       <div class="input-group">
         <input type="text" class="form-control" placeholder="Search..." name="query">
         <span class="input-group-btn search-btn">
-          <a href="javascript:;" class="btn submit">
-            <i class="icon-magnifier"></i>
-          </a>
+          
         </span>
       </div>
     </form>
 
-    <!-- start mobile menu -->
-    <a href="javascript:;" class="menu-toggler responsive-toggler" data-toggle="collapse" data-target=".navbar-collapse">
-      <span></span>
-    </a>
-    <!-- end mobile menu -->
+    
     <!-- start header menu -->
     <div class="top-menu">
       <ul class="nav navbar-nav pull-right">
@@ -45,21 +40,14 @@
             <i class="fa fa-envelope-o"></i>
             <span class="badge headerBadgeColor2"> 2 </span>
           </a>
-          <ul class="dropdown-menu animated slideInDown">
-            <li class="external">
-              <h3><span class="bold">Messages</span></h3>
-              <span class="notification-label cyan-bgcolor">New 2</span>
-            </li>
-          </ul>
         </li>
 
         <li class="dropdown dropdown-user">
           <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
-            <img alt="" class="img-circle " src="assets/img/dp.jpg" />
-            <span class="username username-hide-on-mobile"> John </span>
+            <img alt="" class="img-circle " src="https://ccie.ucf.edu/wp-content/uploads/sites/12/2018/08/Patrick_Carlton.jpg" />
+            <span class="username username-hide-on-mobile"> {{currentUser?.firstName!=null ? '' : '' }} {{currentUser?.firstName}} </span>
             <i class="fa fa-angle-down"></i>
           </a>
-
         </li>
 
         <li class="dropdown dropdown-quick-sidebar-toggler">
@@ -67,6 +55,7 @@
             <i class="material-icons">settings</i>
           </a>
         </li>
+
       </ul>
     </div>
   </div>

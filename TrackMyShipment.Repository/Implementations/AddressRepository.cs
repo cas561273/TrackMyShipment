@@ -25,5 +25,10 @@ namespace TrackMyShipment.Repository.Implementations
         {
             return await _context.Address.WhereAsync(u => u.UsersId == userId);
         }
+
+        public async Task<Address> MyActiveAddressAsync(int? userId)
+        {
+            return await _context.Address.SingleOrDefaultAsync(u => u.UsersId == userId && u.Active);
+        }
     }
 }

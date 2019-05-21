@@ -21,5 +21,7 @@ namespace TrackMyShipment.Repository
         public DbSet<Company> Company { get; set; }
         public DbSet<Subscription> Subscriptions { get; set; }
         public DbSet<Role> Roles { get; set; }
+        public DbSet<Objective> Task { get; set; }
+
     }
 }

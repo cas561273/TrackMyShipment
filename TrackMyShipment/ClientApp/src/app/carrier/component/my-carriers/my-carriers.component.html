@@ -1,0 +1,53 @@
+
+<style>
+  #inner {
+    width: 80%;
+    margin: 0 0 0 200px;
+  }
+</style>
+
+<div id="inner">
+  <div class="row">
+    <div class="col-md-10 col-sm-10">
+      <div class="card  card-box">
+        <div class="card-head">
+          <header>My Carrier list</header>
+          <div class="tools">
+            <a class="fa fa-repeat btn-color " (click)="refresh()"></a>
+            <a class=" btn-color fa fa-cart-plus" href="javascript:;"></a>
+            <a class=" btn-color fa fa-times" href="javascript:;"></a>
+          </div>
+        </div>
+        <div class="card-body ">
+          <div class="table-responsive">
+            <table class="table display" id="support_table5">
+              <thead>
+              <tr>
+                <th>Id</th>
+                <th>Logo</th>
+                <th>Name</th>
+                <th>Subscriptions</th>
+
+              </tr>
+              </thead>
+              <tbody>
+              <tr *ngFor="let carrier of carriers;let i=index; trackBy:identify">
+                <th scope="row">{{i+1}}</th>
+                <td>
+                  <div class="sidebar-logocarrier">
+                    <img src="{{carrier.logo}}" class="img-responsive" alt="Not Found Logo" />
+                  </div>
+                </td>
+                <td>{{carrier.name}}</td>
+                <td>
+                  <button mat-raised-button color="primary" (click)="subscribe(carrier)">UnSubscribe</button>
+                </td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

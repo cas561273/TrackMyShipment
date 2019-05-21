@@ -42,27 +42,27 @@ $(function(){
         },
         
         /**
-        Default method to show value in element. Can be overwritten by display option.
+        Default method to show value in user. Can be overwritten by display option.
         
-        @method value2html(value, element) 
+        @method value2html(value, user) 
         **/
-        value2html: function(value, element) {
+        value2html: function(value, user) {
             if(!value) {
-                $(element).empty();
+                $(user).empty();
                 return; 
             }
             var html = $('<div>').text(value.city).html() + ', ' + $('<div>').text(value.street).html() + ' st., bld. ' + $('<div>').text(value.building).html();
-            $(element).html(html); 
+            $(user).html(html); 
         },
         
         /**
-        Gets value from element's html
+        Gets value from user's html
         
         @method html2value(html) 
         **/        
         html2value: function(html) {        
           /*
-            you may write parsing method to get value by element's html
+            you may write parsing method to get value by user's html
             e.g. "Moscow, st. Lenina, bld. 15" => {city: "Moscow", street: "Lenina", building: "15"}
             but for complex structures it's not recommended.
             Better set value directly via javascript, e.g. 

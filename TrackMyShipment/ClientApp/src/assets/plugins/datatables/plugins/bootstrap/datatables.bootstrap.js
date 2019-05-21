@@ -199,7 +199,7 @@ $.extend($.fn.dataTableExt.oPagination, {
                     $('.pagination', an[i]).css('visibility', 'visible');
                 }
 
-                // Remove the middle elements
+                // Remove the middle users
                 $('li:gt(1)', an[i]).filter(':not(.next)').remove();
 
                 // Add the new list items and their event handlers
@@ -214,7 +214,7 @@ $.extend($.fn.dataTableExt.oPagination, {
                         });
                 }
 
-                // Add / remove disabled classes from the static elements
+                // Add / remove disabled classes from the static users
                 if (oPaging.iPage === 0) {
                     $('li.prev', an[i]).addClass('disabled');
                 } else {
@@ -284,7 +284,7 @@ $.extend($.fn.dataTableExt.oPagination, {
                     $('.pagination', an[i]).css('visibility', 'visible');
                 }
 
-                // Remove the middle elements
+                // Remove the middle users
                 $('li:gt(0)', an[i]).filter(':not(.next)').remove();
 
                 // Add the new list items and their event handlers
@@ -299,7 +299,7 @@ $.extend($.fn.dataTableExt.oPagination, {
                         });
                 }
 
-                // Add / remove disabled classes from the static elements
+                // Add / remove disabled classes from the static users
                 if (oPaging.iPage === 0) {
                     $('li.prev', an[i]).addClass('disabled');
                 } else {
@@ -416,7 +416,7 @@ $.extend($.fn.dataTableExt.oPagination, {
                 $('.pagination-panel-total', an[i]).html(oPaging.iTotalPages);
                 $('.pagination-panel-input', an[i]).val(oPaging.iPage + 1);
 
-                // Remove the middle elements
+                // Remove the middle users
                 $('li:gt(1)', an[i]).filter(':not(.next)').remove();
 
                 // Add the new list items and their event handlers
@@ -431,7 +431,7 @@ $.extend($.fn.dataTableExt.oPagination, {
                         });
                 }
 
-                // Add / remove disabled classes from the static elements
+                // Add / remove disabled classes from the static users
                 if (oPaging.iPage === 0) {
                     $('a.prev', an[i]).addClass('disabled');
                 } else {

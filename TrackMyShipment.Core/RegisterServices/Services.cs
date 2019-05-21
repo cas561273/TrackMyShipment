@@ -19,7 +19,9 @@ namespace TrackMyShipment.Core.RegisterServices
                 .AddTransient<ICompanyService, CompanyService>()
                 .AddTransient<ICompanyRepository, CompanyRepository>()
                 .AddTransient<ISubscriptionService, SubscriptionService>()
-                .AddTransient<ISubscriptionRepository, SubscriptionsRepository>();
+                .AddTransient<ISubscriptionRepository, SubscriptionsRepository>()
+                .AddTransient<IObjectiveService, ObjectiveService>()
+                .AddTransient<IObjectiveRepository, ObjectiveRepository>();
 
             return services;
         }
