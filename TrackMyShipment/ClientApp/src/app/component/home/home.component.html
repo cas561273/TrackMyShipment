@@ -3,6 +3,11 @@
     width: 80%;
     margin: 0 0 0 200px;
   }
+  .empty {
+    font-size: 25px;
+    padding:5% 5% 5% 46%
+  }
+
 </style>
 
 
@@ -115,7 +120,7 @@
   </div>
 </div>
 
-<div *ngIf="currentUser?.role==='admin';else other_content">
+<div *ngIf="currentUser?.role==='admin'">
 
   <div class="row">
     <div class="col-md-12 col-sm-12">
@@ -132,56 +137,56 @@
           <div class="table-responsive">
             <table class="table display" id="support_table5">
               <thead>
-                <tr>
-                  <th>Id</th>
-                  <th>Name</th>
-                  <th>Phone</th>
-                  <th>Cost</th>
-                  <th>Status</th>
-                  <th>Edit</th>
-                </tr>
+              <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Phone</th>
+                <th>Cost</th>
+                <th>Status</th>
+                <th>Edit</th>
+              </tr>
               </thead>
               <tbody>
-                <tr *ngFor="let carrier of carriers; let i=index; trackBy:identify">
-                  <th scope="row">{{i+1}}</th>
-                  <td>{{carrier.name + ' ' + carrier.code}}</td>
-                  <td>{{carrier.phone}}</td>
+              <tr *ngFor="let carrier of carriers; let i=index; trackBy:identify">
+                <th scope="row">{{i+1}}</th>
+                <td>{{carrier.name + ' ' + carrier.code}}</td>
+                <td>{{carrier.phone}}</td>
 
-                  <td>
-                    <div *ngIf="carrier.cost;else other_content">
-                      <span class="label label-sm label-success">paid</span>
-                    </div>
-                    <ng-template #other_content>
-                      <span class="label label-sm label-warning">free</span>
-                    </ng-template>
-                  </td>
+                <td>
+                  <div *ngIf="carrier.cost;else other_content">
+                    <span class="label label-sm label-success">paid</span>
+                  </div>
+                  <ng-template #other_content>
+                    <span class="label label-sm label-warning">free</span>
+                  </ng-template>
+                </td>
 
-                  <td>
+                <td>
 
-                    <div *ngIf="carrier.status; else deactivateStatus">
-                      <button class="label label-sm label-success" (click)="changeStatus(carrier)">Active</button>
-                    </div>
+                  <div *ngIf="carrier.status; else deactivateStatus">
+                    <button class="label label-sm label-success" (click)="changeStatus(carrier)">Active</button>
+                  </div>
 
-                    <ng-template #deactivateStatus>
-                      <button class="label label-sm label-primary" (click)="changeStatus(carrier)">Deactivate</button>
-                    </ng-template>
+                  <ng-template #deactivateStatus>
+                    <button class="label label-sm label-primary" (click)="changeStatus(carrier)">Deactivate</button>
+                  </ng-template>
 
 
-                  </td>
+                </td>
 
-                  <td>
-                    <button class="btn btn-tbl-edit btn-xs" [routerLink]="['/main/carrier-detail',carrier.id]">
-                      <i class="fa fa-pencil"></i>
-                    </button>
-                    <button class="btn btn-tbl-delete btn-xs" (click)="delete(carrier)">
-                      <i class="fa fa-trash-o "></i>
-                    </button>
+                <td>
+                  <button class="btn btn-tbl-edit btn-xs" [routerLink]="['/main/carrier-detail',carrier.id]">
+                    <i class="fa fa-pencil"></i>
+                  </button>
+                  <button class="btn btn-tbl-delete btn-xs" (click)="delete(carrier)">
+                    <i class="fa fa-trash-o "></i>
+                  </button>
 
-                    <button class="btn btn-tbl-add btn-xs" [routerLink]="['/main/carrier',carrier.id] ">
-                      <i class="fa fa-users "></i>
-                    </button>
-                  </td>
-                </tr>
+                  <button class="btn btn-tbl-add btn-xs" [routerLink]="['/main/carrier',carrier.id] ">
+                    <i class="fa fa-users "></i>
+                  </button>
+                </td>
+              </tr>
               </tbody>
             </table>
           </div>
@@ -192,9 +197,10 @@
 
 
 </div>
-<ng-template #other_content>
+<div *ngIf="currentUser?.role==='customer'">
   <div id="inner">
     <div class="row">
+
       <div class="col-md-10 col-sm-10">
         <div class="card  card-box">
           <div class="card-head">
@@ -205,31 +211,83 @@
               <a class=" btn-color fa fa-times" href="javascript:;"></a>
             </div>
           </div>
+          <div *ngIf="!carriers?.length==0 ; else empty">
+            <div class="card-body ">
+              <div class="table-responsive">
+                <table class="table display" id="support_table5">
+                  <thead>
+                    <tr>
+                      <th>Id</th>
+                      <th>Logo</th>
+                      <th>Name</th>
+                      <th>Connect</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let carrier of carriers;let i=index; trackBy:identify">
+                      <th scope="row">{{i+1}}</th>
+                      <td>
+                        <div class="sidebar-logocarrier">
+                          <img src="{{carrier.logo}}" class="img-responsive" alt="Not Found Logo" />
+                        </div>
+                      </td>
+                      <td>{{carrier.name}}</td>
+
+                      <td>
+                        <button mat-raised-button color="primary" (click)="subscribe(carrier)">Subscribe</button>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+    </div>
+  </div>
+</div>
+</div>
+
+
+
+<div *ngIf="currentUser?.role==='carrier'">
+  <div id="inner">
+    <div class="row">
+      <div class="col-md-10 col-sm-10">
+        <div class="card  card-box">
+          <div class="card-head">
+            <header>Active Users</header>
+            <div class="tools">
+              <a class="fa fa-repeat btn-color " (click)="refresh()"></a>
+              <a class=" btn-color fa fa-cart-plus" href="javascript:;"></a>
+              <a class=" btn-color fa fa-times" href="javascript:;"></a>
+            </div>
+          </div>
           <div class="card-body ">
             <div class="table-responsive">
               <table class="table display" id="support_table5">
                 <thead>
-                  <tr>
-                    <th>Id</th>
-                    <th>Logo</th>
-                    <th>Name</th>
-                    <th>Connect</th>
-                  </tr>
+                <tr>
+                  <th>Id</th>
+                  <th>Logo</th>
+                  <th>Name</th>
+                  <th>Connect</th>
+                </tr>
                 </thead>
                 <tbody>
-                  <tr *ngFor="let carrier of carriers;let i=index; trackBy:identify">
-                    <th scope="row">{{i+1}}</th>
-                    <td>
-                      <div class="sidebar-logocarrier">
-                        <img src="{{carrier.logo}}" class="img-responsive" alt="Not Found Logo" />
-                      </div>
-                    </td>
-                    <td>{{carrier.name}}</td>
+                <tr *ngFor="let carrier of carriers;let i=index; trackBy:identify">
+                  <th scope="row">{{i+1}}</th>
+                  <td>
+                    <div class="sidebar-logocarrier">
+                      <img src="{{carrier.logo}}" class="img-responsive" alt="Not Found Logo" />
+                    </div>
+                  </td>
+                  <td>{{carrier.name}}</td>
 
-                    <td>
-                      <button mat-raised-button color="primary" (click)="subscribe(carrier)">Subscribe</button>
-                    </td>
-                  </tr>
+                  <td>
+                    <button mat-raised-button color="primary" (click)="subscribe(carrier)">Subscribe</button>
+                  </td>
+                </tr>
                 </tbody>
               </table>
             </div>
@@ -238,5 +296,7 @@
       </div>
     </div>
   </div>
-
+</div>
+<ng-template #empty>
+  <div class="empty"><b>EMPTY</b></div>
 </ng-template>

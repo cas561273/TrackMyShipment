@@ -5,6 +5,7 @@ import { IRequestResult, IRequestResult as IRequestResult1 } from '../../models/
 import { Carrier } from '../../models/Carrier';
 import { Person } from 'src/app/models/Person';
 import { Address } from "../../models/Address";
+import { Objective } from "../../models/Objective";
 
 @Injectable()
 export class UserService {
@@ -17,12 +18,10 @@ export class UserService {
     return this.http.get<IRequestResult>(this._url + 'usersOfCarrier/' + carrierId, { headers });
   }
 
-
   public getAllCarrier() {
     let headers = this.authService.initAuthHeaders();
     return this.http.get<IRequestResult>(this._url + 'GetUsersCarrier', { headers });
   }
-
 
   public subscribe(carrier: Carrier) {
     let headers = this.authService.initAuthHeaders();
@@ -51,6 +50,11 @@ export class UserService {
   public getMyTask() {
     let headers = this.authService.initAuthHeaders();
     return this.http.get<IRequestResult>('https://localhost:44395/api/objective/' + 'GetMyTask', { headers });
+  }
+
+  public takeTask(task:Objective) {
+    let headers = this.authService.initAuthHeaders();
+    return this.http.post<IRequestResult>('https://localhost:44395/api/objective/' + 'TakeTask',task.id, { headers });
   }
   
 }

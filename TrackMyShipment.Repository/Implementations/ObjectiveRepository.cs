@@ -50,5 +50,18 @@ namespace TrackMyShipment.Repository.Implementations
             return false;
         }
 
+        public async Task<bool> TakeTask(int userId, int taskId)
+        {
+           var estimate = await _context.Estimates.WhereAsync(x => x.userId == userId);
+           if (estimate == null)
+           {
+               await _context.Estimates.AddAsync(new Estimate()
+                   {userId = userId, objectiveId = taskId, Status = "in progress"});
+               return true;
+           }
+
+           return false;
+        }
+
     }
 }

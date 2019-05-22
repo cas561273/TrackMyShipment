@@ -31,7 +31,6 @@ export class HomeComponent implements OnInit {
     this.refresh();
     this.dataSharingService.currentUser.subscribe(user => {
       this.currentUser = user;
-
     });
   }
 

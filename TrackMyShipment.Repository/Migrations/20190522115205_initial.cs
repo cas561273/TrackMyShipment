@@ -150,6 +150,31 @@ namespace TrackMyShipment.Repository.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Estimates",
+                columns: table => new
+                {
+                    objectiveId = table.Column<int>(nullable: false),
+                    userId = table.Column<int>(nullable: false),
+                    Status = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Estimates", x => new { x.userId, x.objectiveId });
+                    table.ForeignKey(
+                        name: "FK_Estimates_Task_objectiveId",
+                        column: x => x.objectiveId,
+                        principalTable: "Task",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Estimates_Users_userId",
+                        column: x => x.userId,
+                        principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Supplies",
                 columns: table => new
                 {
@@ -198,6 +223,11 @@ namespace TrackMyShipment.Repository.Migrations
                 column: "UsersId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Estimates_objectiveId",
+                table: "Estimates",
+                column: "objectiveId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Supplies_CarrierId",
                 table: "Supplies",
                 column: "CarrierId");
@@ -234,6 +264,9 @@ namespace TrackMyShipment.Repository.Migrations
         {
             migrationBuilder.DropTable(
                 name: "Address");
+
+            migrationBuilder.DropTable(
+                name: "Estimates");
 
             migrationBuilder.DropTable(
                 name: "Supplies");

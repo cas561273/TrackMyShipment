@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using TrackMyShipment.Repository.Constant;
 using TrackMyShipment.Repository.Models;
 
 namespace TrackMyShipment.Repository.Migrations
@@ -23,6 +22,9 @@ namespace TrackMyShipment.Repository.Migrations
 
             modelBuilder.Entity<Supplies>().HasKey(
                 t => new { t.UserId, t.CarrierId }
+            );
+            modelBuilder.Entity<Estimate>().HasKey(
+                t => new { t.userId, t.objectiveId }
             );
         }
     }

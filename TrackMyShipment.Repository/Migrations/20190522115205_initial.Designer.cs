@@ -10,7 +10,7 @@ using TrackMyShipment.Repository;
 namespace TrackMyShipment.Repository.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20190521140818_initial")]
+    [Migration("20190522115205_initial")]
     partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -82,6 +82,21 @@ namespace TrackMyShipment.Repository.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Company");
+                });
+
+            modelBuilder.Entity("TrackMyShipment.Repository.Models.Estimate", b =>
+                {
+                    b.Property<int?>("userId");
+
+                    b.Property<int?>("objectiveId");
+
+                    b.Property<string>("Status");
+
+                    b.HasKey("userId", "objectiveId");
+
+                    b.HasIndex("objectiveId");
+
+                    b.ToTable("Estimates");
                 });
 
             modelBuilder.Entity("TrackMyShipment.Repository.Models.Objective", b =>
@@ -215,6 +230,19 @@ namespace TrackMyShipment.Repository.Migrations
                     b.HasOne("TrackMyShipment.Repository.Models.User", "Users")
                         .WithMany()
                         .HasForeignKey("UsersId");
+                });
+
+            modelBuilder.Entity("TrackMyShipment.Repository.Models.Estimate", b =>
+                {
+                    b.HasOne("TrackMyShipment.Repository.Models.Objective", "Objective")
+                        .WithMany()
+                        .HasForeignKey("objectiveId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("TrackMyShipment.Repository.Models.User", "User")
+                        .WithMany()
+                        .HasForeignKey("userId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("TrackMyShipment.Repository.Models.Objective", b =>

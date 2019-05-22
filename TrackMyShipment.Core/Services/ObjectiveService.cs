@@ -21,6 +21,7 @@ namespace TrackMyShipment.Core.Services
             if (addedTask != null && carrierId !=null)
             {
                 addedTask.Entity.carrierId = carrierId;
+                addedTask.Entity.Status = true;
                 await _context.CompleteAsync();
                 return true;
             }
@@ -34,8 +35,11 @@ namespace TrackMyShipment.Core.Services
 
         public async Task<bool> ChangeStatusTask(int userId, int taskId)
         {
-
             return await _context.ChangeStatusTask(userId, taskId);
+        }
+        public async Task<bool> TakeTask(int userId, int taskId)
+        {
+            return await _context.TakeTask(userId, taskId);
         }
     }
 }

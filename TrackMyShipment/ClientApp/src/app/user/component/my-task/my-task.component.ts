@@ -20,4 +20,9 @@ export class MyTaskComponent  {
     });
   }
 
+  takeTask(task:Objective) {
+    this.userService.takeTask(task).subscribe((data) => {
+      console.log(data);
+    });
+  }
 }
