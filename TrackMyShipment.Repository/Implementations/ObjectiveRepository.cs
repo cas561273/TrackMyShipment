@@ -13,7 +13,7 @@ using TrackMyShipment.Repository.Models;
 
 namespace TrackMyShipment.Repository.Implementations
 {
-   public class ObjectiveRepository : Repository<Objective>,IObjectiveRepository
+    public class ObjectiveRepository : Repository<Objective>, IObjectiveRepository
     {
         private readonly ApplicationContext _context;
 
@@ -25,16 +25,16 @@ namespace TrackMyShipment.Repository.Implementations
         public async Task<IEnumerable<Objective>> GetMyTask(int userId)
         {
             var subscriptionCarrier = await _context.Supplies.WhereAsync(x => x.UserId == userId);
-            List<int?> carriersId =  subscriptionCarrier.SelectAsync(x => x.CarrierId).Result.ToList();
+            List<int?> carriersId = subscriptionCarrier.SelectAsync(x => x.CarrierId).Result.ToList();
 
-           return await _context.Task.WhereAsync(x => carriersId.Contains(x.carrierId) && x.Status == true);
+            return await _context.Task.WhereAsync(x => carriersId.Contains(x.carrierId) && x.Status == true);
 
         }
 
         public async Task<int?> GetCarrierId(int carrierUserId)
         {
             var carrier = await _context.Supplies.SingleOrDefaultAsync(x => x.UserId == carrierUserId);
-                return carrier.CarrierId;
+            return carrier.CarrierId;
         }
 
         public async Task<bool> ChangeStatusTask(int userId, int taskId)
@@ -52,15 +52,14 @@ namespace TrackMyShipment.Repository.Implementations
 
         public async Task<bool> TakeTask(int userId, int taskId)
         {
-           var estimate = await _context.Estimates.WhereAsync(x => x.userId == userId);
-           if (estimate == null)
-           {
-               await _context.Estimates.AddAsync(new Estimate()
-                   {userId = userId, objectiveId = taskId, Status = "in progress"});
-               return true;
-           }
-
-           return false;
+            var estimate = await _context.Estimates.AddAsync(new Estimate()
+            { userId = userId, objectiveId = taskId, Status = "in progress" });
+            if (estimate != null)
+            {
+                await _context.SaveChangesAsync();
+                return true;
+            }
+            return false;
         }
 
     }

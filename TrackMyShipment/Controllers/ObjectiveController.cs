@@ -86,8 +86,8 @@ namespace TrackMyShipment.Controllers
 
         [HttpPost]
         [Route("TakeTask")]
-        [Authorize(Roles = "carrier")]
-        public async Task<IActionResult> TakeTask(int objectiveId)
+        [Authorize(Roles = "customer")]
+        public async Task<IActionResult> TakeTask([FromBody]int objectiveId)
         {
             User user = await CurrentUser();
             int userId = user.Id;
