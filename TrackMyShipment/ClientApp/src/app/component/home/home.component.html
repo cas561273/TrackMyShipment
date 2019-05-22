@@ -287,9 +287,9 @@
                       <td>{{user.user.phone}}</td>
                       <td>{{user.task.name}}</td>
                       <td>{{user.task.cost}}</td>
-                      <td>{{user.task.status}}</td>
+                      <td>{{user.status}}</td>
                       <td>
-                        <button mat-raised-button color="primary" (click)="subscribe(carrier)">Resolved</button>
+                        <button mat-raised-button color="primary" (click)="resolve(user.task.id)">Resolved</button>
                       </td>
                     </tr>
                   </tbody>

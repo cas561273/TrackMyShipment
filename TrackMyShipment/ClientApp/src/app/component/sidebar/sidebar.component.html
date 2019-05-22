@@ -44,6 +44,7 @@
           <span class="arrow open"></span>
         </a>
       </li>
+
       <li *ngIf="currentUser?.role==='customer'" class="nav-item">
         <a [routerLink]="['my-carriers']" class="nav-link ">
           <i class="material-icons">person</i>
@@ -52,30 +53,13 @@
           <span class="arrow"></span>
         </a>
       </li>
-      <li class="nav-item">
+      <li *ngIf="currentUser?.role==='customer' ||currentUser?.role==='carrier' " class="nav-item">
         <a [routerLink]="['my-task']" class="nav-link ">
           <i class="material-icons">email</i>
           <span  class="title">Tasks</span>
           <span class="arrow"></span>
           <span class="label label-rouded label-menu label-danger">new</span>
         </a>
-        <ul class="sub-menu">
-          <li class="nav-item">
-            <a href="" class="nav-link ">
-              <span class="title">Inbox</span>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a href="" class="nav-link ">
-              <span class="title">View Mail</span>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a href="" class="nav-link ">
-              <span class="title">Compose Mail</span>
-            </a>
-          </li>
-        </ul>
       </li>
     </ul>
   </div>
