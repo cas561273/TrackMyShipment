@@ -39,7 +39,7 @@
       <li class="nav-item">
         <a [routerLink]="['home']" class="nav-link ">
           <i class="material-icons">dashboard</i>
-          <span class="title">Dashboard</span>
+          <span class="title">Main</span>
           <span class="selected"></span>
           <span class="arrow open"></span>
         </a>
@@ -47,7 +47,7 @@
       <li *ngIf="currentUser?.role==='customer'" class="nav-item">
         <a [routerLink]="['my-carriers']" class="nav-link ">
           <i class="material-icons">person</i>
-          <span class="title">My Carriers</span>
+          <span class="title">Subscription</span>
           <span class="selected"></span>
           <span class="arrow"></span>
         </a>
@@ -55,7 +55,7 @@
       <li class="nav-item">
         <a [routerLink]="['carriers']" class="nav-link ">
           <i class="material-icons">email</i>
-          <span  class="title">Carriers</span>
+          <span  class="title">Available Tasks</span>
           <span class="arrow"></span>
           <span class="label label-rouded label-menu label-danger">new</span>
         </a>
@@ -77,14 +77,6 @@
           </li>
         </ul>
       </li>
-      <li class="nav-item">
-        <a href="#" class="nav-link ">
-          <i class="material-icons">business_center</i>
-          <span class="title">Booking</span>
-          <span class="arrow"></span>
-        </a>
-      </li>
-
     </ul>
   </div>
 </div>
