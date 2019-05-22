@@ -9,6 +9,7 @@ namespace TrackMyShipment.Core.Interfaces
         Task<IEnumerable<User>> GetMyUsersAsync(int? carrierId);
         Task<IEnumerable<User>> GetCarrierUsersAsync();
         Task<IEnumerable<User>> GetCarrierUsersByIdAsync(int id);
+        Task<IEnumerable<object>> GetWorkUsers(int id);
         Task<User> GetUserByEmailAsync(string email);
         Task<User> GetUserAsync(User person);
         Task<User> PutUserCarrierAsync(User carrier);

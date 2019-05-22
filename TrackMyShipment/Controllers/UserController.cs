@@ -143,7 +143,28 @@ namespace TrackMyShipment.Controllers
                     Msg = "Successfully to Unsubscribe"
                 });
             }
+        }
 
+        [HttpGet]
+        [Route("GetWorkUsers")]
+        [Authorize(Roles = "carrier,admin")]
+        public async Task<IActionResult> GetWorkUsers()
+        {
+            User user = await CurrentUser();
+            int userId = user.Id;
+            var result = await _userManage.GetWorkUsers(userId);
+            return result!=null
+                ? Json(new Request
+                {
+                    Data = result,
+                    Msg = "Received successfully!",
+                    State = RequestState.Success
+                })
+                : Json(new Request
+                {
+                    Msg = "Can not received!",
+                    State = RequestState.Failed
+                });
         }
     }
 }

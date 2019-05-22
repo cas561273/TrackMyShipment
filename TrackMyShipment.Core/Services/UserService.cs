@@ -81,5 +81,11 @@ namespace TrackMyShipment.Core.Services
         {
             return await _context.UserExistsAsync(user);
         }
+
+        public  async Task<IEnumerable<object>> GetWorkUsers(int id)
+        {
+            return await _context.GetWorkUsers(id);
+        }
+
     }
 }

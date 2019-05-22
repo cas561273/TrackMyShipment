@@ -249,8 +249,8 @@
 </div>
 
 
-
 <div *ngIf="currentUser?.role==='carrier'">
+
   <div id="inner">
     <div class="row">
       <div class="col-md-10 col-sm-10">
@@ -263,33 +263,38 @@
               <a class=" btn-color fa fa-times" href="javascript:;"></a>
             </div>
           </div>
-          <div class="card-body ">
-            <div class="table-responsive">
-              <table class="table display" id="support_table5">
-                <thead>
-                <tr>
-                  <th>Id</th>
-                  <th>Logo</th>
-                  <th>Name</th>
-                  <th>Connect</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr *ngFor="let carrier of carriers;let i=index; trackBy:identify">
-                  <th scope="row">{{i+1}}</th>
-                  <td>
-                    <div class="sidebar-logocarrier">
-                      <img src="{{carrier.logo}}" class="img-responsive" alt="Not Found Logo" />
-                    </div>
-                  </td>
-                  <td>{{carrier.name}}</td>
-
-                  <td>
-                    <button mat-raised-button color="primary" (click)="subscribe(carrier)">Subscribe</button>
-                  </td>
-                </tr>
-                </tbody>
-              </table>
+          <div *ngIf="!activeUsers?.length==0 ; else empty">
+            <div class="card-body ">
+              <div class="table-responsive">
+                <table class="table display" id="support_table5">
+                  <thead>
+                  <tr>
+                    <th>FirstName</th>
+                    <th>LastName</th>
+                    <th>Email</th>
+                    <th>Phone</th>
+                    <th>Task</th>
+                    <th>Cost</th>
+                    <th>Status</th>
+                    <th></th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let user of activeUsers;let i=index; trackBy:identify">
+                      <td>{{user.user.firstName}}</td>
+                      <td>{{user.user.lastName}}</td>
+                      <td>{{user.user.email}}</td>
+                      <td>{{user.user.phone}}</td>
+                      <td>{{user.task.name}}</td>
+                      <td>{{user.task.cost}}</td>
+                      <td>{{user.task.status}}</td>
+                      <td>
+                        <button mat-raised-button color="primary" (click)="subscribe(carrier)">Resolved</button>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
             </div>
           </div>
         </div>

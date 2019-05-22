@@ -22,6 +22,7 @@ export class HomeComponent implements OnInit {
 
   carriers: Carrier[];
   currentUser: Person;
+  activeUsers: any[];
 
   constructor(private router: Router, private http: HttpClient, private carrierService: CarrierService,private userService:UserService,
     private dataSharingService: DataSharingService, public dialog: MatDialog) { }
@@ -31,7 +32,12 @@ export class HomeComponent implements OnInit {
     this.refresh();
     this.dataSharingService.currentUser.subscribe(user => {
       this.currentUser = user;
+        this.userService.getWorkUser().subscribe(response => {
+          this.activeUsers = response.data;
+          console.log(this.activeUsers);
+        });
     });
+
   }
 
   public refresh() {

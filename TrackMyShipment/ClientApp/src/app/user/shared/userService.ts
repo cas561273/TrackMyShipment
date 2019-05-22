@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { AuthService } from '../../core/auth/authService';
-import { IRequestResult, IRequestResult as IRequestResult1 } from '../../models/IRequestResult';
+import { IRequestResult} from '../../models/IRequestResult';
 import { Carrier } from '../../models/Carrier';
 import { Person } from 'src/app/models/Person';
 import { Address } from "../../models/Address";
@@ -39,7 +39,7 @@ export class UserService {
   }
   public getMyAllAddress() {
     let headers = this.authService.initAuthHeaders();
-    return this.http.get<IRequestResult1>('https://localhost:44395/api/' + 'MyAddress', { headers });
+    return this.http.get<IRequestResult>('https://localhost:44395/api/' + 'MyAddress', { headers });
   }
 
   public addAddress(address:Address) {
@@ -54,8 +54,12 @@ export class UserService {
 
   public takeTask(task:Objective) {
     let headers = this.authService.initAuthHeaders();
-    let taskId = task.id;
-    return this.http.post<IRequestResult>('https://localhost:44395/api/objective/' + 'TakeTask',taskId, { headers });
+    return this.http.post<IRequestResult>('https://localhost:44395/api/objective/' + 'TakeTask',task.id, { headers });
+  }
+
+  public getWorkUser() {
+    let headers = this.authService.initAuthHeaders();
+    return this.http.get<IRequestResult>(this._url + 'GetWorkUsers', { headers });
   }
   
 }
