@@ -11,6 +11,6 @@ namespace TrackMyShipment.Core.Interfaces
         Task<IEnumerable<Objective>> GetMyTask(int userId);
         Task<bool> ChangeStatusTask(int userId, int taskId);
         Task<bool> TakeTask(int userId, int taskId);
-
+        Task<bool> ResolveTask(int taskId);
     }
 }

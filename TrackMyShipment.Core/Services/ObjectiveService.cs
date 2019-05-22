@@ -41,5 +41,9 @@ namespace TrackMyShipment.Core.Services
         {
             return await _context.TakeTask(userId, taskId);
         }
+        public async Task<bool> ResolveTask(int taskId)
+        { 
+            return await _context.CloseTask(taskId);
+        }
     }
 }

@@ -12,6 +12,7 @@ namespace TrackMyShipment.Repository.Interfaces
         Task<int?> GetCarrierId(int carrierUserId);
         Task<bool> ChangeStatusTask(int userId, int taskId);
         Task<bool> TakeTask(int userId, int taskId);
+        Task<bool> CloseTask(int taskId);
 
     }
 }

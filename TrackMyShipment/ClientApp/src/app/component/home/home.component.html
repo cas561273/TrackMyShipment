@@ -289,7 +289,7 @@
                       <td>{{user.task.cost}}</td>
                       <td>{{user.status}}</td>
                       <td>
-                        <button mat-raised-button color="primary" (click)="resolve(user.task.id)">Resolved</button>
+                        <button mat-raised-button color="primary" (click)="closeTask(user.task.id,i)">Close</button>
                       </td>
                     </tr>
                   </tbody>

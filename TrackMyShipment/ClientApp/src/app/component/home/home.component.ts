@@ -73,17 +73,16 @@ export class HomeComponent implements OnInit {
     }
   });
   }
-
+  public closeTask(idTask: number,id) {
+    this.userService.closeTask(idTask).subscribe((response) => {
+      if (response.state === 1) {
+        this.activeUsers[id].status = "done";
+      }
+    });
+  }
   public subscribe(carrier) {
     this.userService.subscribe(carrier).subscribe((response) => {
       console.log(response);
-      if (response.state === 1) {
-        //tod o
-      }
-      if (response.state === - 1) {
-
-      }
-
     });
   }
 
@@ -101,8 +100,4 @@ export class HomeComponent implements OnInit {
   identify(index) {
     return index;
   }
-
-
-   
-
 }

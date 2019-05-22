@@ -66,7 +66,7 @@ namespace TrackMyShipment.Controllers
         [HttpPost]
         [Route("ChangeStatusTask")]
         [Authorize(Roles = "carrier")]
-        public async Task<IActionResult> ChangeStatusTask(int objectiveId)
+        public async Task<IActionResult> ChangeStatusTask([FromBody]int objectiveId)
         {
             User user = await CurrentUser();
             int userId = user.Id;
@@ -92,6 +92,25 @@ namespace TrackMyShipment.Controllers
             User user = await CurrentUser();
             int userId = user.Id;
             bool result = await _objectiveManage.TakeTask(userId, objectiveId);
+            return result
+                ? Json(new Request
+                {
+                    Msg = "Task take success!",
+                    State = RequestState.Success
+                })
+                : Json(new Request
+                {
+                    Msg = "Can not take this task!",
+                    State = RequestState.Failed
+                });
+        }
+
+        [HttpPost]
+        [Route("CloseTask")]
+        [Authorize(Roles = "carrier")]
+        public async Task<IActionResult> ResolveTask([FromBody]int idTask)
+        {
+            bool result = await _objectiveManage.ResolveTask(idTask);
             return result
                 ? Json(new Request
                 {

@@ -26,9 +26,10 @@ namespace TrackMyShipment.Repository.Implementations
         {
             var subscriptionCarrier = await _context.Supplies.WhereAsync(x => x.UserId == userId);
             List<int?> carriersId = subscriptionCarrier.SelectAsync(x => x.CarrierId).Result.ToList();
-
+            var user = await _context.Users.Include(x => x.Role).SingleOrDefaultAsync(x => x.Id == userId);
+            if (user.Role.Name == "carrier")
+                return await _context.Task.WhereAsync(x => carriersId.Contains(x.carrierId));
             return await _context.Task.WhereAsync(x => carriersId.Contains(x.carrierId) && x.Status == true);
-
         }
 
         public async Task<int?> GetCarrierId(int carrierUserId)
@@ -62,5 +63,17 @@ namespace TrackMyShipment.Repository.Implementations
             return false;
         }
 
+        public async Task<bool> CloseTask(int taskId)
+        {
+            var task= await _context.Estimates.SingleOrDefaultAsync(x => x.objectiveId == taskId);
+            if (task.Status == "resolved")
+            {
+                task.Status = "done";
+                await CompleteAsync();
+                return true;
+            }
+
+            return false;
+        }
     }
 }

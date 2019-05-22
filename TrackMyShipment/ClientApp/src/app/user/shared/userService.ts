@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { AuthService } from '../../core/auth/authService';
-import { IRequestResult} from '../../models/IRequestResult';
+import { IRequestResult  } from '../../models/IRequestResult';
 import { Carrier } from '../../models/Carrier';
 import { Person } from 'src/app/models/Person';
 import { Address } from "../../models/Address";
@@ -61,5 +61,17 @@ export class UserService {
     let headers = this.authService.initAuthHeaders();
     return this.http.get<IRequestResult>(this._url + 'GetWorkUsers', { headers });
   }
+
+  public changeStatusTask(idTask: number) {
+    let headers = this.authService.initAuthHeaders();
+    return this.http.post<IRequestResult>('https://localhost:44395/api/objective/' + 'ChangeStatusTask', idTask, { headers });
+  }
+
+  public closeTask(idTask:number) {
+    let headers = this.authService.initAuthHeaders();
+    return this.http.post<IRequestResult>('https://localhost:44395/api/objective/' + 'CloseTask',idTask, { headers });
+  }
+
+
   
 }
