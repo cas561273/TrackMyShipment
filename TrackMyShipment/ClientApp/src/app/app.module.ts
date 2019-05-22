@@ -1,4 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
+import { DxTemplateModule } from 'devextreme-angular';
+
 import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
@@ -24,6 +26,7 @@ import { DialogAddUserCarrierComponent } from './carrier/ui/dialog.add-user-carr
 import { UserProfileComponent } from "./user/component/user-profile/user-profile.component";
 import { UserService } from "./user/shared/userService";
 import { AddressComponent } from "./component/address/address.component";
+import { MyTaskComponent } from "./user/component/my-task/my-task.component";
 
 
 @NgModule(({
@@ -33,6 +36,7 @@ import { AddressComponent } from "./component/address/address.component";
     MainComponent,
     LoginComponent,
     HeaderComponent,
+    MyTaskComponent,
     SidebarComponent,
     PricingComponent,
     AddressComponent,

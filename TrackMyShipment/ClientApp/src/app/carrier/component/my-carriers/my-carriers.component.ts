@@ -16,14 +16,13 @@ export class MyCarriersComponent implements OnInit {
   ngOnInit() {
     this.carrierService.getMyCarriers().subscribe((data) => {
       this.carriers = data.data as Carrier[];
+      console.log(this.carriers);
     });
   }
 
   public subscribe(carrier) {
     this.userService.subscribe(carrier).subscribe((response) => {
-      console.log(response.state);
       if (response.state === -1) {
-        console.log("Unsubscribe");
         this.carriers = this.carriers.filter(c => c.id !== carrier.id);
       }
 

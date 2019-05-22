@@ -10,6 +10,7 @@ import { CarrierDetailComponent } from './carrier/component/carrier-detail/carri
 import { MyCarriersComponent } from "./carrier/component/my-carriers/my-carriers.component";
 import { UserProfileComponent } from "./user/component/user-profile/user-profile.component";
 import { AddressComponent } from "./component/address/address.component";
+import { MyTaskComponent } from "./user/component/my-task/my-task.component";
 
 const routes: Routes = [ {path: '', redirectTo: 'login', pathMatch: 'full'},
 {path: 'login', component: LoginComponent},
@@ -25,7 +26,8 @@ const routes: Routes = [ {path: '', redirectTo: 'login', pathMatch: 'full'},
     { path: 'carrier-detail/:id', component: CarrierDetailComponent },
     { path: 'my-carriers', component: MyCarriersComponent },
     { path: 'user-profile', component: UserProfileComponent },
-    { path: 'my-address', component: AddressComponent }
+    { path: 'my-address', component: AddressComponent },
+    {path:'my-task',component:MyTaskComponent}
   ]
   },
 ];

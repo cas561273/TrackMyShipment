@@ -1,9 +1,8 @@
-
 <style>
   .empty {
-     font-size: 25px;
-     padding:5% 5% 5% 46%
-   }
+    font-size: 25px;
+    padding:5% 5% 5% 46%
+  }
 
   #inner {
     width: 80%;
@@ -23,7 +22,7 @@
             <a class=" btn-color fa fa-times" href="javascript:;"></a>
           </div>
         </div>
-        <div *ngIf="!carriers?.length==0 ; else empty">
+        <div *ngIf="!tasks?.length==0 ; else empty">
           <div class="card-body ">
             <div class="table-responsive">
               <table class="table display" id="support_table5">
@@ -31,19 +30,19 @@
                 <tr>
                   <th>Id</th>
                   <th>Name</th>
-                  <th>Code</th>
-                  <th>Phone</th>
+                  <th>Status</th>
+                  <th>Cost</th>
                   <th></th>
                 </tr>
                 </thead>
                 <tbody>
-                <tr *ngFor="let carrier of carriers;let i=index; trackBy:identify">
+                <tr *ngFor="let task of tasks;let i=index; trackBy:identify">
                   <th scope="row">{{i+1}}</th>
-                  <td>{{carrier.name}}</td>
-                  <td>{{carrier.code}}</td>
-                  <td>{{carrier.phone}}</td>
+                  <td>{{task.name}}</td>
+                  <td>{{task.status}}</td>
+                  <td>{{task.cost}}</td>
                   <td>
-                    <button mat-raised-button color="primary" (click)="subscribe(carrier)">Delete</button>
+                    <button mat-raised-button color="primary" >Take</button>
                   </td>
                 </tr>
                 </tbody>

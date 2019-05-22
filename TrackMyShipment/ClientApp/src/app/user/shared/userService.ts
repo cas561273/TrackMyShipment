@@ -47,5 +47,10 @@ export class UserService {
     let headers = this.authService.initAuthHeaders();
     return this.http.post<IRequestResult>('https://localhost:44395/api/' + 'PutAddress',address, { headers });
   }
+
+  public getMyTask() {
+    let headers = this.authService.initAuthHeaders();
+    return this.http.get<IRequestResult>('https://localhost:44395/api/objective/' + 'GetMyTask', { headers });
+  }
   
 }

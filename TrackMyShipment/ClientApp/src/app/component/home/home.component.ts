@@ -9,6 +9,8 @@ import { CarrierService } from 'src/app/carrier/shared/carrierService';
 import { Person } from 'src/app/models/Person';
 import { DialogOverviewComponent } from 'src/app/carrier/ui/dialog-overview/dialog-overview.component';
 import { UserService } from 'src/app/user/shared/userService';
+import notify from "devextreme/ui/notify";
+
 
 
 @Component({
@@ -69,8 +71,12 @@ export class HomeComponent implements OnInit {
 
   public subscribe(carrier) {
     this.userService.subscribe(carrier).subscribe((response) => {
+      console.log(response);
       if (response.state === 1) {
-        console.log("subscribe");
+        //tod o
+      }
+      if (response.state === - 1) {
+
       }
 
     });
