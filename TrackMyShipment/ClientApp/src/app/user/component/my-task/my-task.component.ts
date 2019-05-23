@@ -28,9 +28,13 @@ export class MyTaskComponent  {
     });
   }
 
-  takeTask(task:Objective) {
+  takeTask(task:Objective,index:number) {
     this.userService.takeTask(task).subscribe((data) => {
-      console.log(data);
+      if (data.state === 1) {
+        this.tasks[index].status = !this.tasks[index].status;
+        console.log(this.tasks[index]);
+        console.log('yes');
+      }
     });
   }
 

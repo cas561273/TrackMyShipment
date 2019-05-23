@@ -39,10 +39,17 @@
                   <tr *ngFor="let task of tasks;let i=index; trackBy:identify">
                     <th scope="row">{{i+1}}</th>
                     <td>{{task.name}}</td>
-                    <td>{{task.status}}</td>
+                    <td>
+                      <div *ngIf="task.status;else other_content">
+                        <span class="label label-sm label-success">Open</span>
+                      </div>
+                      <ng-template #other_content>
+                        <span class="label label-sm label-warning">In Progress</span>
+                      </ng-template>
+                    </td>
                     <td>{{task.cost}}</td>
                     <td *ngIf="currentUser?.role==='customer'">
-                      <button  mat-raised-button color="primary" (click)="takeTask(task)">Take</button>
+                      <button  mat-raised-button color="primary" (click)="takeTask(task,i)">take</button>
                     </td>
                     <td  *ngIf="currentUser?.role==='carrier'">
                       <button mat-raised-button color="primary" (click)="changeStatus(task.id,i)">change</button>

@@ -27,10 +27,14 @@ namespace TrackMyShipment.Repository.Implementations
             var subscriptionCarrier = await _context.Supplies.WhereAsync(x => x.UserId == userId);
             List<int?> carriersId = subscriptionCarrier.SelectAsync(x => x.CarrierId).Result.ToList();
             var user = await _context.Users.Include(x => x.Role).SingleOrDefaultAsync(x => x.Id == userId);
+            var estimate = await _context.Estimates.WhereAsync(x => x.userId==userId);
+            var usersId = await estimate.SelectAsync(x => x.objectiveId);
             if (user.Role.Name == "carrier")
                 return await _context.Task.WhereAsync(x => carriersId.Contains(x.carrierId));
-            return await _context.Task.WhereAsync(x => carriersId.Contains(x.carrierId) && x.Status == true);
+            return await _context.Task.WhereAsync(x => carriersId.Contains(x.carrierId) && x.Status || usersId.Contains(x.Id));
         }
+
+
 
         public async Task<int?> GetCarrierId(int carrierUserId)
         {
@@ -55,6 +59,9 @@ namespace TrackMyShipment.Repository.Implementations
         {
             var estimate = await _context.Estimates.AddAsync(new Estimate()
             { userId = userId, objectiveId = taskId, Status = "in progress" });
+             var task = await _context.Task.SingleOrDefaultAsync(x => x.Id == taskId);
+             task.Status = false;
+
             if (estimate != null)
             {
                 await _context.SaveChangesAsync();
