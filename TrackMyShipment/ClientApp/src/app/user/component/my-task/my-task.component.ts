@@ -32,8 +32,6 @@ export class MyTaskComponent  {
     this.userService.takeTask(task).subscribe((data) => {
       if (data.state === 1) {
         this.tasks[index].status = !this.tasks[index].status;
-        console.log(this.tasks[index]);
-        console.log('yes');
       }
     });
   }

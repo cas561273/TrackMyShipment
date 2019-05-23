@@ -32,7 +32,9 @@
                   <th>Name</th>
                   <th>Status</th>
                   <th>Cost</th>
-                  <th>Status</th>
+                  <th></th>
+                  <th></th>
+
                 </tr>
                 </thead>
                 <tbody>
@@ -49,10 +51,13 @@
                     </td>
                     <td>{{task.cost}}</td>
                     <td *ngIf="currentUser?.role==='customer'">
-                      <button  mat-raised-button color="primary" (click)="takeTask(task,i)">take</button>
+                      <button mat-raised-button color="primary" (click)="takeTask(task,i)">take task</button>
                     </td>
-                    <td  *ngIf="currentUser?.role==='carrier'">
-                      <button mat-raised-button color="primary" (click)="changeStatus(task.id,i)">change</button>
+                    <td *ngIf="currentUser?.role==='customer'">
+                      <button mat-raised-button color="primary" (click)="takeTask(task,i)">resolved</button>
+                    </td>
+                    <td *ngIf="currentUser?.role==='carrier'">
+                      <button mat-raised-button color="primary">delete</button>
                     </td>
                   </tr>
                 </tbody>
