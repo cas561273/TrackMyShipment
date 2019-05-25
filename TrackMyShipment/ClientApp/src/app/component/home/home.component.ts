@@ -88,8 +88,8 @@ export class HomeComponent implements OnInit {
 
   openDialog(): void {
     const dialogRef = this.dialog.open(DialogOverviewComponent, {
-      width: '340px',
-      height:'450',
+      width: '330px',
+      height:'500px',
     });
 
     dialogRef.afterClosed().subscribe(result => {

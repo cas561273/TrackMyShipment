@@ -27,6 +27,7 @@ import { UserProfileComponent } from "./user/component/user-profile/user-profile
 import { UserService } from "./user/shared/userService";
 import { AddressComponent } from "./component/address/address.component";
 import { MyTaskComponent } from "./user/component/my-task/my-task.component";
+import { DialogTaskComponent } from './user/component/my-task/ui/dialog.add-task/dialog.add-task.component';
 
 
 @NgModule(({
@@ -38,8 +39,10 @@ import { MyTaskComponent } from "./user/component/my-task/my-task.component";
     HeaderComponent,
     MyTaskComponent,
     SidebarComponent,
+    DialogTaskComponent,
     PricingComponent,
     AddressComponent,
+    MyTaskComponent,
     MyCarriersComponent,
     UserProfileComponent,
     UsersCarrierComponent,
@@ -56,7 +59,7 @@ import { MyTaskComponent } from "./user/component/my-task/my-task.component";
     AppRoutingModule,
     BrowserAnimationsModule
   ],
-  entryComponents: [DialogOverviewComponent,DialogAddUserCarrierComponent],
+  entryComponents: [DialogOverviewComponent, DialogAddUserCarrierComponent, DialogTaskComponent, MyTaskComponent],
   providers: [AuthService, DataSharingService, CarrierService,UserService],
   bootstrap: [AppComponent]
 }) as any)

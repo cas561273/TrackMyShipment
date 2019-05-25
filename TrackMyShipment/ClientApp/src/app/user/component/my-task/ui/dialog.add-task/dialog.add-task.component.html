@@ -1,0 +1,23 @@
+
+  <form role="form" action="" method="put" #task="ngForm" (ngSubmit)="addTask(task)">
+    <div class="form-group">
+      <ol>
+        <li>
+          <mat-form-field>
+            <input matInput name="name" [(ngModel)]="name" placeholder="Name">
+          </mat-form-field>
+        </li>
+        <li>
+          <mat-form-field>
+            <input matInput name="status" [(ngModel)]="status" placeholder="Status">
+          </mat-form-field>
+        </li>
+        <li>
+          <mat-form-field>
+            <input matInput name="cost" [(ngModel)]="cost" placeholder="Cost">
+          </mat-form-field>
+        </li>
+      </ol>
+      <button type="submit" class="btn">Add Task!</button>
+      </div>
+  </form>

@@ -20,8 +20,8 @@ export class UsersCarrierComponent {
 
   openModal(): void {
     const dialogRef = this.dialog.open(DialogAddUserCarrierComponent, {
-      width: '340px',
-      height:'390',
+      width: '350px',
+      height:'430px',
     });
 
     //delete this
