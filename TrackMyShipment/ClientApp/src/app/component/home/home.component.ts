@@ -76,7 +76,7 @@ export class HomeComponent implements OnInit {
   public closeTask(idTask: number,id) {
     this.userService.closeTask(idTask).subscribe((response) => {
       if (response.state === 1) {
-        this.activeUsers[id].status = "done";
+        this.activeUsers[id].status = "completed";
       }
     });
   }

@@ -35,34 +35,19 @@ namespace TrackMyShipment.Repository.Implementations
             var subscription = await _context.Supplies.WhereAsync(x => x.UserId == userId);
             var subscriptionId = await subscription.SelectAsync(x => x.CarrierId);
 
-            if (user.Role.Name == "customer")
-            {
-                var tasks = await _context.Task.WhereAsync(x => subscriptionId.Contains(x.carrierId) && x.Status);
+            var tasks = await _context.Task.WhereAsync(x => subscriptionId.Contains(x.carrierId) && x.Status);
 
-                var noSubscriptionTask = await tasks.SelectAsync(x => new ViewModelObjective
-                { Id = x.Id,Cost = x.Cost, Name = x.Name, Status = "open" });
+            var noSubscriptionTask = await tasks.SelectAsync(x => new ViewModelObjective
+            { Id = x.Id, Cost = x.Cost, Name = x.Name, Status = "open" });
 
-                var availableTasks = await _context.Estimates.Include(x=>x.Objective)
-                    .WhereAsync(x => x.userId==userId);
-                var viewAvailableTasks = await availableTasks.SelectAsync(x =>
-                new ViewModelObjective { Id = x.Objective.Id,Cost = x.Objective.Cost, Name = x.Objective.Name, Status = x.Status });
+            var availableTasks = await _context.Estimates.Include(x => x.Objective)
+                .WhereAsync(x => x.userId == userId);
+            var viewAvailableTasks = await availableTasks.SelectAsync(x =>
+            new ViewModelObjective { Id = x.Objective.Id, Cost = x.Objective.Cost, Name = x.Objective.Name, Status = x.Status });
 
-                var result =  noSubscriptionTask.Concat(viewAvailableTasks);
-                return result;
-            }
-
-            if (user.Role.Name == "carrier") {
-
-                var taskCarrier =  await _context.Task.WhereAsync(x => subscriptionId.Contains(x.carrierId));
-                var estimateCarrier =  await _context.Estimates.Include(x => x.Objective)
-                    .WhereAsync(x => subscriptionId.Contains(x.Objective.carrierId));
-                return await estimateCarrier.SelectAsync(x =>
-                new ViewModelObjective {Id = x.Objective.Id, Cost = x.Objective.Cost, Name = x.Objective.Name, Status = x.Status });
-            }
-            return null;
+            var result = noSubscriptionTask.Concat(viewAvailableTasks);
+            return result;
         }
-
-
 
         public async Task<int?> GetCarrierId(int carrierUserId)
         {
@@ -87,8 +72,8 @@ namespace TrackMyShipment.Repository.Implementations
         {
             var estimate = await _context.Estimates.AddAsync(new Estimate()
             { userId = userId, objectiveId = taskId, Status = "in progress" });
-             var task = await _context.Task.SingleOrDefaultAsync(x => x.Id == taskId);
-             task.Status = false;
+            var task = await _context.Task.SingleOrDefaultAsync(x => x.Id == taskId);
+            task.Status = false;
 
             if (estimate != null)
             {
@@ -100,7 +85,7 @@ namespace TrackMyShipment.Repository.Implementations
 
         public async Task<bool> CloseTask(int taskId)
         {
-            var task= await _context.Estimates.SingleOrDefaultAsync(x => x.objectiveId == taskId);
+            var task = await _context.Estimates.SingleOrDefaultAsync(x => x.objectiveId == taskId);
             if (task.Status == "resolved")
             {
                 task.Status = "completed";

@@ -43,5 +43,16 @@ namespace TrackMyShipment.Repository.Implementations
             await _context.SaveChangesAsync();
             return carrier.Status;
         }
+        public async Task<bool> DeleteCarrierAsync(int id)
+        {
+            var carriersTask = await _context.Task.WhereAsync(x => x.carrierId == id);
+            _context.Task.RemoveRange(carriersTask);
+            var carriersSupplies = await _context.Supplies.WhereAsync(x => x.CarrierId == id);
+            _context.Supplies.RemoveRange(carriersSupplies);
+            var carriers = await _context.Carriers.WhereAsync(x => x.Id == id);
+            _context.Carriers.RemoveRange(carriers);
+            await _context.SaveChangesAsync();
+            return true;
+        }
     }
 }

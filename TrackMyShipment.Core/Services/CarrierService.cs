@@ -35,11 +35,7 @@ namespace TrackMyShipment.Core.Services
 
         public async Task<bool> DeleteCarrierAsync(int id)
         {
-            Carrier carrier = await GetCarrierByIdAsync(id);
-            if (carrier == null) return false;
-            _context.Remove(carrier);
-            await _context.CompleteAsync();
-            return true;
+            return await _context.DeleteCarrierAsync(id);
         }
 
         public async Task<IEnumerable<Carrier>> GetAvailableCarriersAsync(User user)

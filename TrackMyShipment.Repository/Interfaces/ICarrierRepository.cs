@@ -9,6 +9,6 @@ namespace TrackMyShipment.Repository.Interfaces
         Task<IEnumerable<Carrier>> GetCarriersAsync(User user);
         Task<IEnumerable<Carrier>> GetAvailableCarriersAsync(User user);
         Task<bool?> ChangeStatusCarrierAsync(int carrierId);
-
+        Task<bool> DeleteCarrierAsync(int id);
     }
 }
