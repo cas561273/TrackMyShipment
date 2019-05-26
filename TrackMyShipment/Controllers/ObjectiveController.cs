@@ -105,12 +105,33 @@ namespace TrackMyShipment.Controllers
                 });
         }
 
+
+        [HttpPost]
+        [Route("Resolved")]
+        [Authorize(Roles = "customer")]
+        public async Task<IActionResult> Resolved([FromBody]int objectiveId)
+        {
+            User user = await CurrentUser();
+            bool result = await _objectiveManage.ResolveTask(objectiveId);
+            return result
+                ? Json(new Request
+                {
+                    Msg = "Resolved success!",
+                    State = RequestState.Success
+                })
+                : Json(new Request
+                {
+                    Msg = "Can not resolve this task!",
+                    State = RequestState.Failed
+                });
+        }
+
         [HttpPost]
         [Route("CloseTask")]
         [Authorize(Roles = "carrier")]
-        public async Task<IActionResult> ResolveTask([FromBody]int idTask)
+        public async Task<IActionResult> CloseTask([FromBody]int idTask)
         {
-            bool result = await _objectiveManage.ResolveTask(idTask);
+            bool result = await _objectiveManage.CloseTask(idTask);
             return result
                 ? Json(new Request
                 {

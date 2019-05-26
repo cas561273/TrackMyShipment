@@ -57,6 +57,11 @@ export class UserService {
     return this.http.post<IRequestResult>('https://localhost:44395/api/objective/' + 'TakeTask',task.id, { headers });
   }
 
+  public resolved(task: Objective) {
+    let headers = this.authService.initAuthHeaders();
+    return this.http.post<IRequestResult>('https://localhost:44395/api/objective/' + 'Resolved', task.id, { headers });
+  }
+
   public getWorkUser() {
     let headers = this.authService.initAuthHeaders();
     return this.http.get<IRequestResult>(this._url + 'GetWorkUsers', { headers });

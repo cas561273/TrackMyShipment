@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using TrackMyShipment.Core.Interfaces;
+using TrackMyShipment.Repository.Implementations;
 using TrackMyShipment.Repository.Models;
 
 namespace TrackMyShipment.Manage
@@ -18,7 +19,7 @@ namespace TrackMyShipment.Manage
         { 
             return await _objectiveService.AddTask(carrierId, task);
         }
-        public async Task<IEnumerable<Objective>> GetMyTask(int userId)
+        public async Task<IEnumerable<ViewModelObjective>> GetMyTask(int userId)
         {
             return await _objectiveService.GetMyTask(userId);
         }
@@ -37,7 +38,10 @@ namespace TrackMyShipment.Manage
         {
             return await _objectiveService.ResolveTask(taskId);
         }
-
+        public async Task<bool> CloseTask(int taskId)
+        {
+            return await _objectiveService.CloseTask(taskId);
+        }
     }
 
 }

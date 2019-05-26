@@ -32,8 +32,8 @@
                   <th>Name</th>
                   <th>Status</th>
                   <th>Cost</th>
-                  <th></th>
-                  <th></th>
+                  <th>Info</th>
+                  <th>Event</th>
 
                 </tr>
                 </thead>
@@ -42,22 +42,38 @@
                     <th scope="row">{{i+1}}</th>
                     <td>{{task.name}}</td>
                     <td>
-                      <div *ngIf="task.status;else other_content">
+                      <div *ngIf="task.status==='open'">
                         <span class="label label-sm label-success">Open</span>
                       </div>
-                      <ng-template #other_content>
+                      <div *ngIf="task.status==='in progress'">
                         <span class="label label-sm label-warning">In Progress</span>
-                      </ng-template>
+                      </div>
+                      <div *ngIf="task.status==='resolved'">
+                        <span class="label label-sm label-danger">Resovled</span>
+                      </div>
+                      <div *ngIf="task.status==='completed'">
+                        <span class="label label-sm label-success">Completed</span>
+                      </div>
                     </td>
                     <td>{{task.cost}}</td>
-                    <td *ngIf="currentUser?.role==='customer'">
+                    <td *ngIf="currentUser?.role==='customer' && task.status==='open'">
                       <button mat-raised-button color="primary" (click)="takeTask(task,i)">take task</button>
                     </td>
-                    <td *ngIf="currentUser?.role==='customer'">
-                      <button mat-raised-button color="primary" (click)="takeTask(task,i)">resolved</button>
+                    <td *ngIf="currentUser?.role==='customer' && task.status==='in progress'">
+                      <button mat-raised-button color="primary" (click)="resolved(task,i)">mark as resolved</button>
+                    </td>
+                    <td *ngIf=" task.status==='resolved'">
+                      <p>
+                        waiting for confirmation
+                      </p>
+                    </td>
+                    <td *ngIf=" task.status==='completed'">
+                      <p style="color:green">
+                        task successfully completed
+                      </p>
                     </td>
                     <td *ngIf="currentUser?.role==='carrier'">
-                      <button mat-raised-button color="primary">delete</button>
+                      <button mat-raised-button color="primary" (click)="closeTask(task,i)">close task</button>
                     </td>
                   </tr>
                 </tbody>

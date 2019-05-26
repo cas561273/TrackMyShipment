@@ -32,8 +32,27 @@ export class MyTaskComponent  {
 
   takeTask(task:Objective,index:number) {
     this.userService.takeTask(task).subscribe((data) => {
+      console.log(data);
       if (data.state === 1) {
-        this.tasks[index].status = !this.tasks[index].status;
+        this.tasks[index].status = "in progress"
+      }
+    });
+  }
+
+  resolved(task: Objective, index: number) {
+    this.userService.resolved(task).subscribe((data) => {
+      console.log(data);
+      if (data.state === 1) {
+        this.tasks[index].status = "resolved"
+      }
+    });
+  }
+
+  closeTask(task: Objective, index: number) {
+    this.userService.closeTask(task.id).subscribe((data) => {
+      console.log(data);
+      if (data.state === 1) {
+        this.tasks[index].status = "completed"
       }
     });
   }
@@ -42,7 +61,7 @@ export class MyTaskComponent  {
     console.log(this.tasks[index]);
     this.userService.changeStatusTask(taskId).subscribe((data) => {
       if (data.state === 1) {
-        this.tasks[index].status = !this.tasks[index].status;
+        //this.tasks[index].status = !this.tasks[index].status;
       }
     });
   }
