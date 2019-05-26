@@ -233,7 +233,7 @@
                       <td>{{carrier.name}}</td>
 
                       <td>
-                        <button mat-raised-button color="primary" (click)="subscribe(carrier)">Subscribe</button>
+                        <button mat-raised-button color="primary" (click)="subscribe(carrier)">{{buttonSubscribe}}</button>
                       </td>
                     </tr>
                   </tbody>
@@ -286,7 +286,10 @@
                       <td>{{user.user.phone}}</td>
                       <td>{{user.task.name}}</td>
                       <td>{{user.task.cost}}</td>
-                      <td>{{user.status}}</td>
+                      <td *ngIf="user.status==='completed'"><p style="color:green">{{user.status}}</p></td>
+                      <td *ngIf="user.status==='in progress'"><p style="color:red">{{user.status}}</p></td>
+                      <td *ngIf="user.status==='resolved'"><p style="color:gold">{{user.status}}</p></td>
+
                       <td>
                         <button mat-raised-button color="primary" (click)="closeTask(user.task.id,i)">Close Task</button>
                       </td>

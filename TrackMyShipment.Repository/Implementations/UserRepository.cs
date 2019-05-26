@@ -23,12 +23,14 @@ namespace TrackMyShipment.Repository.Implementations
         private async Task<User> FetchUserAsync(Expression<Func<User, bool>> predicate)
         {
             User user = await _context.Users.SingleOrDefaultAsync(predicate);
+
             if (user != null)
             {
                 _context.Entry(user).Reference(nameof(Role)).Load();
-                _context.Entry(user).Reference(nameof(Company)).Load();
                 _context.Entry(user).Reference(nameof(Subscription)).Load();
+                _context.Entry(user).Reference(nameof(Company)).Load();
             }
+
             return user;
         }
 

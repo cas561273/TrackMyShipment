@@ -40,6 +40,7 @@ namespace TrackMyShipment.Controllers
             var claimsIdentity = User.Identity as ClaimsIdentity;
             if (claimsIdentity == null) return null;
             var user =  await _userManage.GetByEmailUser(claimsIdentity.Name);
+ 
             return new InfoUserModel {FirstName = user.FirstName, LastName = user.LastName,
                 Phone = user.Phone,CompanyName = user.Company.Name,Email = user.Email,Role = user.Role.Name};
         }

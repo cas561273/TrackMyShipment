@@ -33,20 +33,6 @@ export class UserService {
     return this.http.post<IRequestResult>(this._url + 'AddUserCarrier/' + carrierId ,userCarrier, { headers });
   }
 
-  public getMyActiveAddress() {
-    let headers = this.authService.initAuthHeaders();
-    return this.http.get<IRequestResult>('https://localhost:44395/api/' + 'MyActiveAddress', { headers });
-  }
-  public getMyAllAddress() {
-    let headers = this.authService.initAuthHeaders();
-    return this.http.get<IRequestResult>('https://localhost:44395/api/' + 'MyAddress', { headers });
-  }
-
-  public addAddress(address:Address) {
-    let headers = this.authService.initAuthHeaders();
-    return this.http.post<IRequestResult>('https://localhost:44395/api/' + 'PutAddress',address, { headers });
-  }
-
   public getMyTask() {
     let headers = this.authService.initAuthHeaders();
     return this.http.get<IRequestResult>('https://localhost:44395/api/objective/' + 'GetMyTask', { headers });
@@ -76,7 +62,5 @@ export class UserService {
     let headers = this.authService.initAuthHeaders();
     return this.http.post<IRequestResult>('https://localhost:44395/api/objective/' + 'CloseTask',idTask, { headers });
   }
-
-
   
 }

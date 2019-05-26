@@ -25,7 +25,6 @@ import { CarrierService } from './carrier/shared/carrierService';
 import { DialogAddUserCarrierComponent } from './carrier/ui/dialog.add-user-carrier/dialog.add-user-carrier.component';
 import { UserProfileComponent } from "./user/component/user-profile/user-profile.component";
 import { UserService } from "./user/shared/userService";
-import { AddressComponent } from "./component/address/address.component";
 import { MyTaskComponent } from "./user/component/my-task/my-task.component";
 import { DialogTaskComponent } from './user/component/my-task/ui/dialog.add-task/dialog.add-task.component';
 
@@ -41,7 +40,6 @@ import { DialogTaskComponent } from './user/component/my-task/ui/dialog.add-task
     SidebarComponent,
     DialogTaskComponent,
     PricingComponent,
-    AddressComponent,
     MyTaskComponent,
     MyCarriersComponent,
     UserProfileComponent,

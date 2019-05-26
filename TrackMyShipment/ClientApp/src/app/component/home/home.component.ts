@@ -24,6 +24,7 @@ export class HomeComponent implements OnInit {
   currentUser: Person;
   activeUsers: any[];
 
+  buttonSubscribe: string = "Subscribe";
   constructor(private router: Router, private http: HttpClient, private carrierService: CarrierService,private userService:UserService,
     private dataSharingService: DataSharingService, public dialog: MatDialog) { }
 
@@ -83,6 +84,7 @@ export class HomeComponent implements OnInit {
   public subscribe(carrier) {
     this.userService.subscribe(carrier).subscribe((response) => {
       console.log(response);
+      
     });
   }
 

@@ -1,218 +1,216 @@
 
 <head>
-
-  <!--     Fonts and icons     -->
   <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700,200" rel="stylesheet" />
   <link href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet">
-  <!-- CSS Files -->
   <link href="../assets/profile/css/bootstrap.min.css" rel="stylesheet" />
-  <!-- CSS Just for demo purpose, don't include it in your project -->
-
 </head>
 
-  
 
 
-      <div class="content">
-        <div class="row">
-          <div class="col-md-4">
-            <div class="card card-user">
-              <div class="image">
-              </div>
-              <div class="card-body">
-                <div class="author">
-                  <a href="#">
-                    <h5 class="title">Chet Faker</h5>
-                  </a>
-                  <p class="description">
-                    @chetfaker
-                  </p>
-                </div>
-                <p class="description text-center">
-                  "I like the way you work it
-                  <br> No diggity
-                  <br> I wanna bag it up"
-                </p>
-              </div>
-              <div class="card-footer">
-                <hr>
-                <div class="button-container">
-                  <div class="row">
-                    <div class="col-lg-3 col-md-6 col-6 ml-auto">
-                      <h5>
-                        12
-                        <br>
-                        <small>Files</small>
-                      </h5>
-                    </div>
-                    <div class="col-lg-4 col-md-6 col-6 ml-auto mr-auto">
-                      <h5>
-                        2GB
-                        <br>
-                        <small>Used</small>
-                      </h5>
-                    </div>
-                    <div class="col-lg-3 mr-auto">
-                      <h5>
-                        24,6$
-                        <br>
-                        <small>Spent</small>
-                      </h5>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="card">
-              <div class="card-header">
-                <h4 class="card-title">My Carriers</h4>
-              </div>
-              <div class="card-body">
-                <ul class="list-unstyled team-members">
-                  <li>
-                    <div class="row">
-                      <div class="col-md-2 col-2">
-                        <div class="avatar">
-                        </div>
-                      </div>
-                      <div class="col-md-7 col-7">
-                        DJ Khaled
-                        <br />
-                        <span class="text-muted">
-                          <small>Offline</small>
-                        </span>
-                      </div>
-                      <div class="col-md-3 col-3 text-right">
-                        <button class="btn btn-sm btn-outline-success btn-round btn-icon"><i class="fa fa-envelope"></i></button>
-                      </div>
-                    </div>
-                  </li>
-                  <li>
-                    <div class="row">
-                      <div class="col-md-2 col-2">
-                        <div class="avatar">
-                        </div>
-                      </div>
-                      <div class="col-md-7 col-7">
-                        Creative Tim
-                        <br />
-                        <span class="text-success">
-                          <small>Available</small>
-                        </span>
-                      </div>
-                      <div class="col-md-3 col-3 text-right">
-                        <button class="btn btn-sm btn-outline-success btn-round btn-icon"><i class="fa fa-envelope"></i></button>
-                      </div>
-                    </div>
-                  </li>
-                  <li>
-                    <div class="row">
-                      <div class="col-md-2 col-2">
-                        <div class="avatar">
-                        </div>
-                      </div>
-                      <div class="col-ms-7 col-7">
-                        Flume
-                        <br />
-                        <span class="text-danger">
-                          <small>Busy</small>
-                        </span>
-                      </div>
-                      <div class="col-md-3 col-3 text-right">
-                        <button class="btn btn-sm btn-outline-success btn-round btn-icon"><i class="fa fa-envelope"></i></button>
-                      </div>
-                    </div>
-                  </li>
-                </ul>
-              </div>
-            </div>
+<div class="content">
+  <div class="row">
+    <div class="col-md-4">
+      <div class="card card-user">
+        <div class="image">
+          
+        </div>
+        <div class="card-body">
+          <div class="author">
+            <a href="#">
+            </a>
+            <p class="description">
+              @{{currentUser.firstName}}
+            </p>
           </div>
-          <div class="col-md-8">
-            <div class="card card-user">
-              <div class="card-header">
-                <h5 class="card-title">Edit Profile</h5>
+          <p class="description text-center">
+            "I like the way you work it
+            <br> No diggity
+            <br> I wanna bag it up"
+          </p>
+        </div>
+        <div class="card-footer">
+          <div class="button-container">
+            <div class="row">
+              <div class="col-lg-3 col-md-6 col-6 ml-auto">
+                <h5>
+                  12
+                  <br>
+                  <small>Files</small>
+                </h5>
               </div>
-              <div class="card-body">
-                <form method="post"  #address="ngForm" (ngSubmit)="editAddress(address)">
-                  <div class="row">
-                    <div class="col-md-5 pr-1">
-                      <div class="form-group">
-                        <label>Company (disabled)</label>
-                        <input type="text" class="form-control" disabled="" placeholder="Company"  value="{{myAddress?.companyName!=null ? '' : 'loading..' }} {{myAddress?.companyName}}">
-                      </div>
-                    </div>
-                    <div class="col-md-3 px-1">
-                      <div class="form-group">
-                        <label>Username (disabled)</label>
-                        <input type="text" class="form-control"  disabled="" placeholder="Username"  value="{{currentUser?.firstName!=null ? '' : 'loading..' }} {{currentUser?.firstName}}">
-                      </div>
-                    </div>
-                    <div class="col-md-4 pl-1">
-                      <div class="form-group">
-                        <label>Email address (disabled)</label>
-                        <input type="email" class="form-control"  disabled="" placeholder="Email"   value="{{currentUser?.email!=null ? '' : 'loading..' }} {{currentUser?.email}}">
-                      </div>
-                    </div>
-                  </div>
-                  <div class="row">
-                    <div class="col-md-6 pr-1">
-                      <div class="form-group">
-                        <label>First Name (disabled)</label>
-                        <input type="text" class="form-control"  disabled=""  placeholder="First Name" value="{{currentUser?.firstName!=null ? '' : '' }} {{currentUser?.firstName}}">
-                      </div>
-                    </div>
-                    <div class="col-md-6 pl-1">
-                      <div class="form-group">
-                        <label>Last Name (disabled)</label>
-                        <input type="text" class="form-control"  disabled=""  placeholder="Last Name" value="{{currentUser?.lastName!=null ? '' : '' }} {{currentUser?.lastName}}">
-                      </div>
-                    </div>
-                  </div>
-                  <div class="row">
-                    <div class="col-md-6 pr-1">
-                      <div class="form-group">
-                        <label>StreetLine1</label>
-                        <input type="text" class="form-control" placeholder="StreetLine1"  [ngModel]="myAddress.streetLine1" name="streetLine1" value="{{myAddress?.streetLine1!=null ? '' : '' }} {{myAddress?.streetLine1}} ">
-                      </div>
-                    </div>
-
-                    <div class="col-md-6 pr-1">
-                      <div class="form-group">
-                        <label>StreetLine2</label>
-                        <input type="text" class="form-control" placeholder="StreetLine2" [ngModel]="myAddress.streetLine2" name="streetLine2" value="{{myAddress?.streetLine2!=null ? '' : '' }} {{myAddress?.streetLine2}} ">
-                      </div>
-                    </div>
-                  </div>
-                  <div class="row">
-                    <div class="col-md-4 pr-1">
-                      <div class="form-group">
-                        <label>City</label>
-                        <input type="text" class="form-control" placeholder="City"  [ngModel]="myAddress.city" name="city" value="{{myAddress?.city!=null ? '' : '' }} {{myAddress?.city}}">
-                      </div>
-                    </div>
-                    <div class="col-md-4 px-1">
-                      <div class="form-group">
-                        <label>State</label>
-                        <input type="text" class="form-control" placeholder="State"  [ngModel]="myAddress.state" name="state" value="{{myAddress?.state!=null ? '' : '' }} {{myAddress?.state}}">
-                      </div>
-                    </div>
-                    <div class="col-md-4 pl-1">
-                      <div class="form-group">
-                        <label>Postal Code</label>
-                        <input type="number" class="form-control" placeholder="ZIP Code" [ngModel]="myAddress.zipCode" name="zipCode" value="{{myAddress?.zipCode!=null ? '' : 'loading..' }} {{myAddress?.zipCode}}">
-                      </div>
-                    </div>
-                  </div>
-              
-                  <div class="row">
-                    <div class="update ml-auto mr-auto">
-                      <button type="submit" class="btn btn-primary btn-round">Update Profile</button>
-                    </div>
-                  </div>
-                </form>
+              <div class="col-lg-4 col-md-6 col-6 ml-auto mr-auto">
+                <h5>
+                  2GB
+                  <br>
+                  <small>Used</small>
+                </h5>
+              </div>
+              <div class="col-lg-3 mr-auto">
+                <h5>
+                  24,6$
+                  <br>
+                  <small>Spent</small>
+                </h5>
               </div>
             </div>
           </div>
         </div>
       </div>
-  
+      <div class="card">
+        <div class="card-header">
+          <h4 class="card-title">My Subscriptions</h4>
+        </div>
+        <div class="card-body">
+          <ul class="list-unstyled team-members">
+            <li>
+              <div class="row">
+                <div class="col-md-2 col-2">
+                  <div class="avatar">
+                  </div>
+                </div>
+                <div class="col-md-7 col-7">
+                  DJ Khaled
+                  <br />
+                  <span class="text-muted">
+                    <small>Offline</small>
+                  </span>
+                </div>
+                <div class="col-md-3 col-3 text-right">
+                  <button class="btn btn-sm btn-outline-success btn-round btn-icon"><i class="fa fa-envelope"></i></button>
+                </div>
+              </div>
+            </li>
+            <li>
+              <div class="row">
+                <div class="col-md-2 col-2">
+                  <div class="avatar">
+                  </div>
+                </div>
+                <div class="col-md-7 col-7">
+                  Creative Tim
+                  <br />
+                  <span class="text-success">
+                    <small>Available</small>
+                  </span>
+                </div>
+                <div class="col-md-3 col-3 text-right">
+                  <button class="btn btn-sm btn-outline-success btn-round btn-icon"><i class="fa fa-envelope"></i></button>
+                </div>
+              </div>
+            </li>
+            <li>
+              <div class="row">
+                <div class="col-md-2 col-2">
+                  <div class="avatar">
+                  </div>
+                </div>
+                <div class="col-ms-7 col-7">
+                  Flume
+                  <br />
+                  <span class="text-danger">
+                    <small>Busy</small>
+                  </span>
+                </div>
+                <div class="col-md-3 col-3 text-right">
+                  <button class="btn btn-sm btn-outline-success btn-round btn-icon"><i class="fa fa-envelope"></i></button>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-8">
+      <div class="card card-user">
+        <div class="card-header">
+          <h5 class="card-title">Profile</h5>
+        </div>
+        <div class="card-body">
+          <form method="post" #form="ngForm">
+            <div class="row">
+              <div class="col-md-5 pr-1">
+                <div class="form-group">
+                  <label>Company </label>
+                  <input type="text" class="form-control" disabled="" placeholder="CompanyName" value="{{currentUser.companyName}}">
+                </div>
+              </div>
+              <div class="col-md-3 px-1">
+                <div class="form-group">
+                  <label>Role </label>
+                  <input type="text" class="form-control" disabled="" placeholder="Role" value="{{currentUser?.role!=null ? '' : '' }} {{currentUser?.role}}">
+                </div>
+              </div>
+              <div class="col-md-4 pl-1">
+                <div class="form-group">
+                  <label>Email address </label>
+                  <input type="email" class="form-control" disabled="" placeholder="Email" value="{{currentUser?.email!=null ? '' : '' }} {{currentUser?.email}}">
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6 pr-1">
+                <div class="form-group">
+                  <label>First Name </label>
+                  <input type="text" class="form-control" disabled="" placeholder="First Name" value="{{currentUser?.firstName!=null ? '' : '' }} {{currentUser?.firstName}}">
+                </div>
+              </div>
+              <div class="col-md-6 pl-1">
+                <div class="form-group">
+                  <label>Last Name </label>
+                  <input type="text" class="form-control" disabled="" placeholder="Last Name" value="{{currentUser?.lastName!=null ? '' : '' }} {{currentUser?.lastName}}">
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-7 pr-1">
+                <div class="form-group">
+                  <label>Phone</label>
+                  <input type="text" class="form-control" disabled="" placeholder="Phone" name="Phone" value="{{currentUser?.phone!=null ? '' : '' }} {{currentUser?.phone}}">
+                </div>
+              </div>
+              <div class="col-md-2 pr-1">
+                <div class="form-group">
+                  <label>Subscription Status:</label>
+                  <input type="button" class="form-control" placeholder="Phone" name="Phone" value="Paid">
+                </div>
+              </div>
+              <div class="col-md-2 pr-1">
+                <div class="form-group">
+                  <label>&#160;</label>
+                  <input style="background-color:greenyellow" type="button" class="form-control"  placeholder="Phone" name="Phone" value="Free">
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-4 pr-1">
+                <div class="form-group">
+                  <label>City</label>
+                  <input type="text" class="form-control" placeholder="City">
+                </div>
+              </div>
+              <div class="col-md-4 px-1">
+                <div class="form-group">
+                  <label>State</label>
+                  <input type="text" class="form-control" placeholder="State">
+                </div>
+              </div>
+              <div class="col-md-4 pl-1">
+                <div class="form-group">
+                  <label>Postal Code</label>
+                  <input type="number" class="form-control" placeholder="ZIP Code">
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="update ml-auto mr-auto">
+                <button type="submit" class="btn btn-primary btn-round">Update Profile</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

@@ -32,8 +32,8 @@
                   <th>Name</th>
                   <th>Status</th>
                   <th>Cost</th>
-                  <th>Info</th>
-                  <th>Event</th>
+                  <th *ngIf="currentUser?.role==='customer'">Info</th>
+                  <th *ngIf="currentUser?.role==='carrier'">Event</th>
 
                 </tr>
                 </thead>

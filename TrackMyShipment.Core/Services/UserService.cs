@@ -36,6 +36,7 @@ namespace TrackMyShipment.Core.Services
             User existedUser = await _context.UserExistsAsync(carrier);
             if (existedUser == null)
             {
+                carrier.CompanyId = 1;
                 carrier.RoleId = await _context.GetRoleIdAsync(Roles.CARRIER);
                 carrier.SubscriptionId = await _context.GetSubscribeIdAsync(Subscribe.FREE);
                 var addedUser  =  await _context.AddAsync(carrier);
