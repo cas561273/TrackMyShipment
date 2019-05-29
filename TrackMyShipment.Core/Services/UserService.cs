@@ -59,6 +59,11 @@ namespace TrackMyShipment.Core.Services
             return existedUser;
         }
 
+        public async Task<List<int>> GetStats()
+        {
+            return await _context.GetStats();
+        }
+
         public async Task<IEnumerable<User>> GetCarrierUsersAsync()
         {
            return await _context.GetCarrierUsersAsync();

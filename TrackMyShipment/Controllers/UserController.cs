@@ -11,15 +11,15 @@ namespace TrackMyShipment.Controllers
     [ApiController]
     public class UserController : BaseController
     {
-        public UserController(ObjectiveManage objectiveManage,UserManage userManage, CarrierManage carrierManage, AddressManage addressManage, CompanyManage companyManage, SubscriptionManage subscriptionManage)
-            : base(objectiveManage,userManage, carrierManage, addressManage, companyManage, subscriptionManage)
+        public UserController(ObjectiveManage objectiveManage, UserManage userManage, CarrierManage carrierManage, AddressManage addressManage, CompanyManage companyManage, SubscriptionManage subscriptionManage)
+            : base(objectiveManage, userManage, carrierManage, addressManage, companyManage, subscriptionManage)
         {
         }
 
         [Route("AddUserCarrier/{id}")]
         [HttpPost]
         [Authorize(Roles = "admin")]
-        public async Task<IActionResult> AddUserCarrier(int id,[FromBody] UserModel carrier)
+        public async Task<IActionResult> AddUserCarrier(int id, [FromBody] UserModel carrier)
         {
             User currentCarrier = await _userManage.PutUserCarrier(carrier);
             bool result = await _subscriptionManage.Subscribe(new Carrier { Id = id }, currentCarrier);
@@ -135,14 +135,13 @@ namespace TrackMyShipment.Controllers
                     Msg = "Successfully to Subscribe"
                 });
             }
-            else
+
+            return Json(new Request
             {
-                return Json(new Request
-                {
-                    State = RequestState.Failed,
-                    Msg = "Successfully to Unsubscribe"
-                });
-            }
+                State = RequestState.Failed,
+                Msg = "Successfully to Unsubscribe"
+            });
+
         }
 
         [HttpGet]
@@ -153,7 +152,7 @@ namespace TrackMyShipment.Controllers
             User user = await CurrentUser();
             int userId = user.Id;
             var result = await _userManage.GetWorkUsers(userId);
-            return result!=null
+            return result != null
                 ? Json(new Request
                 {
                     Data = result,
@@ -163,6 +162,26 @@ namespace TrackMyShipment.Controllers
                 : Json(new Request
                 {
                     Msg = "Can not received!",
+                    State = RequestState.Failed
+                });
+        }
+
+        [HttpGet]
+        [Route("GetStats")]
+        [Authorize(Roles = "carrier,admin")]
+        public async Task<IActionResult> GetStats()
+        {
+            var result = await _userManage.GetStats();
+            return result != null
+                ? Json(new Request
+                {
+                    Data = result,
+                    Msg = "Stats Received successfully!",
+                    State = RequestState.Success
+                })
+                : Json(new Request
+                {
+                    Msg = "Can not received Stats!",
                     State = RequestState.Failed
                 });
         }

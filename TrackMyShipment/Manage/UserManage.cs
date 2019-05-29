@@ -90,6 +90,11 @@ namespace TrackMyShipment.Manage
             return await _userService.GetUserAsync(user);
         }
 
+        public async Task<List<int>> GetStats() 
+        {
+            return await _userService.GetStats();
+        }
+
         public async Task<IEnumerable<object>> GetWorkUsers(int userId)
         {
             return await _userService.GetWorkUsers(userId);

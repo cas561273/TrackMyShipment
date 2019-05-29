@@ -19,7 +19,7 @@
         <div class="info-box bg-blue">
           <span class="info-box-icon push-bottom"><i class="material-icons">style</i></span>
           <div class="info-box-content">
-            <span class="info-box-text">Count Carriers</span>
+            <span class="info-box-text">Company</span>
             <span class="info-box-number">{{carriers?.length!=null ? '' : 'Loading..' }} {{carriers?.length}}</span>
             <div class="progress">
               <div class="progress-bar width-60"></div>
@@ -27,7 +27,7 @@
             <span class="progress-description">
               60% Increase in 28 Days
             </span>
-          </div>щз
+          </div>
         </div>
       </div>
 
@@ -35,8 +35,8 @@
         <div class="info-box bg-orange">
           <span class="info-box-icon push-bottom"><i class="material-icons">card_travel</i></span>
           <div class="info-box-content">
-            <span class="info-box-text">New Booking</span>
-            <span class="info-box-number">155</span>
+            <span class="info-box-text">Employer</span>
+            <span class="info-box-number">{{stats!=null ? '':'Loading..'}} {{stats[0]}}</span>
             <div class="progress">
               <div class="progress-bar width-40"></div>
             </div>
@@ -51,8 +51,8 @@
         <div class="info-box bg-purple">
           <span class="info-box-icon push-bottom"><i class="material-icons">phone_in_talk</i></span>
           <div class="info-box-content">
-            <span class="info-box-text">Inquiry</span>
-            <span class="info-box-number">52</span>
+            <span class="info-box-text">Completed Task</span>
+            <span class="info-box-number">{{stats!=null ? '':'Loading..'}} {{stats[1]}}</span>
             <div class="progress">
               <div class="progress-bar width-80"></div>
             </div>
@@ -66,8 +66,8 @@
         <div class="info-box bg-success">
           <span class="info-box-icon push-bottom"><i class="material-icons">monetization_on</i></span>
           <div class="info-box-content">
-            <span class="info-box-text">Total Price</span>
-            <span class="info-box-number">13,921</span><span>$</span>
+            <span class="info-box-text">Earned money </span>
+            <span class="info-box-number">{{stats!=null ? '':'Loading..'}} {{stats[2]}}</span><span>$</span>
             <div class="progress">
               <div class="progress-bar width-60"></div>
             </div>

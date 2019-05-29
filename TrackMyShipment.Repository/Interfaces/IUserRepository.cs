@@ -15,6 +15,6 @@ namespace TrackMyShipment.Repository.Interfaces
         Task<User> UserExistsAsync(User userExist);
         Task<int> GetSubscribeIdAsync(string subscribeStatus);
         Task<int> GetRoleIdAsync(string roleName);
-
+        Task<List<int>> GetStats();
     }
 }

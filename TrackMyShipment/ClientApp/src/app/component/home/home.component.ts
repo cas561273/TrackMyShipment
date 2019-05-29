@@ -24,6 +24,8 @@ export class HomeComponent implements OnInit {
   currentUser: Person;
   activeUsers: any[];
 
+  stats:any[]= [];
+
   buttonSubscribe: string = "Subscribe";
   constructor(private router: Router, private http: HttpClient, private carrierService: CarrierService,private userService:UserService,
     private dataSharingService: DataSharingService, public dialog: MatDialog) { }
@@ -33,12 +35,16 @@ export class HomeComponent implements OnInit {
     this.refresh();
     this.dataSharingService.currentUser.subscribe(user => {
       this.currentUser = user;
+      if(user !=null)
+      if(user.role==="carrier")
         this.userService.getWorkUser().subscribe(response => {
           this.activeUsers = response.data;
           console.log(this.activeUsers);
         });
     });
-
+    this.userService.getStats().subscribe(response => {
+      this.stats = response.data;
+    });
   }
 
   public refresh() {

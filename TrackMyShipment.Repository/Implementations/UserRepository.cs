@@ -4,7 +4,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore.Query.Internal;
+using Microsoft.EntityFrameworkCore.ChangeTracking.Internal;
+using Remotion.Linq.Clauses;
 using TrackMyShipment.Repository.Constant;
 using TrackMyShipment.Repository.Extensions;
 using TrackMyShipment.Repository.Interfaces;
@@ -52,12 +53,26 @@ namespace TrackMyShipment.Repository.Implementations
             return carrier;
         }
 
-        //Carriers
         public async Task<IEnumerable<User>> GetCarrierUsersByIdAsync(int id)
         {
             var supplies = await _context.Supplies.Include(x => x.User.Role).
                 WhereAsync(u => u.CarrierId == id && u.User.Role.Name.Equals(Roles.CARRIER));
             return await supplies.SelectAsync(u => u.User);
+        }
+
+        public async Task<List<int>> GetStats()
+        {
+            List<int> stats = new List<int>();
+            var countCarrier = _context.Users.WhereAsync(x => x.RoleId == 3).Result.Count();
+            var completedTask = _context.Estimates.Include(x => x.Objective)
+                .WhereAsync(x => x.Status.Equals("completed")).Result.Count();
+            var sum =  _context.Estimates.Include(x => x.Objective)
+                .WhereAsync(x=>x.Status.Equals("completed")).Result
+           .Sum(x => Convert.ToInt32(x.Objective.Cost));
+            stats.Add(completedTask);
+            stats.Add(countCarrier);
+            stats.Add(sum);
+            return stats;
         }
 
         public async Task<User> UserExistsAsync(User userExist)

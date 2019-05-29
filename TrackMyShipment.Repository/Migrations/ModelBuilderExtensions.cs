@@ -12,6 +12,9 @@ namespace TrackMyShipment.Repository.Migrations
                 new Role { Id = 2, Name = "customer" },
                 new Role { Id = 3, Name = "carrier" });
 
+            modelBuilder.Entity<Company>().HasData(
+                new Company {Id = 1, Name = "Private person"});
+
             modelBuilder.Entity<Subscription>().HasData(
                 new Subscription { Id = 1, Status = "free" },
                 new Subscription { Id = 2, Status = "paid" });
