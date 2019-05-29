@@ -49,8 +49,7 @@ export class HomeComponent implements OnInit {
 
   public refresh() {
     this.carrierService.requestCarriers().subscribe((data) => {
-      let requestCarriers = data.data as Carrier[];
-      this.carriers = requestCarriers;
+      this.carriers = data.data;
     });
   }
 
@@ -99,9 +98,8 @@ export class HomeComponent implements OnInit {
       width: '330px',
       height:'500px',
     });
-
     dialogRef.afterClosed().subscribe(result => {
-      console.log(result.value);
+      this.refresh();
     });
   }
 

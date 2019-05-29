@@ -26,7 +26,9 @@ export class DialogOverviewComponent {
   }
 
   public addCarrier(form: NgForm) {
-    this.carrierService.putCarrier(form.value).subscribe((response) => {
+    let temp = form.value;
+    temp.status = true;
+    this.carrierService.putCarrier(temp).subscribe((response) => {
       console.log(response.msg);
       this.carrier = response.data as Carrier;
       this.dialogRef.close();
