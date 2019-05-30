@@ -43,6 +43,7 @@ export class HomeComponent implements OnInit {
         });
     });
     this.userService.getStats().subscribe(response => {
+      console.log((response.data));
       this.stats = response.data;
     });
   }
