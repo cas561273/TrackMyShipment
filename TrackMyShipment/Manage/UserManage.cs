@@ -79,6 +79,11 @@ namespace TrackMyShipment.Manage
             return mapper.Map<IEnumerable<User>, IEnumerable<EditUserModel>>(carrierUsers);
         }
 
+        public async Task<bool> DeleteUserCarrier(int idUserCarrier)
+        {
+          return  await _userService.DeleteUserCarrier(idUserCarrier);
+        }
+
         public async Task<User> GetByEmailUser(string email)
         {
             return await _userService.GetUserByEmailAsync(email);

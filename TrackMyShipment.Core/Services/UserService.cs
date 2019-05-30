@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using TrackMyShipment.Core.Interfaces;
 using TrackMyShipment.Repository.Constant;
@@ -59,6 +60,10 @@ namespace TrackMyShipment.Core.Services
             return existedUser;
         }
 
+        public async Task<bool> DeleteUserCarrier(int idUserCarrier)
+        {
+            return await _context.DeleteUserCarrier(idUserCarrier);
+        }
         public async Task<List<int>> GetStats()
         {
             return await _context.GetStats();

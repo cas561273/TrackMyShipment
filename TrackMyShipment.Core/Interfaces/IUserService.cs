@@ -15,6 +15,7 @@ namespace TrackMyShipment.Core.Interfaces
         Task<User> PutUserCarrierAsync(User carrier);
         Task<User> CreateUserAsync(User person);
         Task<User> EditUserCarrierAsync(User carrier);
+        Task<bool> DeleteUserCarrier(int idUserCarrier);
         Task<List<int>> GetStats();
 
     }

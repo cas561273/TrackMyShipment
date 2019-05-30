@@ -13,6 +13,7 @@ namespace TrackMyShipment.Repository.Interfaces
         Task<User> GetUserByIdAsync(int idUser);
         Task<User> GetUserByEmailAsync(string email);
         Task<User> UserExistsAsync(User userExist);
+        Task<bool> DeleteUserCarrier(int idUserCarrier);
         Task<int> GetSubscribeIdAsync(string subscribeStatus);
         Task<int> GetRoleIdAsync(string roleName);
         Task<List<int>> GetStats();

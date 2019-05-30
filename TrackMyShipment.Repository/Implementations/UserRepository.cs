@@ -4,8 +4,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore.ChangeTracking.Internal;
-using Remotion.Linq.Clauses;
 using TrackMyShipment.Repository.Constant;
 using TrackMyShipment.Repository.Extensions;
 using TrackMyShipment.Repository.Interfaces;
@@ -47,6 +45,19 @@ namespace TrackMyShipment.Repository.Implementations
                 WhereAsync(u => u.CarrierId == carrierId && u.User.Role.Name.Equals(Roles.CUSTOMER));
             return await supplies.SelectAsync(u => u.User);
         }
+
+        public async Task<bool> DeleteUserCarrier(int idUserCarrier)
+        {
+            var user = await _context.Users.FirstOrDefaultAsync(x => x.Id == idUserCarrier);
+            var userDeleted = _context.Users.Remove(user);
+            if (userDeleted != null)
+            {
+                await _context.SaveChangesAsync();
+                return true;
+            }
+            return false;
+        }
+
         public async Task<IEnumerable<User>> GetCarrierUsersAsync()
         {
             IEnumerable<User> carrier = await _context.Users.Include(nameof(Role)).WhereAsync(u => u.Role.Name.Equals(Roles.CARRIER));

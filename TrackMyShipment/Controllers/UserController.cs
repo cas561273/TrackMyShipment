@@ -185,5 +185,25 @@ namespace TrackMyShipment.Controllers
                     State = RequestState.Failed
                 });
         }
+
+        [HttpPost]
+        [Route("DeleteUserCarrier")]
+        [Authorize(Roles = "admin")]
+        public async Task<IActionResult> DeleteUserCarrier([FromBody] int idUserCarrier)
+        {
+            var result = await _userManage.DeleteUserCarrier(idUserCarrier);
+            return result 
+                ? Json(new Request
+                {
+                    Msg = "Successfully deleted!",
+                    State = RequestState.Success
+                })
+                : Json(new Request
+                {
+                    Msg = "Can not delete!",
+                    State = RequestState.Failed
+                });
+        }
+
     }
 }

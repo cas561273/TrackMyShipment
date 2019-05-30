@@ -46,5 +46,4 @@ export class CarrierService {
     let headers = this.authService.initAuthHeaders();
     return this.http.put<IRequestResult>('https://localhost:44395/api/objective/' + "Add-Task", task,{ headers });
   }
-  
 }

@@ -4,6 +4,7 @@ import { Person } from "../../../models/Person";
 import { DialogAddUserCarrierComponent } from '../../ui/dialog.add-user-carrier/dialog.add-user-carrier.component';
 import { MatDialog } from '@angular/material';
 import { UserService } from 'src/app/user/shared/userService';
+import { CarrierService } from "../../shared/carrierService";
 
 
 @Component({
@@ -15,7 +16,7 @@ export class UsersCarrierComponent {
   users: Person[];
   public static userId: number;
 
-  constructor(private activatedRoute: ActivatedRoute, private userService: UserService,public dialog: MatDialog) {
+  constructor(private activatedRoute: ActivatedRoute,private userService: UserService,public dialog: MatDialog) {
   }
 
   openModal(): void {
@@ -27,22 +28,29 @@ export class UsersCarrierComponent {
     //delete this
     dialogRef.afterClosed().subscribe(result => {
 
-      this.userService.getUsersOfCarrier(UsersCarrierComponent.userId).subscribe(response => {
-        this.users = response.data as Person[];
-      });
+      this.getUsersCarrier();
 
     });
   }
-  
+
+  getUsersCarrier() {
+    this.userService.getUsersOfCarrier(UsersCarrierComponent.userId).subscribe(response => {
+      this.users = response.data as Person[];
+    });
+  }
 
   ngOnInit() {
     UsersCarrierComponent.userId = this.activatedRoute.snapshot.params['id'];
     this.userService.getUsersOfCarrier(UsersCarrierComponent.userId).subscribe(response => {
       this.users = response.data as Person[];
     });
-     
+  }
 
-    
+  delete(userCarrier) {
+    console.log(userCarrier);
+    this.userService.deleteUserCarrier(userCarrier).subscribe(response => {
+      this.getUsersCarrier();
+    });
   }
 }
 
