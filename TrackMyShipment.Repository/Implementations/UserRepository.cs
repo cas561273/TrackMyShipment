@@ -74,7 +74,7 @@ namespace TrackMyShipment.Repository.Implementations
         public async Task<List<int>> GetStats()
         {
             List<int> stats = new List<int>();
-            var countCarrier = _context.Users.WhereAsync(x => x.RoleId == 3).Result.Count();
+            var countCarrier =  _context.Users.WhereAsync(x => x.RoleId == 3).Result.Count();
             var completedTask = _context.Estimates.Include(x => x.Objective)
                 .WhereAsync(x => x.Status.Equals("completed")).Result.Count();
             var sum =  _context.Estimates.Include(x => x.Objective)

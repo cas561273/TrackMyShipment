@@ -89,8 +89,7 @@ export class HomeComponent implements OnInit {
   }
   public subscribe(carrier) {
     this.userService.subscribe(carrier).subscribe((response) => {
-      console.log(response);
-      
+      this.refresh();
     });
   }
 

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using TrackMyShipment.Repository.Constant;
@@ -32,7 +33,10 @@ namespace TrackMyShipment.Repository.Implementations
             if (user.Subscription.Status.Equals(Subscribe.PAID))
                 return await _context.Carriers.WhereAsync(u => u.Status);
 
-            return await _context.Carriers.WhereAsync(u => u.Cost == 0 && u.Status);
+            var supplies = await _context.Supplies.WhereAsync(x => x.UserId == user.Id);
+            var suppliesId =  supplies.SelectAsync(x => x.CarrierId).Result.ToList();
+
+            return await _context.Carriers.WhereAsync(u => u.Cost == 0 && u.Status && !suppliesId.Contains(u.Id));
         }
 
         public async Task<bool?> ChangeStatusCarrierAsync(int carrierId)
