@@ -31,7 +31,6 @@ namespace TrackMyShipment
             services.RegisterServices();
             services.RegisterSwaggerServices();
             services.AddTransient<UserManage>().AddTransient<CarrierManage>()
-                .AddTransient<AddressManage>()
                 .AddTransient<SubscriptionManage>()
                 .AddTransient<CompanyManage>()
                 .AddTransient<ObjectiveManage>();

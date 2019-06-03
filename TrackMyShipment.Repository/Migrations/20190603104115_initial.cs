@@ -125,31 +125,6 @@ namespace TrackMyShipment.Repository.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Address",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    StreetLine1 = table.Column<string>(nullable: true),
-                    StreetLine2 = table.Column<string>(nullable: true),
-                    City = table.Column<string>(nullable: true),
-                    State = table.Column<string>(nullable: true),
-                    ZipCode = table.Column<string>(nullable: true),
-                    Active = table.Column<bool>(nullable: false),
-                    UsersId = table.Column<int>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Address", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Address_Users_UsersId",
-                        column: x => x.UsersId,
-                        principalTable: "Users",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Estimates",
                 columns: table => new
                 {
@@ -199,6 +174,11 @@ namespace TrackMyShipment.Repository.Migrations
                 });
 
             migrationBuilder.InsertData(
+                table: "Company",
+                columns: new[] { "Id", "Name" },
+                values: new object[] { 1, "Private person" });
+
+            migrationBuilder.InsertData(
                 table: "Roles",
                 columns: new[] { "Id", "Name" },
                 values: new object[,]
@@ -216,11 +196,6 @@ namespace TrackMyShipment.Repository.Migrations
                     { 1, "free" },
                     { 2, "paid" }
                 });
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Address_UsersId",
-                table: "Address",
-                column: "UsersId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Estimates_objectiveId",
@@ -262,9 +237,6 @@ namespace TrackMyShipment.Repository.Migrations
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropTable(
-                name: "Address");
-
             migrationBuilder.DropTable(
                 name: "Estimates");
 

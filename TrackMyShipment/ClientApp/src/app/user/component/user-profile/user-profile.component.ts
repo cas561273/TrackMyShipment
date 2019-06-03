@@ -13,15 +13,17 @@ import { NgForm } from '@angular/forms';
 export class UserProfileComponent implements OnInit {
 
   currentUser: Person;
-
-  constructor(private userService:UserService,private dataSharingService:DataSharingService) { }
+  stats: any[];
+  constructor(private userService: UserService, private dataSharingService: DataSharingService) { }
 
   ngOnInit() {
-      this.dataSharingService.currentUser.subscribe(user => {
-        this.currentUser = user;
-        console.log(this.currentUser);
+    this.userService.myProfileStats().subscribe(stats => {
+      this.stats = stats.data;
+      console.log(this.stats);
+    });
+    this.dataSharingService.currentUser.subscribe(user => {
+      this.currentUser = user;
+      console.log(this.currentUser);
     });
   }
-
-
 }

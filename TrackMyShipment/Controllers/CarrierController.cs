@@ -11,8 +11,8 @@ namespace TrackMyShipment.Controllers
     [ApiController]
     public class CarrierController : BaseController
     {
-        public CarrierController(ObjectiveManage objectiveManage,UserManage userManage, CarrierManage carrierManage, AddressManage addressManage,CompanyManage companyManage,SubscriptionManage subscriptionManage)
-            : base(objectiveManage,userManage, carrierManage, addressManage,companyManage,subscriptionManage)
+        public CarrierController(ObjectiveManage objectiveManage,UserManage userManage, CarrierManage carrierManage,CompanyManage companyManage,SubscriptionManage subscriptionManage)
+            : base(objectiveManage,userManage, carrierManage,companyManage,subscriptionManage)
         {
         }
 

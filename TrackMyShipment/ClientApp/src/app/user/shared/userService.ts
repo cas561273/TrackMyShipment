@@ -72,4 +72,9 @@ export class UserService {
     let headers = this.authService.initAuthHeaders();
     return this.http.post<IRequestResult>(this._url + "deleteUserCarrier", carrier.id, { headers });
   }
+
+  public myProfileStats() {
+    let headers = this.authService.initAuthHeaders();
+    return this.http.get<IRequestResult>(this._url + "myProfileStats", { headers });
+  }
 }

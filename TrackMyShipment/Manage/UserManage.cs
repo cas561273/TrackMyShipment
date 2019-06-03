@@ -81,8 +81,13 @@ namespace TrackMyShipment.Manage
 
         public async Task<bool> DeleteUserCarrier(int idUserCarrier)
         {
-          return  await _userService.DeleteUserCarrier(idUserCarrier);
+            return await _userService.DeleteUserCarrier(idUserCarrier);
         }
+        public async Task<List<int>> MyProfileStats(int id)
+        {
+            return await _userService.MyProfileStats(id);
+        }
+
 
         public async Task<User> GetByEmailUser(string email)
         {

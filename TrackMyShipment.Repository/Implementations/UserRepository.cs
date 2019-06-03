@@ -86,6 +86,25 @@ namespace TrackMyShipment.Repository.Implementations
             return stats;
         }
 
+        public async Task<List<int>> MyProfileStats(int id)
+        {
+            List<int> stats = new List<int>();
+            var earnedMoney = _context.Estimates.Include(x => x.Objective)
+                .WhereAsync(x => x.Status.Equals("completed") && x.userId == id).Result.Sum(y=>Convert.ToInt32(y.Objective.Cost));
+
+            var activeTask = _context.Estimates.Include(x => x.Objective)
+                .WhereAsync(x => x.Status.Equals("in progress") && x.userId == id).Result.Count();
+
+            var completedTask = _context.Estimates.Include(x => x.Objective)
+               .WhereAsync(x => x.Status.Equals("completed") && x.userId == id).Result.Count();
+
+            stats.Add(earnedMoney);
+            stats.Add(activeTask);
+            stats.Add(completedTask);
+
+            return stats;
+        }
+
         public async Task<User> UserExistsAsync(User userExist)
         {
             return await FetchUserAsync(u => u.Email == userExist.Email && u.Password == userExist.Password);

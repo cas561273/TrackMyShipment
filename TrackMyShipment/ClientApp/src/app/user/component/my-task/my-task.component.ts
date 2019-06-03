@@ -71,8 +71,11 @@ export class MyTaskComponent  {
       width: '300px',
       height: '300px',
     });
-
-    dialogRef.afterClosed().subscribe();
+  
+    dialogRef.afterClosed().subscribe(response => {
+      this.userService.getMyTask().subscribe((data) => {
+        this.tasks = data.data as Objective[];
+      });
+    });
   }
-
 }

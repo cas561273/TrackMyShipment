@@ -11,8 +11,8 @@ namespace TrackMyShipment.Controllers
     [ApiController]
     public class UserController : BaseController
     {
-        public UserController(ObjectiveManage objectiveManage, UserManage userManage, CarrierManage carrierManage, AddressManage addressManage, CompanyManage companyManage, SubscriptionManage subscriptionManage)
-            : base(objectiveManage, userManage, carrierManage, addressManage, companyManage, subscriptionManage)
+        public UserController(ObjectiveManage objectiveManage, UserManage userManage, CarrierManage carrierManage, CompanyManage companyManage, SubscriptionManage subscriptionManage)
+            : base(objectiveManage, userManage, carrierManage, companyManage, subscriptionManage)
         {
         }
 
@@ -172,6 +172,28 @@ namespace TrackMyShipment.Controllers
         public async Task<IActionResult> GetStats()
         {
             var result = await _userManage.GetStats();
+            return result != null
+                ? Json(new Request
+                {
+                    Data = result,
+                    Msg = "Stats Received successfully!",
+                    State = RequestState.Success
+                })
+                : Json(new Request
+                {
+                    Msg = "Can not received Stats!",
+                    State = RequestState.Failed
+                });
+        }
+
+        [HttpGet]
+        [Route("MyProfileStats")]
+        [Authorize(Roles = "carrier,admin,customer")]
+        public async Task<IActionResult> MyProfileStats()
+        {
+            User user = await CurrentUser();
+            int userId = user.Id;
+            var result = await _userManage.MyProfileStats(userId);
             return result != null
                 ? Json(new Request
                 {

@@ -10,7 +10,7 @@ using TrackMyShipment.Repository;
 namespace TrackMyShipment.Repository.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20190522115205_initial")]
+    [Migration("20190603104115_initial")]
     partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -20,33 +20,6 @@ namespace TrackMyShipment.Repository.Migrations
                 .HasAnnotation("ProductVersion", "2.2.3-servicing-35854")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-            modelBuilder.Entity("TrackMyShipment.Repository.Models.Address", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<bool>("Active");
-
-                    b.Property<string>("City");
-
-                    b.Property<string>("State");
-
-                    b.Property<string>("StreetLine1");
-
-                    b.Property<string>("StreetLine2");
-
-                    b.Property<int?>("UsersId");
-
-                    b.Property<string>("ZipCode");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("UsersId");
-
-                    b.ToTable("Address");
-                });
 
             modelBuilder.Entity("TrackMyShipment.Repository.Models.Carrier", b =>
                 {
@@ -82,13 +55,20 @@ namespace TrackMyShipment.Repository.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Company");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "Private person"
+                        });
                 });
 
             modelBuilder.Entity("TrackMyShipment.Repository.Models.Estimate", b =>
                 {
                     b.Property<int?>("userId");
 
-                    b.Property<int?>("objectiveId");
+                    b.Property<int>("objectiveId");
 
                     b.Property<string>("Status");
 
@@ -223,13 +203,6 @@ namespace TrackMyShipment.Repository.Migrations
                     b.HasIndex("SubscriptionId");
 
                     b.ToTable("Users");
-                });
-
-            modelBuilder.Entity("TrackMyShipment.Repository.Models.Address", b =>
-                {
-                    b.HasOne("TrackMyShipment.Repository.Models.User", "Users")
-                        .WithMany()
-                        .HasForeignKey("UsersId");
                 });
 
             modelBuilder.Entity("TrackMyShipment.Repository.Models.Estimate", b =>

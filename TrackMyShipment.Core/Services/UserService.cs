@@ -18,6 +18,10 @@ namespace TrackMyShipment.Core.Services
             _context = context;
         }
 
+        public async Task<List<int>> MyProfileStats(int id)
+        {
+           return await _context.MyProfileStats(id);
+        }
         public async Task<User> CreateUserAsync(User user)
         {
             User existedUser = await _context.GetUserByEmailAsync(user.Email);

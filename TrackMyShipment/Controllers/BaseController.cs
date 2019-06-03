@@ -14,15 +14,13 @@ namespace TrackMyShipment.Controllers
         protected readonly CarrierManage _carrierManage;
         protected readonly UserManage _userManage;
         protected readonly CompanyManage _companyManage;
-        protected readonly AddressManage _addressManage;
         protected readonly SubscriptionManage _subscriptionManage;
         protected readonly ObjectiveManage _objectiveManage;
 
-        protected BaseController(ObjectiveManage objectiveManage,UserManage userManage, CarrierManage carrierManage,AddressManage addressManage, CompanyManage companyManage, SubscriptionManage subscriptionManage)
+        protected BaseController(ObjectiveManage objectiveManage,UserManage userManage, CarrierManage carrierManage, CompanyManage companyManage, SubscriptionManage subscriptionManage)
         {
             _userManage = userManage;
             _carrierManage = carrierManage;
-            _addressManage = addressManage;
             _companyManage = companyManage;
             _subscriptionManage = subscriptionManage;
             _objectiveManage = objectiveManage;
