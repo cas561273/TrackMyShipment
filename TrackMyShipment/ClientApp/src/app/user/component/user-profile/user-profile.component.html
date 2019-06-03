@@ -30,8 +30,8 @@
         </div>
         <div class="card-footer">
           <div class="button-container">
-            <div class="row">
-              <div class="col-lg-3 col-md-6 col-6 ml-auto">
+            <div *ngIf="currentUser?.role==='customer'" class="row">
+              <div  class="col-lg-3 col-md-6 col-6 ml-auto">
                 <h5>
                   {{stats[2]}}
                   <br>
