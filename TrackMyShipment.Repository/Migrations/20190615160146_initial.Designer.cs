@@ -10,14 +10,14 @@ using TrackMyShipment.Repository;
 namespace TrackMyShipment.Repository.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20190603104115_initial")]
+    [Migration("20190615160146_initial")]
     partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.2.3-servicing-35854")
+                .HasAnnotation("ProductVersion", "2.2.4-servicing-10062")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 

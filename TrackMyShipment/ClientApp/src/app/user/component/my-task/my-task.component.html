@@ -43,7 +43,7 @@
                     <td>{{task.name}}</td>
                     <td>
                       <div *ngIf="task.status==='open'">
-                        <span class="label label-sm label-success">Open</span>
+                        <span class="label label-sm label-default">Open</span>
                       </div>
                       <div *ngIf="task.status==='in progress'">
                         <span class="label label-sm label-warning">In Progress</span>
@@ -73,7 +73,7 @@
                       </p>
                     </td>
                     <td *ngIf="currentUser?.role==='carrier'">
-                      <button mat-raised-button color="primary" (click)="closeTask(task,i)">close task</button>
+                      <button mat-raised-button color="primary" (click)="deleteTask(task.id)">delete</button>
                     </td>
                   </tr>
                 </tbody>

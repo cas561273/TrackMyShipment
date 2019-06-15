@@ -66,6 +66,12 @@ export class MyTaskComponent  {
     });
   }
 
+  deleteTask(taskId: number) {
+    this.userService.changeStatusTask(taskId).subscribe(() => {
+      this.tasks = this.tasks.filter(x => x.id != taskId)
+    });
+  }
+
   openDialog(): void {
     const dialogRef = this.dialog.open(DialogTaskComponent, {
       width: '300px',

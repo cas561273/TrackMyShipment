@@ -16,6 +16,9 @@ namespace TrackMyShipment.Core.Services
 
         public async Task<bool> PutCompanyAsync(string companyName, User existedUser)
         {
+            if (companyName == null || companyName == string.Empty)
+                companyName = "Private person";
+
             Company company = await _context.GetCompanyByNameAsync(companyName);
             if (company != null)
             {

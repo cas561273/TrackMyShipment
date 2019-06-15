@@ -268,6 +268,7 @@
                 <table class="table display" id="support_table5">
                   <thead>
                   <tr>
+
                     <th>FirstName</th>
                     <th>LastName</th>
                     <th>Email</th>
@@ -275,7 +276,7 @@
                     <th>Task</th>
                     <th>Cost</th>
                     <th>Status</th>
-                    <th></th>
+                    <th>Action</th>
                   </tr>
                   </thead>
                   <tbody>
@@ -290,8 +291,11 @@
                       <td *ngIf="user.status==='in progress'"><p style="color:red">{{user.status}}</p></td>
                       <td *ngIf="user.status==='resolved'"><p style="color:gold">{{user.status}}</p></td>
 
-                      <td>
+                      <td *ngIf="user.status==='resolved'">
                         <button mat-raised-button color="primary" (click)="closeTask(user.task.id,i)">Close Task</button>
+                      </td>
+                      <td *ngIf="user.status!=='resolved'">
+                        <button disabled color="primary" (click)="closeTask(user.task.id,i)">Close Task</button>
                       </td>
                     </tr>
                   </tbody>

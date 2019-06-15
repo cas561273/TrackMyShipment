@@ -19,7 +19,7 @@ export class DialogTaskComponent  {
   }
 
   public addTask(form: NgForm) {
-    console.log(form.value);
+    form.value.status = true;
     this.carrierService.addTask(form.value).subscribe((response) => {
       this.dialogRef.close();
     });
